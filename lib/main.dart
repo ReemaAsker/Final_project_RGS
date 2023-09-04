@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:gsg_final_project_rgs/view/home/categories/home_view.dart';
 import 'package:gsg_final_project_rgs/view/home/categories/providers/Category_provider.dart';
+import 'package:gsg_final_project_rgs/view/splash/splash_screan.dart';
 import 'package:provider/provider.dart';
 
 void main() async {
@@ -19,7 +19,9 @@ class MyApp extends StatelessWidget {
         ),
       ],
       child: const MaterialApp(
-          debugShowCheckedModeBanner: false, title: 'home', home: HomeView()),
+          debugShowCheckedModeBanner: false,
+          title: 'home',
+          home: SplashScreen()),
     );
   }
 }
