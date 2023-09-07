@@ -84,6 +84,7 @@ class _LogInWidgetState extends State<LogInWidget> {
               TextFormField(
                 autofillHints: const [AutofillHints.password],
                 controller: passwordController,
+                obscureText: true,
                 decoration: InputDecoration(
                   hintText: "password",
                   hintStyle: TextStyle(

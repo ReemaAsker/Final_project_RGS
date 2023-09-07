@@ -29,7 +29,7 @@ class User {
     email = json['email'];
     image = json['image'];
     emailVerifiedAt = json['email_verified_at'];
-    roleId = json['role_id'];
+    roleId = json['role_id'].toString();
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
     role = json['role'] != null ? Role.fromJson(json['role']) : null;

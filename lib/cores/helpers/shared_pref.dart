@@ -1,4 +1,4 @@
-import 'package:gsg_final_project_rgs/view_features/auth/model/login_model.dart';
+import 'package:gsg_final_project_rgs/view_features/auth/model/auth_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SharedPreferencesController {
@@ -24,7 +24,7 @@ class SharedPreferencesController {
 
   Future<bool?> setToken(String key, LoginModel userInfo) async {
     await _checkInstance();
-    return await _prefs?.setString(key, userInfo.toJson());
+    return await _prefs?.setString(key, userToJson(userInfo));
   }
 
   Future<bool?> checkKeyContain(String key) async {
@@ -43,4 +43,5 @@ class SharedPreferencesController {
     if (isremoved == null) return true;
     return await _prefs?.remove(key);
   }
+  
 }

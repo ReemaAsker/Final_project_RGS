@@ -1,4 +1,4 @@
-import 'package:gsg_final_project_rgs/models/user.dart';
+import 'package:gsg_final_project_rgs/view_features/auth/model/user.dart';
 
 class RegModel {
   String? _message;

@@ -20,7 +20,7 @@ class ApiBaseHelper {
   }
 
   Future<dynamic> post(String url, bool isAuth, Map<String, String>? header,
-      Map<String, String> body) async {
+      Map<String, dynamic> body) async {
     var responseJson;
     try {
       final response = isAuth
