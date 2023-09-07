@@ -1,3 +1,4 @@
+import 'package:gsg_final_project_rgs/view_features/auth/model/login_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SharedPreferencesController {
@@ -21,25 +22,25 @@ class SharedPreferencesController {
     _prefs = await SharedPreferences.getInstance();
   }
 
-  Future<bool?> setToken(String key, String token) async {
+  Future<bool?> setToken(String key, LoginModel userInfo) async {
     await _checkInstance();
-    return await _prefs?.setString('token', token);
+    return await _prefs?.setString(key, userInfo.toJson());
   }
-  // Future<bool?> setData(String key, dynamic data) async {
-  //   await _checkInstance();
-  //   switch (data.runtimeType) {
-  //     case int:
-  //       return _prefs?.setInt(key, data);
-  //     case String:
-  //       return _prefs?.setString(key, data);
-  //     case bool:
-  //       return _prefs?.setBool(key, data);
-  //   }
-  // return null;
-  // }
 
-  dynamic getData(String key) async {
+  Future<bool?> checkKeyContain(String key) async {
     await _checkInstance();
+    return _prefs?.containsKey(key);
+  }
+
+  dynamic getData(String key) {
+    _checkInstance();
     return _prefs?.get(key);
+  }
+
+  Future<bool?> logout(String key) async {
+    await _checkInstance();
+    bool? isremoved = await _prefs?.remove(key);
+    if (isremoved == null) return true;
+    return await _prefs?.remove(key);
   }
 }

@@ -12,12 +12,11 @@ class _SignUpWidgetState extends State<SignUpWidget> {
   Widget build(BuildContext context) {
     return Form(
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 75),
+        padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 35),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             TextFormField(
-              // style: TextStyle(height: 20),
               decoration: InputDecoration(
                 hintText: "Enter email or username",
                 hintStyle: TextStyle(
@@ -25,9 +24,10 @@ class _SignUpWidgetState extends State<SignUpWidget> {
                 ),
               ),
             ),
-
+            SizedBox(
+              height: 15,
+            ),
             TextFormField(
-              // style: TextStyle(height: 20),
               decoration: InputDecoration(
                 hintText: "password",
                 hintStyle: TextStyle(
@@ -35,8 +35,10 @@ class _SignUpWidgetState extends State<SignUpWidget> {
                 ),
               ),
             ),
+            SizedBox(
+              height: 15,
+            ),
             TextFormField(
-              // style: TextStyle(height: 20),
               decoration: InputDecoration(
                 hintText: "confirm password",
                 hintStyle: TextStyle(
@@ -45,30 +47,36 @@ class _SignUpWidgetState extends State<SignUpWidget> {
               ),
             ),
             SizedBox(
-              height: 20,
+              height: 60,
             ),
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                maximumSize: Size(double.infinity, 50),
-                primary: Color(0xff0039F6),
-                padding: EdgeInsetsDirectional.symmetric(
-                    horizontal: 103, vertical: 14),
-              ),
-              child: SizedBox(
-                child: Text(
-                  "Signup",
-                  style: TextStyle(fontSize: 12),
-                ),
-              ),
-              onPressed: () {
+            GestureDetector(
+              onTap: () {
                 print("sign up button pressed");
               },
-            )
-            // ElevatedButton(
-            //   style: const ButtonStyle(backgroundColor: Color(0xff)),
-            //   child: Text("Log In"),
-            //   onPressed: () {},
-            // )
+              child: Container(
+                padding: EdgeInsets.all(14.0),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(30.0),
+                  gradient: LinearGradient(
+                    begin: Alignment.topRight,
+                    end: Alignment.bottomLeft,
+                    colors: [
+                      Color(0xff0039F6),
+                      Color(0xff6589FF),
+                    ],
+                  ),
+                ),
+                child: Center(
+                  child: Text(
+                    'SignUp',
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 16.0,
+                        fontWeight: FontWeight.bold),
+                  ),
+                ),
+              ),
+            ),
           ],
         ),
       ),

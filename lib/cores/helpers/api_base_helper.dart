@@ -19,12 +19,27 @@ class ApiBaseHelper {
     responseJson;
   }
 
-  Future<dynamic> post(
+  Future<dynamic> post(String url, bool isAuth, Map<String, String>? header,
+      Map<String, String> body) async {
+    var responseJson;
+    try {
+      final response = isAuth
+          ? await http.post(Uri.parse(baseUrl + url), body: body)
+          : await http.post(Uri.parse(baseUrl + url),
+              headers: header, body: body);
+      responseJson = _returnResponse(response);
+    } on SocketException {
+      throw FetchDataException('No Internet connection');
+    }
+    return responseJson;
+  }
+
+  Future<dynamic> put(
       String url, Map<String, String> header, Map<String, String> body) async {
     var responseJson;
     try {
-      final response = await http.post(Uri.parse(baseUrl + url),
-          headers: header, body: body);
+      final response =
+          await http.put(Uri.parse(baseUrl + url), headers: header, body: body);
       responseJson = _returnResponse(response);
     } on SocketException {
       throw FetchDataException('No Internet connection');
@@ -32,19 +47,7 @@ class ApiBaseHelper {
     responseJson;
   }
 
- Future<dynamic> put(
-      String url, Map<String, String> header, Map<String, String> body) async {
-    var responseJson;
-    try {
-      final response = await http.put(Uri.parse(baseUrl + url),
-          headers: header, body: body);
-      responseJson = _returnResponse(response);
-    } on SocketException {
-      throw FetchDataException('No Internet connection');
-    }
-    responseJson;
-  }
-Future<dynamic> delete(String url, Map<String, String> header) async {
+  Future<dynamic> delete(String url, Map<String, String> header) async {
     var responseJson;
     try {
       final response =
@@ -55,7 +58,6 @@ Future<dynamic> delete(String url, Map<String, String> header) async {
     }
     responseJson;
   }
-
 
   dynamic _returnResponse(http.Response response) {
     switch (response.statusCode) {

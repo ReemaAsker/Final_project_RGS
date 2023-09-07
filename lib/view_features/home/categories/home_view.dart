@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:gsg_final_project_rgs/view/home/categories/models/category_response.dart';
-import 'package:gsg_final_project_rgs/view/home/categories/providers/Category_provider.dart';
+import 'package:gsg_final_project_rgs/view_features/home/categories/models/category_response.dart';
+import 'package:gsg_final_project_rgs/view_features/home/categories/providers/Category_provider.dart';
 import 'package:provider/provider.dart';
 
 import '../../../cores/helpers/api_response.dart';

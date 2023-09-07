@@ -6,7 +6,7 @@ import '../models/category_response.dart';
 class CategoryRepository {
   final ApiBaseHelper _helper = ApiBaseHelper();
   String userToken = '282|CX4Sg0qj1bHRjIK3JrywqzTyrLsYQp3kFkxW99Xd';
-  //await getToken();
+  // await getToken();
 
   Future<List<Categories>?> fetchCategories() async {
     // String token = '282|CX4Sg0qj1bHRjIK3JrywqzTyrLsYQp3kFkxW99Xd';

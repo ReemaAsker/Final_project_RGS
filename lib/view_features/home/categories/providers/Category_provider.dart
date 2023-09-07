@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:gsg_final_project_rgs/cores/helpers/api_response.dart';
-import 'package:gsg_final_project_rgs/view/home/categories/repo/category_repo.dart';
+import 'package:gsg_final_project_rgs/view_features/home/categories/repo/category_repo.dart';
 
 import '../models/category_response.dart';
 

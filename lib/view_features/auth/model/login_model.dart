@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:gsg_final_project_rgs/models/user.dart';
 
 class LoginModel {
@@ -19,16 +21,16 @@ class LoginModel {
   set token(String? token) => _token = token;
 
   LoginModel.fromJson(Map<String, dynamic> json) {
-    _user = json['user'] != null ? new User.fromJson(json['user']) : null;
+    _user = User.fromJson(json['user']);
     _token = json['token'];
   }
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this._user != null) {
-      data['user'] = this._user!.toJson();
+  String toJson() {
+    final Map<String, dynamic> data = Map<String, dynamic>();
+    if (_user != null) {
+      data['user'] = _user!.toJson();
     }
-    data['token'] = this._token;
-    return data;
+    data['token'] = _token;
+    return json.encode(data);
   }
 }
