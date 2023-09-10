@@ -1,0 +1,65 @@
+import 'package:flutter/widgets.dart';
+import 'package:gsg_final_project_rgs/cores/helpers/api_response.dart';
+
+import '../../../models/tag.dart';
+import '../repositories/tags_repo.dart';
+
+class tagsProvider extends ChangeNotifier {
+  late TagRepo _tagRepo;
+  late ApiResponse<List<Tag>> _allTagsList;
+  late ApiResponse<List<Tag>> _tagsListWithMails;
+  late ApiResponse<List<Tag>> _tagsOfMail;
+  late ApiResponse<Tag> _tag;
+
+  fetchAllTagsList() async {
+    _allTagsList = ApiResponse.loading('Fetching Tags');
+    notifyListeners();
+    try {
+      List<Tag>? tags = await _tagRepo.fetchAllTagsWithoutEmail();
+      _allTagsList = ApiResponse.completed(tags);
+      notifyListeners();
+    } catch (e) {
+      _allTagsList = ApiResponse.error(e.toString());
+      notifyListeners();
+    }
+  }
+
+  fetchTagsListWithMail({required List<int> tags}) async {
+    _tagsListWithMails = ApiResponse.loading('Fetching Tags with mails');
+    notifyListeners();
+    try {
+      List<Tag>? tagsList = await _tagRepo.fetchTagsWithEmail(tags: tags);
+      _tagsListWithMails = ApiResponse.completed(tagsList);
+      notifyListeners();
+    } catch (e) {
+      _tagsListWithMails = ApiResponse.error(e.toString());
+      notifyListeners();
+    }
+  }
+
+  fetchTagsOfMail({required int mailId}) async {
+    _tagsOfMail = ApiResponse.loading('Fetching Tags ');
+    notifyListeners();
+    try {
+      List<Tag>? mailTagsList = await _tagRepo.fetchTagsOfMail(mailId: mailId);
+      _tagsOfMail = ApiResponse.completed(mailTagsList);
+      notifyListeners();
+    } catch (e) {
+      _tagsOfMail = ApiResponse.error(e.toString());
+      notifyListeners();
+    }
+  }
+
+  // createTag({required String name}) async {
+  //   _tag = ApiResponse.loading('creating tag ');
+  //   notifyListeners();
+  //   try {
+  //     Tag? myTag = await _tagRepo.createTag(name: name);
+  //     _tag = ApiResponse.completed(myTag);
+  //     notifyListeners();
+  //   } catch (e) {
+  //     _tag = ApiResponse.error(e.toString());
+  //     notifyListeners();
+  //   }
+  // }
+}

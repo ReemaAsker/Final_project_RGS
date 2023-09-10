@@ -1,4 +1,4 @@
-import 'catigory.dart';
+import '../view/home/categories/models/catigory.dart';
 
 class Sender {
   int? id;

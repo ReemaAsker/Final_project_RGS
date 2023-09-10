@@ -12,11 +12,14 @@ class ApiBaseHelper {
     try {
       final response =
           await http.get(Uri.parse(baseUrl + url), headers: header);
+      // print(response.statusCode);
+      // print("///////////////////////////");
       responseJson = _returnResponse(response);
+      // print(responseJson);
     } on SocketException {
       throw FetchDataException('No Internet connection');
     }
-    responseJson;
+    return responseJson;
   }
 
   Future<dynamic> post(
@@ -29,7 +32,7 @@ class ApiBaseHelper {
     } on SocketException {
       throw FetchDataException('No Internet connection');
     }
-    responseJson;
+    return responseJson;
   }
 
   dynamic _returnResponse(http.Response response) {

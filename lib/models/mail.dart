@@ -13,12 +13,12 @@ class Mail {
   String? archiveDate;
   String? decision;
   String? statusId;
-  Null? finalDecision;
+  dynamic finalDecision;
   String? createdAt;
   String? updatedAt;
   Sender? sender;
   Status? status;
-  List<Tags>? tags;
+  List<Tag>? tags;
   List<Attachment>? attachments;
   List<Activitie>? activities;
 
@@ -57,9 +57,9 @@ class Mail {
     status =
         json['status'] != null ? new Status.fromJson(json['status']) : null;
     if (json['tags'] != null) {
-      tags = <Tags>[];
+      tags = <Tag>[];
       json['tags'].forEach((v) {
-        tags!.add(new Tags.fromJson(v));
+        tags!.add(new Tag.fromJson(v));
       });
     }
     if (json['attachments'] != null) {

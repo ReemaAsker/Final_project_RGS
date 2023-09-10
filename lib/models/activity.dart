@@ -5,9 +5,9 @@ class Activitie {
   String? body;
   String? userId;
   String? mailId;
-  Null? sendNumber;
-  Null? sendDate;
-  Null? sendDestination;
+  dynamic sendNumber;
+  dynamic sendDate;
+  dynamic sendDestination;
   String? createdAt;
   String? updatedAt;
   User? user;

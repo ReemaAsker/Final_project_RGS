@@ -5,9 +5,9 @@ class User {
   String? _name;
   String? _email;
   String? _image;
-  Null? _emailVerifiedAt;
+  dynamic _emailVerifiedAt;
   String? _roleId;
-  Null? _createdAt;
+  dynamic _createdAt;
   String? _updatedAt;
   Role? _role;
 

@@ -1,15 +1,38 @@
 import 'package:gsg_final_project_rgs/models/pivot.dart';
 
-class Tags {
+class TagsResponseModel {
+  List<Tag>? tags;
+
+  TagsResponseModel({this.tags});
+
+  TagsResponseModel.fromJson(Map<String, dynamic> json) {
+    if (json['tags'] != null) {
+      tags = <Tag>[];
+      json['tags'].forEach((v) {
+        tags!.add(new Tag.fromJson(v));
+      });
+    }
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    if (this.tags != null) {
+      data['tags'] = this.tags!.map((v) => v.toJson()).toList();
+    }
+    return data;
+  }
+}
+
+class Tag {
   int? id;
   String? name;
   String? createdAt;
   String? updatedAt;
   Pivot? pivot;
 
-  Tags({this.id, this.name, this.createdAt, this.updatedAt, this.pivot});
+  Tag({this.id, this.name, this.createdAt, this.updatedAt, this.pivot});
 
-  Tags.fromJson(Map<String, dynamic> json) {
+  Tag.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     name = json['name'];
     createdAt = json['created_at'];
