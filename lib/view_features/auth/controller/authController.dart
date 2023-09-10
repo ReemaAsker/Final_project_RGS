@@ -8,30 +8,10 @@ class AuthController {
   late ApiResponse<String> _userdatasign;
   final AuthRepository _authsRepo = AuthRepository();
 
-  static String getToken() {
-    final user = SharedPreferencesController().getData('user');
-    if (user != null && user is String) {
-      return user;
-    } else {
-      return "User not found";
-    }
-  }
-
   Future<bool?> setUserInSharedpref(LoginModel user) async {
     return await SharedPreferencesController().setToken("user", user);
   }
 
-  static bool removeUser() {
-    bool removeUser_done = true;
-    try {
-      SharedPreferencesController()
-          .logout('user')
-          .then((value) => removeUser_done = value!);
-    } catch (e) {
-      print(e);
-    }
-    return removeUser_done;
-  }
 
   Future<ApiResponse<LoginModel>> login(Map<String, String> body) async {
     _userdata = ApiResponse.loading('Loding..');

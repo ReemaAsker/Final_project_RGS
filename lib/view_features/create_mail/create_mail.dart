@@ -1,9 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:gsg_final_project_rgs/cores/helpers/shared_pref.dart';
+import 'package:gsg_final_project_rgs/models/activity.dart';
+import 'package:gsg_final_project_rgs/models/mail.dart';
+import 'package:gsg_final_project_rgs/models/status.dart';
+import 'package:gsg_final_project_rgs/models/tag.dart';
+import 'package:gsg_final_project_rgs/view_features/auth/model/auth_model.dart';
+import 'package:gsg_final_project_rgs/view_features/auth/model/user.dart';
+import 'package:gsg_final_project_rgs/view_features/create_mail/repo/create_mail_repo.dart';
 import 'package:gsg_final_project_rgs/view_features/create_mail/widgets/custom_app_bar.dart';
 import '../../cores/utils/colors.dart';
 import '../home/widgets/custom_border.dart';
 import '../home/widgets/custom_text.dart';
-
 
 class NewInboxPage extends StatelessWidget {
   NewInboxPage({Key? key}) : super(key: key);
@@ -20,17 +27,34 @@ class NewInboxPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: MediaQuery
-          .of(context)
-          .size
-          .height * 0.95,
+      height: MediaQuery.of(context).size.height * 0.95,
       padding: const EdgeInsets.only(right: 16, left: 16),
       child: SingleChildScrollView(
         child: Column(
           children: [
             CustomAppBar(
                 title: 'New Inbox',
-                onTap: () {}),
+                onTap: () {
+                  CreateMailRepository().create_mail(MailClass(
+                      subject: "new_mail_from us",
+                      description: " ",
+                      senderId: "1",
+                      archiveNumber: "3000",
+                      archiveDate: "2023-9-9",
+                      decision: "",
+                      statusId: "1",
+                      finalDecision: "",
+                      tags: [
+                        1,
+                        3
+                      ],
+                      activities: [
+                        Activity(
+                            body: "the problem is in progress",
+                            createdAt: "2023-2-2",
+                            id: 20)
+                      ]));
+                }),
             _buildSenderWidget(),
             _buildMailDescriptionWidget(),
             _buildDateArchiveWidget(),
@@ -84,8 +108,8 @@ class NewInboxPage extends StatelessWidget {
     return Theme(
       data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
       child: ExpansionTile(
-        title: CustomText(
-            'Activity', 20, 'Poppins', kBlackColor, FontWeight.w600),
+        title:
+            CustomText('Activity', 20, 'Poppins', kBlackColor, FontWeight.w600),
         backgroundColor: Colors.transparent,
         children: [
           ListView.separated(
@@ -126,11 +150,7 @@ class NewInboxPage extends StatelessWidget {
                 padding: const EdgeInsets.only(
                     top: 5, bottom: 5, left: 13, right: 13),
                 child: CustomText(
-                    'Inbox',
-                    16,
-                    'Poppins',
-                    kBlackColor,
-                    FontWeight.w600),
+                    'Inbox', 16, 'Poppins', kBlackColor, FontWeight.w600),
               ),
             ),
             const Spacer(),
@@ -172,11 +192,11 @@ class NewInboxPage extends StatelessWidget {
             onTap: () {},
             child: Row(
               children: [
-                CustomText('Category', 14, 'Poppins',
-                    kBlackColor, FontWeight.w400),
+                CustomText(
+                    'Category', 14, 'Poppins', kBlackColor, FontWeight.w400),
                 const Spacer(),
-                CustomText('Other', 12,
-                    'Poppins', kLightBlackColor, FontWeight.w400),
+                CustomText(
+                    'Other', 12, 'Poppins', kLightBlackColor, FontWeight.w400),
                 Image.asset(
                   'images/arrow_right.png',
                   width: 14,
@@ -320,51 +340,51 @@ class NewInboxPage extends StatelessWidget {
             children: [
               subTitle.isEmpty
                   ? TextField(
-                controller: controller,
-                style: const TextStyle(
-                    fontWeight: FontWeight.w500,
-                    fontFamily: 'Poppins',
-                    fontSize: 14,
-                    color: kBlackColor),
-                decoration: InputDecoration(
-                  border: InputBorder.none,
-                  hintText: hint,
-                  hintStyle: const TextStyle(
-                      fontWeight: FontWeight.w600,
-                      fontFamily: 'Poppins',
-                      fontSize: 12,
-                      color: kHintGreyColor),
-                ),
-              )
+                      controller: controller,
+                      style: const TextStyle(
+                          fontWeight: FontWeight.w500,
+                          fontFamily: 'Poppins',
+                          fontSize: 14,
+                          color: kBlackColor),
+                      decoration: InputDecoration(
+                        border: InputBorder.none,
+                        hintText: hint,
+                        hintStyle: const TextStyle(
+                            fontWeight: FontWeight.w600,
+                            fontFamily: 'Poppins',
+                            fontSize: 12,
+                            color: kHintGreyColor),
+                      ),
+                    )
                   : Text(
-                hint,
-                textAlign: TextAlign.left,
-                style: const TextStyle(
-                    fontWeight: FontWeight.w400,
-                    fontFamily: 'Poppins',
-                    fontSize: 14,
-                    color: kBlackColor),
-              ),
+                      hint,
+                      textAlign: TextAlign.left,
+                      style: const TextStyle(
+                          fontWeight: FontWeight.w400,
+                          fontFamily: 'Poppins',
+                          fontSize: 14,
+                          color: kBlackColor),
+                    ),
               subTitle.isNotEmpty
                   ? TextField(
-                controller: controller,
-                style: const TextStyle(
-                    fontWeight: FontWeight.w400,
-                    fontFamily: 'Poppins',
-                    fontSize: 12,
-                    color: kBlackColor),
-                decoration: InputDecoration(
-                  border: InputBorder.none,
-                  hintText: subTitle,
-                  hintStyle: TextStyle(
-                      fontWeight: FontWeight.w400,
-                      fontFamily: 'Poppins',
-                      fontSize: 12,
-                      color: hint == 'Date'
-                          ? kLightPrimaryColor
-                          : kHintGreyColor),
-                ),
-              )
+                      controller: controller,
+                      style: const TextStyle(
+                          fontWeight: FontWeight.w400,
+                          fontFamily: 'Poppins',
+                          fontSize: 12,
+                          color: kBlackColor),
+                      decoration: InputDecoration(
+                        border: InputBorder.none,
+                        hintText: subTitle,
+                        hintStyle: TextStyle(
+                            fontWeight: FontWeight.w400,
+                            fontFamily: 'Poppins',
+                            fontSize: 12,
+                            color: hint == 'Date'
+                                ? kLightPrimaryColor
+                                : kHintGreyColor),
+                      ),
+                    )
                   : Container(),
             ],
           ),
@@ -385,8 +405,7 @@ class NewInboxPage extends StatelessWidget {
             const SizedBox(
               width: 10,
             ),
-            CustomText(
-                'Tags', 16, 'Poppins', kBlackColor, FontWeight.w600),
+            CustomText('Tags', 16, 'Poppins', kBlackColor, FontWeight.w600),
             const Spacer(),
             Image.asset('images/arrow_right.png')
           ],

@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_advanced_drawer/flutter_advanced_drawer.dart';
+import 'package:gsg_final_project_rgs/cores/helpers/token_helper.dart';
+import 'package:gsg_final_project_rgs/custom_widgets/custom_snackbar.dart';
+import 'package:gsg_final_project_rgs/view_features/auth/widgets/auth_screen.dart';
+import 'package:gsg_final_project_rgs/view_features/create_mail/create_mail.dart';
 import 'package:gsg_final_project_rgs/view_features/home/widgets/custom_text.dart';
 import 'package:gsg_final_project_rgs/view_features/home/widgets/mail_list_view.dart';
 import 'package:gsg_final_project_rgs/view_features/home/widgets/ngos_widget.dart';
@@ -8,11 +12,30 @@ import 'package:gsg_final_project_rgs/view_features/home/widgets/status_tile.dar
 import 'package:gsg_final_project_rgs/view_features/home/widgets/tag_list.dart';
 import '../../cores/utils/colors.dart';
 
-class HomePage extends StatelessWidget {
-  HomePage({Key? key,}) : super(key: key);
+class HomePage extends StatefulWidget {
+  HomePage({
+    Key? key,
+  }) : super(key: key);
 
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
   final _advancedDrawerController = AdvancedDrawerController();
-  List statusList= ['Organization Name','k'];
+
+  List statusList = ['Organization Name', 'k'];
+  void logout() {
+    if (removeUser()) {
+      Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => AuthScreen(),
+          ));
+    } else {
+      My_snackBar.showSnackBar(context, "can't logout", Colors.red);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -52,9 +75,7 @@ class HomePage extends StatelessWidget {
                   title: _buildAppBar(
                     context,
                   )),
-              SliverToBoxAdapter(
-                  child: Container()
-              ),
+              SliverToBoxAdapter(child: Container()),
               SliverToBoxAdapter(
                 child: Container(),
               ),
@@ -72,15 +93,19 @@ class HomePage extends StatelessWidget {
                         elevation: 1,
                         color: Colors.white,
                         child: Padding(
-                          padding: const EdgeInsets.only(bottom: 4, left: 16, right: 14, top: 4),
+                          padding: const EdgeInsets.only(
+                              bottom: 4, left: 16, right: 14, top: 4),
                           child: Row(
                             children: [
-                              const Icon(Icons.search, color: kHintGreyColor,),
+                              const Icon(
+                                Icons.search,
+                                color: kHintGreyColor,
+                              ),
                               const SizedBox(
                                 width: 8,
                               ),
-                              CustomText('Search', 18, 'Poppins', kHintGreyColor,
-                                  FontWeight.w400),
+                              CustomText('Search', 18, 'Poppins',
+                                  kHintGreyColor, FontWeight.w400),
                             ],
                           ),
                         ),
@@ -91,23 +116,28 @@ class HomePage extends StatelessWidget {
                     ),
                     Row(
                       children: [
-                        StatusTile('Inbox',Colors.red),
-                        StatusTile('Pending',Colors.yellow),
+                        StatusTile('Inbox', Colors.red),
+                        StatusTile('Pending', Colors.yellow),
                       ],
                     ),
                     Row(
                       children: [
-                        StatusTile('In progress',Colors.blue),
-                        StatusTile('Completed',Colors.green),
+                        StatusTile('In progress', Colors.blue),
+                        StatusTile('Completed', Colors.green),
                       ],
                     ),
-                    MailListView('Official Organization',[{'oo':10}]),
+                    MailListView('Official Organization', [
+                      {'oo': 10}
+                    ]),
                     NGOsWidget(),
-                    OthersListView([{'oo':10},{'oo':10}], Colors.green),
+                    OthersListView([
+                      {'oo': 10},
+                      {'oo': 10}
+                    ], Colors.green),
                     Padding(
                       padding: const EdgeInsets.all(16),
-                      child: CustomText('Tags', 20, 'Poppins', kBlackColor,
-                          FontWeight.w600),
+                      child: CustomText(
+                          'Tags', 20, 'Poppins', kBlackColor, FontWeight.w600),
                     ),
                     TagGridList(),
                   ],
@@ -135,10 +165,10 @@ class HomePage extends StatelessWidget {
                   key: ValueKey<bool>(value.visible),
                   child: value.visible
                       ? Image.asset(
-                    'images/clear.png',
-                    width: 20,
-                    height: 20,
-                  )
+                          'images/clear.png',
+                          width: 20,
+                          height: 20,
+                        )
                       : Image.asset('images/menu.png'),
                 ),
               );
@@ -167,24 +197,24 @@ class HomePage extends StatelessWidget {
     return [
       const PopupMenuItem(
           child: Center(
-            child: CircleAvatar(
-              backgroundColor: Colors.white,
-              radius: 50,
-              child: CircleAvatar(
-                radius: 45.0,
-                backgroundImage: NetworkImage(
-                    'https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png'),
-                backgroundColor: Colors.transparent,
-              ),
-            ),
-          )),
+        child: CircleAvatar(
+          backgroundColor: Colors.white,
+          radius: 50,
+          child: CircleAvatar(
+            radius: 45.0,
+            backgroundImage: NetworkImage(
+                'https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png'),
+            backgroundColor: Colors.transparent,
+          ),
+        ),
+      )),
       const PopupMenuItem(
         textStyle: TextStyle(
             fontWeight: FontWeight.w400,
             fontSize: 16,
             fontFamily: 'Poppins',
             color: kBlackColor),
-        child: Center(child: Text( 'Ghada Abu Kwaik')),
+        child: Center(child: Text('Ghada Abu Kwaik')),
       ),
       const PopupMenuItem(
         textStyle: TextStyle(
@@ -197,18 +227,19 @@ class HomePage extends StatelessWidget {
       const PopupMenuDivider(),
       const PopupMenuItem(
           child: ListTile(
-            leading: Icon(Icons.language),
-            title: Text(
-              'Switch to English',
-              style: TextStyle(
-                  fontSize: 14,
-                  fontFamily: 'Poppins',
-                  color: kLightBlackColor,
-                  fontWeight: FontWeight.w400),
-            ),
-          )),
+        leading: Icon(Icons.language),
+        title: Text(
+          'Switch to English',
+          style: TextStyle(
+              fontSize: 14,
+              fontFamily: 'Poppins',
+              color: kLightBlackColor,
+              fontWeight: FontWeight.w400),
+        ),
+      )),
       PopupMenuItem(
           onTap: () {
+            logout();
           },
           child: const ListTile(
             leading: Icon(Icons.logout),
@@ -227,15 +258,16 @@ class HomePage extends StatelessWidget {
   Widget _buildBottomNavBar(BuildContext context) {
     return GestureDetector(
       onTap: () {
+        getToken();
         showModalBottomSheet<void>(
             isScrollControlled: true,
             backgroundColor: kLightWhiteColor,
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(15)),
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
             context: context,
             builder: (BuildContext context) {
               // return NewInboxPage();
-              return Container();
+              return NewInboxPage();
             });
       },
       child: Container(
@@ -261,8 +293,8 @@ class HomePage extends StatelessWidget {
               const SizedBox(
                 width: 5,
               ),
-              CustomText('New Inbox', 18, 'Poppins',
-                  kLightPrimaryColor, FontWeight.w600),
+              CustomText('New Inbox', 18, 'Poppins', kLightPrimaryColor,
+                  FontWeight.w600),
             ],
           ),
         ),
@@ -348,7 +380,6 @@ class HomePage extends StatelessWidget {
   void _handleMenuButtonPressed() {
     _advancedDrawerController.showDrawer();
   }
-
 }
 
 class PopUpMenu extends StatelessWidget {

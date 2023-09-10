@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:gsg_final_project_rgs/models/role.dart';
 
 class User {
