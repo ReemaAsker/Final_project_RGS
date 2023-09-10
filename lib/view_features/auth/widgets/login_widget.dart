@@ -26,7 +26,7 @@ class _LogInWidgetState extends State<LogInWidget> {
   }
 
   void submit(ApiResponse value) {
-    if (value.status == Status.ERROR) {
+    if (value.status == DataStatus.ERROR) {
       My_snackBar.showSnackBar(context,
           value.message!.split(" ")[0].replaceAll(":", "...."), Colors.red);
     } else {

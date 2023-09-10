@@ -47,7 +47,7 @@ class _SignUpWidgetState extends State<SignUpWidget> {
   }
 
   void submit(ApiResponse value) async {
-    if (value.status == Status.COMPLETED) {
+    if (value.status == DataStatus.COMPLETED) {
       if (mounted) {
         My_snackBar.showSnackBar(
             context, "Sign up process ,Sucuuess , login now ..", Colors.green);

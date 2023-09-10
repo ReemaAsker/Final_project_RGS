@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gsg_final_project_rgs/view_features/splash/widgets/splash_screan.dart';
+import 'package:provider/provider.dart';
 
 void main() async {
   runApp(const MyApp());

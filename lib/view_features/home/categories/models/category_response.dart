@@ -1,19 +1,22 @@
+import 'package:gsg_final_project_rgs/models/sender.dart';
+import 'package:gsg_final_project_rgs/view_features/home/categories/models/Category.dart';
+
 class CategoryResponseModel {
-  List<Categories>? categories;
+  List<CategoryModel>? categories;
 
   CategoryResponseModel({this.categories});
 
   CategoryResponseModel.fromJson(Map<String, dynamic> json) {
     if (json['categories'] != null) {
-      categories = <Categories>[];
+      categories = <CategoryModel>[];
       json['categories'].forEach((v) {
-        categories!.add(new Categories.fromJson(v));
+        categories!.add(CategoryModel.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final Map<String, dynamic> data = Map<String, dynamic>();
     if (this.categories != null) {
       data['categories'] = this.categories!.map((v) => v.toJson()).toList();
     }
@@ -21,87 +24,25 @@ class CategoryResponseModel {
   }
 }
 
-class Categories {
-  int? id;
-  String? name;
-  String? createdAt;
-  String? updatedAt;
-  String? sendersCount;
-  List<Senders>? senders;
+class SingleCatigoryResponse {
+  List<CategoryModel>? category;
 
-  Categories(
-      {this.id,
-      this.name,
-      this.createdAt,
-      this.updatedAt,
-      this.sendersCount,
-      this.senders});
+  SingleCatigoryResponse({this.category});
 
-  Categories.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    name = json['name'];
-    createdAt = json['created_at'];
-    updatedAt = json['updated_at'];
-    sendersCount = json['senders_count'];
-    if (json['senders'] != null) {
-      senders = <Senders>[];
-      json['senders'].forEach((v) {
-        senders!.add(new Senders.fromJson(v));
+  SingleCatigoryResponse.fromJson(Map<String, dynamic> json) {
+    if (json['category'] != null) {
+      category = <CategoryModel>[];
+      json['category'].forEach((v) {
+        category!.add(CategoryModel.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['name'] = this.name;
-    data['created_at'] = this.createdAt;
-    data['updated_at'] = this.updatedAt;
-    data['senders_count'] = this.sendersCount;
-    if (this.senders != null) {
-      data['senders'] = this.senders!.map((v) => v.toJson()).toList();
+    if (this.category != null) {
+      data['category'] = this.category!.map((v) => v.toJson()).toList();
     }
-    return data;
-  }
-}
-
-class Senders {
-  int? id;
-  String? name;
-  String? mobile;
-  String? address;
-  String? categoryId;
-  String? createdAt;
-  String? updatedAt;
-
-  Senders(
-      {this.id,
-      this.name,
-      this.mobile,
-      this.address,
-      this.categoryId,
-      this.createdAt,
-      this.updatedAt});
-
-  Senders.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    name = json['name'];
-    mobile = json['mobile'];
-    address = json['address'];
-    categoryId = json['category_id'];
-    createdAt = json['created_at'];
-    updatedAt = json['updated_at'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['name'] = this.name;
-    data['mobile'] = this.mobile;
-    data['address'] = this.address;
-    data['category_id'] = this.categoryId;
-    data['created_at'] = this.createdAt;
-    data['updated_at'] = this.updatedAt;
     return data;
   }
 }

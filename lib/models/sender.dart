@@ -1,4 +1,5 @@
-import 'catigory.dart';
+import 'package:gsg_final_project_rgs/view_features/home/categories/models/Category.dart';
+import 'package:gsg_final_project_rgs/view_features/home/categories/models/category_response.dart';
 
 class Sender {
   int? id;
@@ -8,7 +9,7 @@ class Sender {
   String? categoryId;
   String? createdAt;
   String? updatedAt;
-  Category? category;
+  CategoryModel? category;
 
   Sender(
       {this.id,
@@ -29,7 +30,7 @@ class Sender {
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
     category = json['category'] != null
-        ? new Category.fromJson(json['category'])
+        ? CategoryModel.fromJson(json['category'])
         : null;
   }
 
