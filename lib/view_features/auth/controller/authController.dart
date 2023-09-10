@@ -5,13 +5,12 @@ import '../repo/auth_Repo.dart';
 
 class AuthController {
   late ApiResponse<LoginModel> _userdata;
-  late ApiResponse<String> _userdatasign;
+  late ApiResponse<Map<String, dynamic>> _userdatasign;
   final AuthRepository _authsRepo = AuthRepository();
 
   Future<bool?> setUserInSharedpref(LoginModel user) async {
     return await SharedPreferencesController().setToken("user", user);
   }
-
 
   Future<ApiResponse<LoginModel>> login(Map<String, String> body) async {
     _userdata = ApiResponse.loading('Loding..');
@@ -27,7 +26,8 @@ class AuthController {
     return _userdata;
   }
 
-  Future<ApiResponse<String>> signup(Map<String, String> body) async {
+  Future<ApiResponse<Map<String, dynamic>>> signup(
+      Map<String, dynamic> body) async {
     _userdatasign = ApiResponse.loading('Loding..');
     try {
       var response = await _authsRepo.signup(body);

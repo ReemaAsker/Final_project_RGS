@@ -1,14 +1,14 @@
 import 'package:gsg_final_project_rgs/cores/helpers/shared_pref.dart';
 import 'package:gsg_final_project_rgs/view_features/auth/model/auth_model.dart';
 
-String? getToken() {
+LoginModel? getToken() {
   final user = SharedPreferencesController().getData('user');
   LoginModel current_user;
   if (user != null && user is String) {
-    current_user = userFromJson(user);
-    return current_user.token;
+    current_user = loginModelFromJson(user);
+    return current_user;
   } else {
-    return "User not found";
+    return null;
   }
 }
 

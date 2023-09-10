@@ -24,7 +24,7 @@ class SharedPreferencesController {
 
   Future<bool?> setToken(String key, LoginModel userInfo) async {
     await _checkInstance();
-    return await _prefs?.setString(key, userToJson(userInfo));
+    return await _prefs?.setString(key, loginModelToJson(userInfo));
   }
 
   Future<bool?> checkKeyContain(String key) async {

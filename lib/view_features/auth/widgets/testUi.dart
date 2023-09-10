@@ -33,7 +33,7 @@ class _HelloState extends State<Hello> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text("Hello ${getToken()}"),
+          Text("Hello ${getToken().toString()}"),
           ElevatedButton(
               onPressed: () => logout(), child: const Text("logout")),
         ],

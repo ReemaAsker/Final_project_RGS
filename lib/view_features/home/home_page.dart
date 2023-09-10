@@ -208,13 +208,13 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
       )),
-      const PopupMenuItem(
+      PopupMenuItem(
         textStyle: TextStyle(
             fontWeight: FontWeight.w400,
             fontSize: 16,
             fontFamily: 'Poppins',
             color: kBlackColor),
-        child: Center(child: Text('Ghada Abu Kwaik')),
+        child: Center(child: Text('${getToken()!.user!.name}')),
       ),
       const PopupMenuItem(
         textStyle: TextStyle(

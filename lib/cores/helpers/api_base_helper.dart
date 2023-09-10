@@ -20,13 +20,12 @@ class ApiBaseHelper {
   }
 
   Future<dynamic> post(
-      String url, bool isAuth, String token, Map<String, dynamic> body) async {
+      String url, Map<String, dynamic> body, Map<String, String> header) async {
     var responseJson;
     try {
-      final response = isAuth
-          ? await http.post(Uri.parse(baseUrl + url), body: body)
-          : await http.post(Uri.parse(baseUrl + url),
-              headers: {'Authorization': 'Bearer $token'});
+      final response = await http.post(Uri.parse(baseUrl + url),
+          body: body, headers: header);
+
       responseJson = _returnResponse(response);
     } on SocketException {
       throw FetchDataException('No Internet connection');

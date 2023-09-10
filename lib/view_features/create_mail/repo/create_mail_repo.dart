@@ -12,9 +12,8 @@ class CreateMailRepository {
       print("***************toJson*************");
       Map<String, dynamic> mailMap = new_mail.toJson();
       print(mailMap);
-      final response =
-          await _helper.post(mailsUrl, false, getToken()!, mailMap);
-
+      final response = await _helper
+          .post(mailsUrl, mailMap, {'Authorization': 'Bearer ${getToken()}'});
     } catch (e) {
       print("erorrrrrrrrrrrrrrrrr");
       print(e);

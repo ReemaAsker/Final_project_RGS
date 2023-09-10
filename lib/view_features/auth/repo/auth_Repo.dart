@@ -1,3 +1,4 @@
+import 'package:gsg_final_project_rgs/cores/helpers/token_helper.dart';
 import 'package:gsg_final_project_rgs/cores/utils/constants.dart';
 import 'package:gsg_final_project_rgs/view_features/auth/model/user.dart';
 
@@ -11,13 +12,14 @@ class AuthRepository {
   Future<LoginModel> login(
     Map<String, String> body,
   ) async {
-    final response = await _helper.post(loginUrl, true, "", body);
+    final response = await _helper.post(loginUrl, body, {});
 
     return LoginModel.fromJson(response);
   }
 
-  Future<String> signup(Map<String, dynamic> body) async {
-    final response = await _helper.post(registerUrl, true, "", body);
-    return userToJson(LoginModel.fromJson(response));
+  Future<Map<String, dynamic>> signup(Map<String, dynamic> body) async {
+    final response = await _helper.post(registerUrl, body, {});
+    return response;
   }
 }
+//{'Authorization': 'Bearer ${getToken()}'}
