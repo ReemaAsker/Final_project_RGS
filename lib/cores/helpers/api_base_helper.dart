@@ -6,6 +6,8 @@ import 'package:http/http.dart' as http;
 
 import 'app_exception.dart';
 
+class tasty {}
+
 class ApiBaseHelper {
   Future<dynamic> get(String url, Map<String, String> header) async {
     var responseJson;
