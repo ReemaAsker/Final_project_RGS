@@ -30,7 +30,7 @@ class Status {
   String? createdAt;
   String? updatedAt;
   String? mailsCount;
-  List<Mail>? mails;
+  List<MailClass>? mails;
 
   Status(
       {this.id,
@@ -49,9 +49,9 @@ class Status {
     updatedAt = json['updated_at'];
     mailsCount = json['mails_count'];
     if (json['mails'] != null) {
-      mails = <Mail>[];
+      mails = <MailClass>[];
       json['mails'].forEach((v) {
-        mails!.add(new Mail.fromJson(v));
+        mails!.add(new MailClass.fromJson(v));
       });
     }
   }

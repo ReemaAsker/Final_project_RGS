@@ -14,9 +14,9 @@ class ApiBaseHelper {
     try {
       final response =
           await http.get(Uri.parse(baseUrl + url), headers: header);
-      // print(response.statusCode);
-      // print("///////////////////////////");
+
       responseJson = _returnResponse(response);
+      // print("Response Json///////////////");
       // print(responseJson);
     } on SocketException {
       throw FetchDataException('No Internet connection');

@@ -1,6 +1,7 @@
 import 'package:gsg_final_project_rgs/cores/helpers/token_helper.dart';
 import 'package:gsg_final_project_rgs/cores/utils/constants.dart';
 import 'package:gsg_final_project_rgs/models/mail.dart';
+
 import '../../../cores/helpers/api_base_helper.dart';
 
 class CreateMailRepository {
@@ -20,7 +21,7 @@ class CreateMailRepository {
     }
     // print("******************************");
     // print(response);
-    print(Mail.fromJson(response));
+    // print(Mail.fromJson(response));
 
     print("******************************");
 

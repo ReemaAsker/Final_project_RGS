@@ -75,6 +75,8 @@
 //     }
 //   }
 
+import 'dart:convert';
+
 //   Map<String, dynamic> toJson() {
 //     final Map<String, dynamic> data = new Map<String, dynamic>();
 //     data['id'] = this.id;
@@ -90,6 +92,8 @@
 // }
 
 import 'package:gsg_final_project_rgs/models/sender.dart';
+
+import '../../../../models/mail.dart';
 
 class CategoryModel {
   int? id;
@@ -133,4 +137,34 @@ class CategoryModel {
     }
     return data;
   }
+}
+
+// To parse this JSON data, do
+//
+//     final categoryMails = categoryMailsFromJson(jsonString);
+
+CategoryMails categoryMailsFromJson(String str) =>
+    CategoryMails.fromJson(json.decode(str));
+
+String categoryMailsToJson(CategoryMails data) => json.encode(data.toJson());
+
+class CategoryMails {
+  List<MailClass>? mails;
+
+  CategoryMails({
+    this.mails,
+  });
+
+  factory CategoryMails.fromJson(Map<String, dynamic> json) => CategoryMails(
+        mails: json["mails"] == null
+            ? []
+            : List<MailClass>.from(
+                json["mails"]!.map((x) => MailClass.fromJson(x))),
+      );
+
+  Map<String, dynamic> toJson() => {
+        "mails": mails == null
+            ? []
+            : List<dynamic>.from(mails!.map((x) => x.toJson())),
+      };
 }

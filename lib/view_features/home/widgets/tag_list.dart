@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
+
 import '../../../cores/utils/colors.dart';
 import 'custom_border.dart';
 import 'custom_text.dart';
 
 class TagGridList extends StatelessWidget {
-  List tags = ['All Tags', '#Urgent', '#Military', '#New'];
-  TagGridList( {super.key});
+  List tags;
+  TagGridList({required this.tags, super.key});
   @override
   Widget build(BuildContext context) {
     if (tags.isEmpty) {
-      return CustomText('notFoundData', 14, 'Poppins', kDarkGreyColor,
-          FontWeight.w400);
+      return CustomText(
+          'notFoundData', 14, 'Poppins', kDarkGreyColor, FontWeight.w400);
     }
     return BorderShape(
       widget: GridView.builder(
@@ -21,7 +22,7 @@ class TagGridList extends StatelessWidget {
             childAspectRatio: 5 / 1.8,
             crossAxisSpacing: 12,
             mainAxisSpacing: 12),
-        itemBuilder: (context, i) => _buildTagTile(tags[i], context),
+        itemBuilder: (context, i) => _buildTagTile("#${tags[i].name}", context),
         itemCount: tags.length,
       ),
       valColor: Colors.white,
@@ -36,8 +37,8 @@ class TagGridList extends StatelessWidget {
             color: kLightGreyColor,
             borderRadius: BorderRadius.all(Radius.circular(15))),
         child: Center(
-          child: CustomText('${tagList}', 12, 'Poppins', kDarkGreyColor,
-              FontWeight.w600),
+          child: CustomText(
+              '${tagList}', 12, 'Poppins', kDarkGreyColor, FontWeight.w600),
         ),
       ),
     );

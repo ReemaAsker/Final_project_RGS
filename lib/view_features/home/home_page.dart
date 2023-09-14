@@ -4,12 +4,14 @@ import 'package:gsg_final_project_rgs/cores/helpers/token_helper.dart';
 import 'package:gsg_final_project_rgs/custom_widgets/custom_snackbar.dart';
 import 'package:gsg_final_project_rgs/view_features/auth/widgets/auth_screen.dart';
 import 'package:gsg_final_project_rgs/view_features/create_mail/create_mail.dart';
+import 'package:gsg_final_project_rgs/view_features/home/providers/category_provider.dart';
+import 'package:gsg_final_project_rgs/view_features/home/providers/tags_provider.dart';
 import 'package:gsg_final_project_rgs/view_features/home/widgets/custom_text.dart';
-import 'package:gsg_final_project_rgs/view_features/home/widgets/mail_list_view.dart';
-import 'package:gsg_final_project_rgs/view_features/home/widgets/ngos_widget.dart';
 import 'package:gsg_final_project_rgs/view_features/home/widgets/others_list_view.dart';
-import 'package:gsg_final_project_rgs/view_features/home/widgets/status_tile.dart';
 import 'package:gsg_final_project_rgs/view_features/home/widgets/tag_list.dart';
+import 'package:provider/provider.dart';
+
+import '../../cores/helpers/api_response.dart';
 import '../../cores/utils/colors.dart';
 
 class HomePage extends StatefulWidget {
@@ -23,8 +25,14 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final _advancedDrawerController = AdvancedDrawerController();
+  // Map<int, Color> colors = {
+  //   1: Colors.red,
+  //   2: Colors.yellow,
+  //   3: Colors.blue,
+  //   4: Colors.green,
+  // };
 
-  List statusList = ['Organization Name', 'k'];
+  // List statusList = ['Organization Name', 'k'];
   void logout() {
     if (removeUser()) {
       Navigator.pushReplacement(
@@ -37,6 +45,15 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
+  @override
+  void initState() {
+    // CategoryProvider categoryProvider = CategoryProvider();
+    // categoryProvider.categoryMails.status = DataStatus.LOADING;
+
+    super.initState();
+  }
+
+  var myindex = 0;
   @override
   Widget build(BuildContext context) {
     return AdvancedDrawer(
@@ -114,32 +131,309 @@ class _HomePageState extends State<HomePage> {
                     const SizedBox(
                       height: 20,
                     ),
-                    Row(
-                      children: [
-                        StatusTile('Inbox', Colors.red),
-                        StatusTile('Pending', Colors.yellow),
-                      ],
+                    // Consumer<StatusProvider>(
+                    //   builder: (_, statusProvider, __) {
+                    //     if (statusProvider.statusListWithoutMails.status ==
+                    //         DataStatus.LOADING) {
+                    //       return const Center(
+                    //         child: CircularProgressIndicator(),
+                    //       );
+                    //     }
+                    //
+                    //     if (statusProvider.statusListWithoutMails.status ==
+                    //         DataStatus.ERROR) {
+                    //       return Center(
+                    //         child: Text(
+                    //             '${statusProvider.statusListWithoutMails.message}\n '),
+                    //       );
+                    //     }
+                    //     // Provider.of<CategoryProvider>(context, listen: false)
+                    //     //     .fetchCategoryMails(myindex + 1);
+                    //     return GridView.builder(
+                    //         // scrollDirection: Axis.vertical,
+                    //         shrinkWrap: true,
+                    //         itemCount: statusProvider
+                    //             .statusListWithoutMails.data?.length,
+                    //         gridDelegate:
+                    //             SliverGridDelegateWithFixedCrossAxisCount(
+                    //                 crossAxisCount: 2),
+                    //         itemBuilder: (context, index) {
+                    //           //colors[statusProvider
+                    //           //                                     .statusListWithoutMails.data![index].id]!
+                    //           return StatusTile(
+                    //               statusProvider
+                    //                   .statusListWithoutMails.data![index],
+                    //               statusProvider.statusListWithoutMails
+                    //                   .data![index].color!);
+                    //         });
+                    //   },
+                    // ),
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                     ListView.builder(
+//                         shrinkWrap: true,
+//                         itemCount: 4,
+//                         itemBuilder: (context, index) {
+//                           Provider.of<CategoryProvider>(context)
+//                               .fetchCategoryMails(index + 1);
+//                           return Consumer<CategoryProvider>(
+//                               builder: (_, categoryProvider, __) {
+//                             if (categoryProvider.categoryMails.status ==
+//                                 DataStatus.LOADING) {
+//                               return CircularProgressIndicator();
+//                             }
+//
+//                             if (categoryProvider.categoryMails.status ==
+//                                 DataStatus.ERROR) {
+//                               return Center(
+//                                 child: Text(
+//                                     '${categoryProvider.categoryMails.message} '),
+//                               );
+//                             }
+//                             return Text("sally");
+//                           });
+//                           Provider.of<CategoryProvider>(context)
+//                               .fetchCategoryMails(index + 1);
+//                         }),
+                    ///////////////////////////////////////////////////////////////////////////////////////4//
+                    //statusProvider.statusListWithMails.data[status.id!].mails![index].mail!.subject!
+                    // Consumer<StatusProvider>(builder: (_, statusProvider, __) {
+                    //   if (statusProvider.statusListWithoutMails.status ==
+                    //       DataStatus.LOADING) {
+                    //     return const Center(
+                    //       child: CircularProgressIndicator(),
+                    //     );
+                    //   }
+                    //   if (statusProvider.statusListWithoutMails.status ==
+                    //       DataStatus.ERROR) {
+                    //     return Center(
+                    //       child: Text(
+                    //           '${statusProvider.statusListWithoutMails.message}'),
+                    //     );
+                    //   }
+                    //   // print(statusProvider.statusListWithoutMails.data?.length);
+                    //   return GridView.builder(
+                    //       shrinkWrap: true,
+                    //       itemCount: statusProvider
+                    //           .statusListWithoutMails.data?.length,
+                    //       gridDelegate:
+                    //           SliverGridDelegateWithFixedCrossAxisCount(
+                    //               crossAxisCount: 2),
+                    //       itemBuilder: (context, index) {
+                    //         //colors[statusProvider
+                    //         //                                     .statusListWithoutMails.data![index].id]!
+                    //         return StatusTile(
+                    //             statusProvider
+                    //                 .statusListWithoutMails.data![index],
+                    //             statusProvider.statusListWithoutMails
+                    //                 .data![index].color!);
+                    //       });
+                    // }),
+
+                    //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                    // Consumer<CategoryProvider>(
+                    //     builder: (_, categoryProvider, __) {
+                    //   if (categoryProvider.categoryList.status ==
+                    //       DataStatus.LOADING) {
+                    //     return const Center(
+                    //       child: CircularProgressIndicator(),
+                    //     );
+                    //   }
+                    //   if (categoryProvider.categoryList.status ==
+                    //       DataStatus.ERROR) {
+                    //     return Center(
+                    //       child: Text(
+                    //           '${categoryProvider.categoriesWithMails.message}'),
+                    //     );
+                    //   }
+                    //   print(categoryProvider.categoryList.data!.length);
+                    //
+                    //   return ListView.builder(
+                    //       shrinkWrap: true,
+                    //       itemCount: categoryProvider.categoryList.data!.length,
+                    //       itemBuilder: (context, index) {
+                    //         Provider.of<CategoryProvider>(context)
+                    //             .fetchCategoryMails(index + 1);
+                    //
+                    //         if (categoryProvider.categoryMails.status ==
+                    //             DataStatus.LOADING) {
+                    //           return const Center(
+                    //             child: CircularProgressIndicator(),
+                    //           );
+                    //         }
+                    //         if (categoryProvider.categoryMails.status ==
+                    //             DataStatus.ERROR) {
+                    //           return Center(
+                    //             child: Text(
+                    //                 '${categoryProvider.categoryMails.message}'),
+                    //           );
+                    //         }
+                    //         return CategoryListView(
+                    //           categoryModel:
+                    //               categoryProvider.categoryList.data![index],
+                    //           mails: categoryProvider.categoryMails.data!,
+                    //         );
+                    //       });
+                    // }),
+                    /////////////////////////////////////////////////////////////////////////////////////////////////
+                    // Consumer<CategoryProvider>(
+                    //     builder: (_, categoryProvider, __) {
+                    //   // Provider.of<CategoryProvider>(context)
+                    //   //     .fetchAllCategoriewWithMails;
+                    //   //     Provider.of<CategoryProvider>(context).fetchCategoryMails(1);
+                    //   //     Provider.of<PROVIDER_NAME>(context).METHOD_NAME
+                    //   /// todo: ممكن تعملي كونسيوم ل ماب من نوع categore , list<MailClass> وبعدها تصلي الها
+                    //   /// todo: ما تنسي تهندلي صفحة ايميلات ال حالة
+                    //
+                    //   if (categoryProvider.categoriesWithMails.status ==
+                    //       DataStatus.LOADING) {
+                    //     return const Center(
+                    //       child: CircularProgressIndicator(),
+                    //     );
+                    //   }
+                    //   if (categoryProvider.categoriesWithMails.status ==
+                    //       DataStatus.ERROR) {
+                    //     // print("t9999999999999999999999999999999999999");
+                    //     // print(categoryProvider.categoriesWithMails.data);
+                    //     // print(
+                    //     //     "${categoryProvider.categoriesWithMails.message}");
+                    //     return Center(
+                    //       child: Text(
+                    //           '${categoryProvider.categoriesWithMails.message}'),
+                    //     );
+                    //   }
+                    //
+                    //   print("t9999999999999999999999999999999999999");
+                    //   print(categoryProvider.categoriesWithMails.data);
+                    //
+                    //   return ListView.builder(
+                    //       shrinkWrap: true,
+                    //       itemCount: categoryProvider
+                    //               .categoriesWithMails.data?.length ??
+                    //           2,
+                    //       itemBuilder: (context, index) {
+                    //         Provider.of<CategoryProvider>(context)
+                    //             .fetchCategoryMails(categoryProvider
+                    //                 .categoryList.data![index].id!);
+                    //         return CategoryListView(
+                    //           categoryModel:
+                    //               categoryProvider.categoryList.data![index],
+                    //           mails: categoryProvider.categoryMails.data!,
+                    //         );
+                    //         //  MailListView(
+                    //         //                                 categoryProvider
+                    //         //                                     .categoryMails.data![index].subject!,
+                    //         //                                 categoryProvider.categoryMails.data!)
+                    //       });
+                    // }),
+
+                    // NGOsWidget(),
+                    // OthersListView([
+                    //   {'oo': 10},
+                    //   {'oo': 10}
+                    // ], c),
+
+                    // Consumer<TagsProvider>(
+                    //   builder: (_, statusProvider, __) {
+                    //     if (statusProvider.allTagsList.status ==
+                    //         DataStatus.LOADING) {
+                    //       return const Center(
+                    //         child: CircularProgressIndicator(),
+                    //       );
+                    //     }
+                    //
+                    //     if (statusProvider.allTagsList.status ==
+                    //         DataStatus.ERROR) {
+                    //       return Center(
+                    //         child: Text(
+                    //             '${statusProvider.allTagsList.message}\n '),
+                    //       );
+                    //     }
+                    //     // Provider.of<CategoryProvider>(context, listen: false)
+                    //     //     .fetchCategoryMails(myindex + 1);
+                    //     return GridView.builder(
+                    //         // scrollDirection: Axis.vertical,
+                    //         shrinkWrap: true,
+                    //         itemCount: statusProvider.allTagsList.data?.length,
+                    //         gridDelegate:
+                    //             SliverGridDelegateWithFixedCrossAxisCount(
+                    //                 crossAxisCount: 2),
+                    //         itemBuilder: (context, index) {
+                    //           //colors[statusProvider
+                    //           //                                     .statusListWithoutMails.data![index].id]!
+                    //           return Chip(
+                    //               label: Text(statusProvider
+                    //                   .allTagsList.data![index]!.name!));
+                    //         });
+                    //   },
+                    // ),
+                    ///////////////////////////////////////////////////////////////////////////////////////////////////////
+                    /// todo: Last try inshaallah
+                    Consumer<CategoryProvider>(
+                        builder: (_, categoryProvider, __) {
+                      return ListView.builder(
+                          shrinkWrap: true,
+                          //categoryProvider.categoryList.data!.length
+                          itemCount: 4,
+                          itemBuilder: (context, index) {
+                            categoryProvider.fetchCategoryMails(index + 1);
+                            Provider.of<CategoryProvider>(context,
+                                    listen: false)
+                                .fetchCategoryMails(index + 1);
+
+                            if (categoryProvider.categoryMails.status ==
+                                DataStatus.LOADING) {
+                              return const Center(
+                                child: CircularProgressIndicator(),
+                              );
+                            }
+                            if (categoryProvider.categoryMails.status ==
+                                DataStatus.ERROR) {
+                              return Center(
+                                child: Text(
+                                    '${categoryProvider.categoryMails.message}'),
+                              );
+                            }
+
+                            return CategoryListView(
+                                categoryModel:
+                                    categoryProvider.categoryList.data![index],
+                                mails:
+                                    categoryProvider.categoryMails.data ?? []);
+                          });
+                    }),
+                    Consumer<TagsProvider>(
+                      builder: (_, tagProvider, __) {
+                        if (tagProvider.allTagsList.status ==
+                            DataStatus.LOADING) {
+                          return const Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        }
+                        if (tagProvider.allTagsList.status ==
+                            DataStatus.ERROR) {
+                          return Center(
+                            child: Text('${tagProvider.allTagsList..message}'),
+                          );
+                        }
+
+                        return Visibility(
+                            visible: tagProvider.allTagsList.data!.isNotEmpty
+                                ? true
+                                : false,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.all(16),
+                                  child: CustomText('Tags', 20, 'Poppins',
+                                      kBlackColor, FontWeight.w600),
+                                ),
+                                TagGridList(
+                                    tags: tagProvider.allTagsList.data!),
+                              ],
+                            ));
+                      },
                     ),
-                    Row(
-                      children: [
-                        StatusTile('In progress', Colors.blue),
-                        StatusTile('Completed', Colors.green),
-                      ],
-                    ),
-                    MailListView('Official Organization', [
-                      {'oo': 10}
-                    ]),
-                    NGOsWidget(),
-                    OthersListView([
-                      {'oo': 10},
-                      {'oo': 10}
-                    ], Colors.green),
-                    Padding(
-                      padding: const EdgeInsets.all(16),
-                      child: CustomText(
-                          'Tags', 20, 'Poppins', kBlackColor, FontWeight.w600),
-                    ),
-                    TagGridList(),
                   ],
                 ),
               ),
@@ -164,12 +458,8 @@ class _HomePageState extends State<HomePage> {
                 child: Container(
                   key: ValueKey<bool>(value.visible),
                   child: value.visible
-                      ? Image.asset(
-                          'images/clear.png',
-                          width: 20,
-                          height: 20,
-                        )
-                      : Image.asset('images/menu.png'),
+                      ? IconButton(onPressed: () {}, icon: Icon(Icons.add))
+                      : IconButton(onPressed: () {}, icon: Icon(Icons.add)),
                 ),
               );
             },
@@ -283,13 +573,14 @@ class _HomePageState extends State<HomePage> {
           padding: const EdgeInsets.only(left: 20),
           child: Row(
             children: [
-              const CircleAvatar(
-                backgroundColor: kLightPrimaryColor,
-                radius: 13,
-                child: Image(
-                  image: AssetImage('images/add.png'),
-                ),
-              ),
+              CircleAvatar(
+                  backgroundColor: kLightPrimaryColor,
+                  radius: 13,
+                  child: IconButton(onPressed: () {}, icon: Icon(Icons.add))
+                  //   Image(
+                  //     image: AssetImage('assets/add.png'),
+                  //   ),
+                  ),
               const SizedBox(
                 width: 5,
               ),
@@ -372,7 +663,7 @@ class _HomePageState extends State<HomePage> {
         shape: BoxShape.circle,
       ),
       child: Image.asset(
-        'images/logo.png',
+        'assets/logoone.png',
       ),
     );
   }

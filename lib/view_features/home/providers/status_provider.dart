@@ -13,12 +13,13 @@ class StatusProvider extends ChangeNotifier {
   ApiResponse<List<Status>> get statusListWithMails => _statusListWithMails;
   ApiResponse<List<Status>> get statusListWithoutMails =>
       _statusListWithoutMails;
-  ApiResponse<Status> get status => _status;
+  ApiResponse<Status>? get status => _status;
 
   StatusProvider() {
     _statusRepo = StatusRepo();
     fetchStatusList(true);
     fetchStatusList(false);
+    fetchStatusWithMails(statusId: 0);
   }
 
   fetchStatusList(bool withMail) async {
@@ -35,7 +36,7 @@ class StatusProvider extends ChangeNotifier {
         notifyListeners();
       }
     } else {
-      _statusListWithoutMails = ApiResponse.loading('Fetching Categories');
+      _statusListWithoutMails = ApiResponse.loading('Fetching Statuses');
       notifyListeners();
       try {
         List<Status>? statuses =
