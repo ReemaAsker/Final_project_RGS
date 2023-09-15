@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../cores/utils/colors.dart';
-import '../create_mail/widgets/custom_app_bar.dart';
+import '../new_inbox/widgets/custom_app_bar.dart';
 import '../home/widgets/custom_border.dart';
 import '../home/widgets/custom_text.dart';
 

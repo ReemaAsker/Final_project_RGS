@@ -99,38 +99,35 @@ class CategoryModel {
   String? sendersCount;
   List<Sender>? senders;
 
-  CategoryModel(
-      {this.id,
-      this.name,
-      this.createdAt,
-      this.updatedAt,
-      this.sendersCount,
-      this.senders});
+  CategoryModel({
+    this.id,
+    this.name,
+    this.createdAt,
+    this.updatedAt,
+    this.sendersCount,
+    this.senders,
+  });
 
-  CategoryModel.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    name = json['name'];
-    createdAt = json['created_at'];
-    updatedAt = json['updated_at'];
-    sendersCount = json['senders_count'];
-    if (json['senders'] != null) {
-      senders = <Sender>[];
-      json['senders'].forEach((v) {
-        senders!.add(new Sender.fromJson(v));
-      });
-    }
-  }
+  factory CategoryModel.fromJson(Map<String, dynamic> json) => CategoryModel(
+        id: json["id"],
+        name: json["name"],
+        createdAt: json["created_at"],
+        updatedAt: json["updated_at"],
+        sendersCount: json["senders_count"],
+        senders: json["senders"] == null
+            ? []
+            : List<Sender>.from(
+                json["senders"]!.map((x) => Sender.fromJson(x))),
+      );
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['name'] = this.name;
-    data['created_at'] = this.createdAt;
-    data['updated_at'] = this.updatedAt;
-    data['senders_count'] = this.sendersCount;
-    if (this.senders != null) {
-      data['senders'] = this.senders!.map((v) => v.toJson()).toList();
-    }
-    return data;
-  }
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "name": name,
+        "created_at": createdAt,
+        "updated_at": updatedAt,
+        "senders_count": sendersCount,
+        "senders": senders == null
+            ? []
+            : List<dynamic>.from(senders!.map((x) => x.toJson())),
+      };
 }

@@ -3,7 +3,7 @@ import 'package:flutter_advanced_drawer/flutter_advanced_drawer.dart';
 import 'package:gsg_final_project_rgs/cores/helpers/token_helper.dart';
 import 'package:gsg_final_project_rgs/custom_widgets/custom_snackbar.dart';
 import 'package:gsg_final_project_rgs/view_features/auth/widgets/auth_screen.dart';
-import 'package:gsg_final_project_rgs/view_features/create_mail/create_mail.dart';
+import 'package:gsg_final_project_rgs/view_features/new_inbox/create_mail.dart';
 import 'package:gsg_final_project_rgs/view_features/home/widgets/custom_text.dart';
 import 'package:gsg_final_project_rgs/view_features/home/widgets/mail_list_view.dart';
 import 'package:gsg_final_project_rgs/view_features/home/widgets/ngos_widget.dart';
