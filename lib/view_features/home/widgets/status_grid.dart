@@ -22,11 +22,11 @@ class StatusTile extends StatelessWidget {
         color: Colors.white,
         elevation: 1,
         child: Container(
-          width: 170,
-          height: 110,
+          width: 160,
+          // height: 110,
           child: Padding(
             padding:
-            const EdgeInsets.only(bottom: 9, left: 16, right: 14, top: 10),
+            const EdgeInsets.all(16),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [

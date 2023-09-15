@@ -18,18 +18,42 @@ class NGOsWidget extends StatelessWidget {
             data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
             child: ExpansionTile(
               title: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   CustomText('NGOs', 20, 'Poppins', kBlackColor,
                       FontWeight.w600),
-                  const SizedBox(width: 210,),
-                  CustomText(
-                      '${ngosList.length}',
-                      12.0,
-                      'Poppins',
-                      kHintGreyColor,
-                      FontWeight.w400),
+                  // const SizedBox(width: 210,),
+                  // CustomText(
+                  //     '${ngosList.length}',
+                  //     12.0,
+                  //     'Poppins',
+                  //     kHintGreyColor,
+                  //     FontWeight.w400),
                 ],
               ),
+              trailing: Wrap(
+                children: <Widget>[
+                      CustomText(
+                          '${ngosList.length}',
+                          12.0,
+                          'Poppins',
+                          kHintGreyColor,
+                          FontWeight.w400),
+                      Icon(Icons.arrow_drop_down)
+                ],
+              ),
+
+              // trailing: Stack(
+              //   children: [
+              //     CustomText(
+              //         '${ngosList.length}',
+              //         12.0,
+              //         'Poppins',
+              //         kHintGreyColor,
+              //         FontWeight.w400),
+              //     Icon(Icons.arrow_drop_down_outlined)
+              //   ],
+              // ),
               backgroundColor: Colors.transparent,
               children: [
                 ListView.separated(
