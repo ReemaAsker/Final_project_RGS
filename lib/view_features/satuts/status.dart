@@ -6,18 +6,15 @@ import '../home/widgets/custom_text.dart';
 
 class StatusPage extends StatelessWidget {
   StatusPage({Key? key}) : super(key: key);
+  List statusList = ['Inbox', 'Pending', 'In Progress', 'Completed'];
 
   @override
   Widget build(BuildContext context) {
-    List statusList = ['a','b'];
-
     return Container(
       padding: const EdgeInsets.only(right: 16, left: 16),
       child: Column(
         children: [
-          CustomAppBar(
-              title: 'status',
-              onTap: () {}),
+          CustomAppBar(title: 'Status', onTap: () {}),
           const SizedBox(
             height: 20,
           ),
@@ -29,9 +26,9 @@ class StatusPage extends StatelessWidget {
                   child: ListView.separated(
                     physics: const NeverScrollableScrollPhysics(),
                     itemBuilder: (context, index) =>
-                        _buildStatusListTile(index, statusList),
+                        buildStatusListTile(index, statusList),
                     separatorBuilder: (context, index) => const SizedBox(
-                      height: 15,
+                      height: 12,
                       child: Divider(
                         height: 1,
                         color: kDividerColor,
@@ -53,48 +50,48 @@ class StatusPage extends StatelessWidget {
   Visibility _buildAddStatus() {
     return Visibility(
       visible: true,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          TextButton(
-            child: const Text(
-              'Add Status',
-              style: TextStyle(
-                fontSize: 16,
-                fontFamily: 'Poppins',
-                color: kLightPrimaryColor,
-                fontWeight: FontWeight.w400,
+      child: Padding(
+        padding: const EdgeInsets.only(right: 8, left: 8),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            TextButton(
+              child: const Text(
+                'Add Status',
+                style: TextStyle(
+                  fontSize: 16,
+                  fontFamily: 'Poppins',
+                  color: kLightPrimaryColor,
+                  fontWeight: FontWeight.w400,
+                ),
               ),
+              onPressed: () {},
             ),
-            onPressed: () {},
-          ),
-          IconButton(
-            icon: const Image(
-              image: AssetImage('images/edit.png'),
+            IconButton(
+              icon: const Image(
+                image: AssetImage('images/edit.png'),
+              ),
+              color: Colors.grey,
+              onPressed: () {},
             ),
-            color: Colors.grey,
-            onPressed: () {},
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
 }
 
-ListTile _buildStatusListTile(
-    int index, List statusList) {
+ListTile buildStatusListTile(int index, List statusList) {
   return ListTile(
-    onTap: () {
-    },
+    onTap: () {},
     leading: Container(
       width: 38,
       height: 38,
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
-          color: Colors.red),
+          borderRadius: BorderRadius.circular(10), color: Colors.red),
     ),
     title: CustomText(
-        'Hello', 16, 'Poppins', kBlackColor, FontWeight.w400),
+        statusList[index], 16, 'Poppins', kBlackColor, FontWeight.w400),
     trailing: IconButton(
       onPressed: () {},
       icon: Image.asset('images/check.png'),
