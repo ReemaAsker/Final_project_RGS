@@ -8,7 +8,7 @@ import 'package:gsg_final_project_rgs/view_features/home/widgets/custom_text.dar
 import 'package:gsg_final_project_rgs/view_features/home/widgets/mail_list_view.dart';
 import 'package:gsg_final_project_rgs/view_features/home/widgets/ngos_widget.dart';
 import 'package:gsg_final_project_rgs/view_features/home/widgets/others_list_view.dart';
-import 'package:gsg_final_project_rgs/view_features/home/widgets/status_tile.dart';
+import 'package:gsg_final_project_rgs/view_features/home/widgets/status_grid.dart';
 import 'package:gsg_final_project_rgs/view_features/home/widgets/tag_list.dart';
 import '../../cores/utils/colors.dart';
 
@@ -58,10 +58,7 @@ class _HomePageState extends State<HomePage> {
       child: Scaffold(
         backgroundColor: kLightWhiteColor,
         body: Container(
-          margin: const EdgeInsets.only(
-            left: 20,
-            right: 20,
-          ),
+          margin: const EdgeInsets.all(16),
           child: CustomScrollView(
             slivers: [
               SliverAppBar(
@@ -84,30 +81,27 @@ class _HomePageState extends State<HomePage> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.only(left: 10),
-                      child: Card(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(22.0),
-                        ),
-                        elevation: 1,
-                        color: Colors.white,
-                        child: Padding(
-                          padding: const EdgeInsets.only(
-                              bottom: 4, left: 16, right: 14, top: 4),
-                          child: Row(
-                            children: [
-                              const Icon(
-                                Icons.search,
-                                color: kHintGreyColor,
-                              ),
-                              const SizedBox(
-                                width: 8,
-                              ),
-                              CustomText('Search', 18, 'Poppins',
-                                  kHintGreyColor, FontWeight.w400),
-                            ],
-                          ),
+                    Card(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(22.0),
+                      ),
+                      elevation: 1,
+                      color: Colors.white,
+                      child: Padding(
+                        padding: const EdgeInsets.only(
+                            bottom: 8, left: 16, right: 16, top: 8),
+                        child: Row(
+                          children: [
+                            const Icon(
+                              Icons.search,
+                              color: kHintGreyColor,
+                            ),
+                            const SizedBox(
+                              width: 8,
+                            ),
+                            CustomText('Search', 18, 'Poppins',
+                                kHintGreyColor, FontWeight.w400),
+                          ],
                         ),
                       ),
                     ),
@@ -115,12 +109,15 @@ class _HomePageState extends State<HomePage> {
                       height: 20,
                     ),
                     Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         StatusTile('Inbox', Colors.red),
                         StatusTile('Pending', Colors.yellow),
                       ],
                     ),
+                    SizedBox(height: 16,),
                     Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         StatusTile('In progress', Colors.blue),
                         StatusTile('Completed', Colors.green),
@@ -280,7 +277,7 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
         child: Padding(
-          padding: const EdgeInsets.only(left: 20),
+          padding: const EdgeInsets.only(left: 16),
           child: Row(
             children: [
               const CircleAvatar(
