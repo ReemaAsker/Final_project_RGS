@@ -11,6 +11,7 @@ import 'package:gsg_final_project_rgs/view_features/home/widgets/others_list_vie
 import 'package:gsg_final_project_rgs/view_features/home/widgets/status_grid.dart';
 import 'package:gsg_final_project_rgs/view_features/home/widgets/tag_list.dart';
 import '../../cores/utils/colors.dart';
+import '../search/search.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({
@@ -92,9 +93,19 @@ class _HomePageState extends State<HomePage> {
                             bottom: 8, left: 16, right: 16, top: 8),
                         child: Row(
                           children: [
-                            const Icon(
-                              Icons.search,
-                              color: kHintGreyColor,
+                            IconButton(
+                              onPressed: () => {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => SearchPage(),
+                                  ),
+                                )
+                              },
+                              icon: const Icon(
+                                Icons.search,
+                                color: kHintGreyColor,
+                              ),
                             ),
                             const SizedBox(
                               width: 8,
