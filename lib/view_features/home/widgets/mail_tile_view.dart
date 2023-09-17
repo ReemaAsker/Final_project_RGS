@@ -8,17 +8,22 @@ class MailTile extends StatelessWidget {
   String orgName = 'Organization Name';
   String createdAt = '12/3/6';
   String subject = 'Here we add the subject';
-  String desc = 'And here excerpt of the mail, can added to this location. And we can do more to this like ...';
+  String desc =
+      'And here excerpt of the mail, can added to this location. And we can do more to this like ...';
   List tags = ['#Urgent', '#Egyptian Military'];
-  List attachments = ['img','file'];
-
+  List attachments = ['img', 'file'];
 
   MailTile(this.mailName, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => {},
+      onTap: () => {
+        // Navigator.push(
+          // context,
+          // MaterialPageRoute(builder: (context) => DetailsPage()),
+        // )
+      },
       child: Container(
         width: MediaQuery.of(context).size.width,
         decoration: const BoxDecoration(
@@ -26,27 +31,23 @@ class MailTile extends StatelessWidget {
             borderRadius: BorderRadius.all(Radius.circular(22))),
         child: Padding(
           padding:
-          const EdgeInsets.only(bottom: 9, left: 16, right: 14, top: 10),
+          const EdgeInsets.only(bottom: 16, left: 16, right: 16, top: 16),
           child:
           Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
             Row(
               children: [
-                const CircleAvatar(
+                CircleAvatar(
                   backgroundColor: Colors.blue,
-                  radius: 10,
+                  radius: 7,
                 ),
                 // const Spacer(),
                 const SizedBox(
                   width: 9,
                 ),
-                CustomText(orgName, 18.0, 'Poppins', kBlackColor,
-                    FontWeight.w600),
-                const Spacer(),
                 CustomText(
-                    'Today at ..',
-                    12.0,
-                    'Poppins',
-                    kHintGreyColor,
+                    orgName, 18.0, 'Poppins', kBlackColor, FontWeight.w600),
+                const Spacer(),
+                CustomText('Today at ..', 12.0, 'Poppins', kHintGreyColor,
                     FontWeight.w400),
                 const SizedBox(
                   width: 8,
@@ -57,14 +58,14 @@ class MailTile extends StatelessWidget {
               ],
             ),
             Container(
-              margin: const EdgeInsets.only(left: 37),
+              margin: EdgeInsets.only(left: 37),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   CustomText(subject, 14.0, 'Poppins', kLightBlackColor,
                       FontWeight.w400),
-                  CustomText(desc , 14.0, 'Poppins',
-                      kHintGreyColor, FontWeight.w400),
+                  CustomText(
+                      desc, 14.0, 'Poppins', kHintGreyColor, FontWeight.w400),
                   const SizedBox(
                     height: 8,
                   ),
@@ -80,7 +81,13 @@ class MailTile extends StatelessWidget {
                         scrollDirection: Axis.horizontal,
                         itemCount: attachments.length,
                         itemBuilder: (ctx, index) {
-                          return const Image(image: NetworkImage('https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg'));
+                          return Container(
+                            margin: EdgeInsets.only(right: 8),
+                            child: Image(
+                              image: NetworkImage(
+                                  'https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg'),
+                            ),
+                          );
                           // return ImageCard(
                           //     attachments[0], 36, 36);
                         },
@@ -107,8 +114,8 @@ class MailTile extends StatelessWidget {
           return Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              CustomText('${tags[index]}', 14, 'Poppins',
-                  kLightPrimaryColor, FontWeight.w600),
+              CustomText('${tags[index]}', 14, 'Poppins', kLightPrimaryColor,
+                  FontWeight.w600),
               // const SizedBox(
               //   height: 6,
               // )
