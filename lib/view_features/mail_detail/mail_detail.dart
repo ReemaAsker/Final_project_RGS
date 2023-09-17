@@ -5,6 +5,7 @@ import 'package:gsg_final_project_rgs/view_features/mail_detail/widgets/image_ti
 import '../../cores/utils/colors.dart';
 import '../home/widgets/custom_border.dart';
 import '../home/widgets/custom_text.dart';
+import '../satuts/status.dart';
 import 'more_page.dart';
 
 class DetailsPage extends StatefulWidget {
@@ -215,7 +216,9 @@ class DetailsWidgetState extends State<DetailsWidget> {
                 height: 12,
               ),
               GestureDetector(
-                onTap: () => {},
+                onTap: () => {
+                  _theReturnValue(context),
+                },
                 child: BorderShape(
                   widget: Row(
                     children: [
@@ -370,5 +373,15 @@ class DetailsWidgetState extends State<DetailsWidget> {
         //  ),
       ),
     );
+  }
+  _theReturnValue(BuildContext context) async {
+    await Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => StatusPage(),
+        ));
+    // after the SecondScreen result comes back update the Text widget with it
+    setState(() {
+    });
   }
 }

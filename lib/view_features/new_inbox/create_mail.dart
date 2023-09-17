@@ -318,12 +318,7 @@ class _NewInboxPageState extends State<NewInboxPage> {
         ),
         valColor: Colors.white,
         onTap: () {
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => StatusPage(),
-              ));
-          // _navigateToStatusPage(context);
+          _navigateToStatusPage(context);
         });
   }
 
@@ -641,6 +636,18 @@ class _NewInboxPageState extends State<NewInboxPage> {
       ),
       valColor: Colors.white,
       onTap: () {},
+    );
+  }
+  Future<void> _navigateToStatusPage(BuildContext context) async {
+    await showModalBottomSheet<dynamic>(
+      isScrollControlled: true,
+      useRootNavigator: true,
+      backgroundColor: kLightWhiteColor,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+      context: context,
+      builder: (BuildContext context) {
+        return FractionallySizedBox(heightFactor: 0.9, child: StatusPage());
+      },
     );
   }
 }
