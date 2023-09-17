@@ -16,6 +16,7 @@ import 'package:gsg_final_project_rgs/view_features/new_inbox/widgets/custom_app
 import 'package:gsg_final_project_rgs/view_features/home/categories/models/Category.dart';
 import 'package:gsg_final_project_rgs/view_features/satuts/status.dart';
 import '../../cores/utils/colors.dart';
+import '../category/category.dart';
 import '../home/widgets/custom_border.dart';
 import '../home/widgets/custom_text.dart';
 import 'package:intl/intl.dart';
@@ -351,7 +352,9 @@ class _NewInboxPageState extends State<NewInboxPage> {
                 AutofillHints.telephoneNumber),
             const Divider(),
             GestureDetector(
-              onTap: () {},
+              onTap: () {
+                onTap: () => _navigateToCategoryPage(context);
+              },
               child: Row(
                 children: [
                   CustomText(
@@ -647,6 +650,18 @@ class _NewInboxPageState extends State<NewInboxPage> {
       context: context,
       builder: (BuildContext context) {
         return FractionallySizedBox(heightFactor: 0.9, child: StatusPage());
+      },
+    );
+  }
+  Future<void> _navigateToCategoryPage(BuildContext context) async {
+    await showModalBottomSheet<dynamic>(
+      isScrollControlled: true,
+      useRootNavigator: true,
+      backgroundColor: kLightWhiteColor,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+      context: context,
+      builder: (BuildContext context) {
+        return FractionallySizedBox(heightFactor: 0.9, child: CategoryPage());
       },
     );
   }
