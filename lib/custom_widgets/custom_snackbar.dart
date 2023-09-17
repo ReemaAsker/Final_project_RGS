@@ -15,29 +15,8 @@ class My_snackBar extends StatelessWidget {
       type: color == Colors.green
           ? AnimatedSnackBarType.success
           : AnimatedSnackBarType.error,
-      mobileSnackBarPosition: MobileSnackBarPosition.bottom,
+      mobileSnackBarPosition: MobileSnackBarPosition.top,
       desktopSnackBarPosition: DesktopSnackBarPosition.topRight,
     ).show(context);
-    // ScaffoldMessenger.of(context).showSnackBar(
-    //   SnackBar(
-    //     behavior: SnackBarBehavior.floating,
-    //     content: Row(
-    //       children: [
-    //         Icon(
-    //           color == Colors.green ? Icons.check_circle : Icons.close,
-    //           color: Colors.white,
-    //         ),
-    //         SizedBox(
-    //           width: 20,
-    //         ),
-    //         Text(
-    //           message,
-    //           style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
-    //         ),
-    //       ],
-    //     ),
-    //     backgroundColor: color,
-    //   ),
-    // );
   }
 }

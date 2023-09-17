@@ -95,9 +95,9 @@ class _NewInboxPageState extends State<NewInboxPage> {
           if (senderhelper.data == null)
             {
               My_snackBar.showSnackBar(
-                  context, "Can't created sender", Colors.red),
+                  context, "Wrong in created sender process", Colors.red),
               My_snackBar.showSnackBar(
-                  context, "Can't created mail", Colors.red),
+                  context, "Wrong in created mail process", Colors.red),
             }
           else
             {
@@ -106,7 +106,6 @@ class _NewInboxPageState extends State<NewInboxPage> {
                     getBody(senderhelper.data!["sender"][0]["id"].toString()),
                   )
                   .then((value) => {
-                        print(value),
                         Navigator.pop(context),
                         My_snackBar.showSnackBar(
                             context, "sender created", Colors.green),
@@ -118,15 +117,7 @@ class _NewInboxPageState extends State<NewInboxPage> {
                             value.data == null ? Colors.red : Colors.green)
                       })
             }
-        }); //}
-
-    // print("---------------------");
-    // // if (_formKey.currentState!.validate())
-    //
-
-    // else {
-    // My_snackBar.showSnackBar(
-    // context, "password not equal confirmpassword", Colors.red);
+        });
   }
 
   @override
