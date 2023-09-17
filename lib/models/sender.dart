@@ -25,10 +25,7 @@ class Sender {
     // this.category,
   });
 
-  factory Sender.fromJson(Map<String, dynamic> json) {
-    Sender x = Sender();
-    try {
-      x = Sender(
+  factory Sender.fromJson(Map<String, dynamic> json) => Sender(
         id: json["id"],
         name: json["name"],
         mobile: json["mobile"],
@@ -40,21 +37,15 @@ class Sender {
         // ? null
         // : CategoryModel.fromJson(json["category"]),
       );
-    } catch (e) {
-      print("from json sender ................");
-      print(e);
-    }
-    print(x.toString());
-    return x;
-  }
+
   Map<String, dynamic> toJson() => {
-        "id": id,
-        "name": name,
-        "mobile": mobile,
+        "id": id ?? "",
+        "name": name ?? "",
+        "mobile": mobile ?? "",
         "address": address,
-        "category_id": categoryId,
-        "created_at": createdAt,
-        "updated_at": updatedAt,
+        "category_id": categoryId ?? "",
+        "created_at": createdAt ?? "",
+        "updated_at": updatedAt ?? "",
         // "category": category?.toJson(),
       };
 }

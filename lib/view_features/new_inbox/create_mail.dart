@@ -14,9 +14,11 @@ import 'package:gsg_final_project_rgs/view_features/auth/model/user.dart';
 import 'package:gsg_final_project_rgs/view_features/new_inbox/repo/create_mail_repo.dart';
 import 'package:gsg_final_project_rgs/view_features/new_inbox/widgets/custom_app_bar.dart';
 import 'package:gsg_final_project_rgs/view_features/home/categories/models/Category.dart';
+import 'package:gsg_final_project_rgs/view_features/satuts/status.dart';
 import '../../cores/utils/colors.dart';
 import '../home/widgets/custom_border.dart';
 import '../home/widgets/custom_text.dart';
+import 'package:intl/intl.dart';
 
 class NewInboxPage extends StatefulWidget {
   NewInboxPage({Key? key}) : super(key: key);
@@ -44,35 +46,36 @@ class _NewInboxPageState extends State<NewInboxPage> {
 
   final mailActivitiesController = TextEditingController();
 
-  void submit(ApiResponse value, BuildContext cont) {
+  void submit(ApiResponse value) {
     print(value.status);
     if (value.status == DataStatus.COMPLETED) {
-      My_snackBar.showSnackBar(cont, "mail created", Colors.green);
+      My_snackBar.showSnackBar(context, value.data, Colors.green);
       // Navigator.pushNamed(context, Hello.id),
       Navigator.pop(
         context,
       );
     } else {
-      My_snackBar.showSnackBar(cont, "error", Colors.red);
-      // Navigator.pop(
-      //   context,
-      // );
+      Navigator.pop(
+        context,
+      );
+      My_snackBar.showSnackBar(context, value.message!, Colors.red);
     }
   }
 
-  MailClass getBody() {
+  MailClass getBody(String sender_id) {
     MailClass mailBody = MailClass(
         subject: mailTitleController.text,
         archiveNumber: mailArchiveNoController.text,
-        archiveDate: mailDateController.text,
+        archiveDate: "2023-5-5",
+        // mailDateController.text,
         createdAt: DateTime.now().toString(),
         activities: [],
         tags: [2, 4],
-        // attachments: [],
+        attachments: [],
         decision: mailDecisionController.text,
         description: mailDescriptionController.text,
         // finalDecision: "",
-        senderId: "1",
+        senderId: sender_id,
         statusId: 1,
         updatedAt: DateTime.now().toString());
 
@@ -80,10 +83,47 @@ class _NewInboxPageState extends State<NewInboxPage> {
   }
 
   void create_mail_UI() {
-    // if (_formKey.currentState!.validate())
-    CreateMailRepository()
-        .create_mail(getBody())
-        .then((value) => {submit(value, context)}); //
+    Sender sender = Sender(
+        mobile: senderPhoneController.text,
+        name: senderNameController.text,
+        categoryId: "2",
+        address: "",
+        updatedAt: DateTime.now().toString(),
+        createdAt: DateTime.now().toString());
+
+    CreateMailRepository().create_sender(sender).then((senderhelper) => {
+          if (senderhelper.data == null)
+            {
+              My_snackBar.showSnackBar(
+                  context, "Can't created sender", Colors.red),
+              My_snackBar.showSnackBar(
+                  context, "Can't created mail", Colors.red),
+            }
+          else
+            {
+              CreateMailRepository()
+                  .create_mail(
+                    getBody(senderhelper.data!["sender"][0]["id"].toString()),
+                  )
+                  .then((value) => {
+                        print(value),
+                        Navigator.pop(context),
+                        My_snackBar.showSnackBar(
+                            context, "sender created", Colors.green),
+                        My_snackBar.showSnackBar(
+                            context,
+                            value.data == null
+                                ? value.message
+                                : value.data!["message"],
+                            value.data == null ? Colors.red : Colors.green)
+                      })
+            }
+        }); //}
+
+    // print("---------------------");
+    // // if (_formKey.currentState!.validate())
+    //
+
     // else {
     // My_snackBar.showSnackBar(
     // context, "password not equal confirmpassword", Colors.red);
@@ -278,7 +318,11 @@ class _NewInboxPageState extends State<NewInboxPage> {
         ),
         valColor: Colors.white,
         onTap: () {
-          print('Hello');
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => StatusPage(),
+              ));
           // _navigateToStatusPage(context);
         });
   }
@@ -347,7 +391,7 @@ class _NewInboxPageState extends State<NewInboxPage> {
               ),
               'Date',
               Image.asset('images/arrow_right.png'),
-              'Tuesday, July 5, 2022',
+              '',
               mailDateController,
               AutofillHints.birthdayDay),
           const Divider(),
@@ -453,6 +497,9 @@ class _NewInboxPageState extends State<NewInboxPage> {
 
   Widget _buildCustomListTile(Icon icon, String hint, Image? iconTrailing,
       String subTitle, TextEditingController controller, String autoFillJints) {
+    TextEditingController dateInput = TextEditingController();
+    String selected_date = "Enter Date";
+
     return Row(
       children: [
         icon,
@@ -464,40 +511,67 @@ class _NewInboxPageState extends State<NewInboxPage> {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              subTitle.isEmpty
-                  ? TextFormField(
-                      controller: controller,
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'please enter the $hint';
-                        }
-                        return null;
-                      },
-                      autofillHints: [autoFillJints],
-                      style: const TextStyle(
-                          fontWeight: FontWeight.w500,
-                          fontFamily: 'Poppins',
-                          fontSize: 14,
-                          color: kBlackColor),
+              autoFillJints == "birthdayDay"
+                  ? TextField(
+                      controller: dateInput,
                       decoration: InputDecoration(
-                        border: InputBorder.none,
-                        hintText: hint,
-                        hintStyle: const TextStyle(
-                            fontWeight: FontWeight.w600,
-                            fontFamily: 'Poppins',
-                            fontSize: 12,
-                            color: kHintGreyColor),
+                        hintText: selected_date,
+                        border: UnderlineInputBorder(
+                          borderSide: BorderSide.none,
+                        ),
                       ),
+                      readOnly: true,
+                      onTap: () async {
+                        DateTime? pickedDate = await showDatePicker(
+                          context: context,
+                          initialDate: DateTime.now(),
+                          firstDate: DateTime(1950),
+                          lastDate: DateTime(2100),
+                        );
+
+                        if (pickedDate != null) {
+                          String formattedDate =
+                              DateFormat('yyyy-MM-dd').format(pickedDate);
+                          setState(() {
+                            dateInput.text = formattedDate;
+                            selected_date = formattedDate;
+                          });
+                        }
+                      },
                     )
-                  : Text(
-                      hint,
-                      textAlign: TextAlign.left,
-                      style: const TextStyle(
-                          fontWeight: FontWeight.w400,
-                          fontFamily: 'Poppins',
-                          fontSize: 14,
-                          color: kBlackColor),
-                    ),
+                  : subTitle.isEmpty
+                      ? TextFormField(
+                          controller: controller,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'please enter the $hint';
+                            }
+                            return null;
+                          },
+                          autofillHints: [autoFillJints],
+                          style: const TextStyle(
+                              fontWeight: FontWeight.w500,
+                              fontFamily: 'Poppins',
+                              fontSize: 14,
+                              color: kBlackColor),
+                          decoration: InputDecoration(
+                            border: InputBorder.none,
+                            hintText: hint,
+                            hintStyle: const TextStyle(
+                                fontWeight: FontWeight.w600,
+                                fontFamily: 'Poppins',
+                                fontSize: 12,
+                                color: kHintGreyColor),
+                          ))
+                      : Text(
+                          hint,
+                          textAlign: TextAlign.left,
+                          style: const TextStyle(
+                              fontWeight: FontWeight.w400,
+                              fontFamily: 'Poppins',
+                              fontSize: 14,
+                              color: kBlackColor),
+                        ),
               subTitle.isNotEmpty
                   ? TextField(
                       controller: controller,
