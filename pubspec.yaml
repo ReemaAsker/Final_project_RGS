@@ -30,6 +30,8 @@ dependencies:
   flutter:
     sdk: flutter
   sliding_switch:
+  image_picker: ^1.0.4
+  video_player: ^2.7.1
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -43,6 +45,7 @@ dependencies:
   expandable: ^5.0.1
   intl: ^0.18.1
   animated_snack_bar: ^0.3.1
+  mime: ^1.0.4
 
 
 dev_dependencies:

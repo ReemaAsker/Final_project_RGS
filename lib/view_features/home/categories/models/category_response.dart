@@ -39,7 +39,7 @@ class SingleCatigoryResponse {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final Map<String, dynamic> data =  Map<String, dynamic>();
     if (this.category != null) {
       data['category'] = this.category!.map((v) => v.toJson()).toList();
     }

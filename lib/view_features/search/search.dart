@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gsg_final_project_rgs/models/mail.dart';
 import 'package:gsg_final_project_rgs/view_features/search/widgets/custom_search.dart';
 import '../../cores/utils/colors.dart';
 import '../home/widgets/custom_text.dart';
@@ -49,7 +50,7 @@ class SearchPage extends StatelessWidget {
                   children: [
                     Padding(
                       padding:
-                      const EdgeInsets.only(left: 0, top: 16, bottom: 8),
+                          const EdgeInsets.only(left: 0, top: 16, bottom: 8),
                       child: CustomText('25 Completed ', 13, 'Poppins',
                           kDarkGreyColor, FontWeight.w400),
                     ),
@@ -92,7 +93,10 @@ class SearchPage extends StatelessWidget {
                               padding: EdgeInsets.zero,
                               itemCount: 2,
                               itemBuilder: (context, index) {
-                                return MailTile('ii');
+                                return MailTile(MailClass(
+                                    subject: "test in search page",
+                                    archiveNumber: "000/000",
+                                    archiveDate: "2023/2022"));
                               },
                               separatorBuilder:
                                   (BuildContext context, int index) {
@@ -144,7 +148,7 @@ class SearchPage extends StatelessWidget {
                                           top: 10),
                                       child: Column(
                                           crossAxisAlignment:
-                                          CrossAxisAlignment.start,
+                                              CrossAxisAlignment.start,
                                           children: [
                                             Row(
                                               children: [
@@ -179,10 +183,11 @@ class SearchPage extends StatelessWidget {
                                               ],
                                             ),
                                             Container(
-                                              margin: const EdgeInsets.only(left: 37),
+                                              margin: const EdgeInsets.only(
+                                                  left: 37),
                                               child: Column(
                                                 crossAxisAlignment:
-                                                CrossAxisAlignment.start,
+                                                    CrossAxisAlignment.start,
                                                 children: [
                                                   CustomText(
                                                       subject!,

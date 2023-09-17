@@ -111,7 +111,7 @@ class StatusElement {
   String? createdAt;
   String? updatedAt;
   String? mailsCount;
-  List<Mail>? mails;
+  List<MailClass>? mails;
 
   StatusElement({
     this.id,
@@ -132,9 +132,14 @@ class StatusElement {
         mailsCount: json["mails_count"],
         mails: json["mails"] == null
             ? []
-            : List<Mail>.from(json["mails"]!.map((x) => Mail.fromJson(x))),
+            : List<MailClass>.from(
+                json["mails"]!.map((x) => MailClass.fromJson(x))),
       );
-
+/*
+        mails: json["mails"] == null
+            ? []
+            : List<Mail>.from(json["mails"]!.map((x) => Mail.fromJson(x))),
+*/
   Map<String, dynamic> toJson() => {
         "id": id,
         "name": name,

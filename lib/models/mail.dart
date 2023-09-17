@@ -1,117 +1,3 @@
-// import 'package:gsg_final_project_rgs/models/activity.dart';
-// import 'package:gsg_final_project_rgs/models/attachment.dart';
-// import 'package:gsg_final_project_rgs/models/sender.dart';
-// import 'package:gsg_final_project_rgs/models/status.dart';
-// import 'package:gsg_final_project_rgs/models/tag.dart';
-
-// class Mail {
-//   int? id;
-//   late String subject;
-//   String? description;
-//   String? senderId;
-//   late String archiveNumber;
-//   late String archiveDate;
-//   String? decision;
-//   int statusId = 1;
-//   String? finalDecision;
-//   String? createdAt;
-//   String? updatedAt;
-//   Sender? sender;
-//   Status? status;
-//   List<Tags>? tags;
-//   List<Attachment>? attachments;
-//   List<Activitie>? activities;
-
-//   Mail(
-//       {this.id,
-//       required this.subject,
-//       this.description,
-//       this.senderId,
-//       required this.archiveNumber,
-//       required this.archiveDate,
-//       this.decision,
-//       required this.statusId,
-//       this.finalDecision,
-//       this.createdAt,
-//       this.updatedAt,
-//       this.sender,
-//       this.status,
-//       this.tags,
-//       this.attachments,
-//       this.activities});
-
-//   Mail.fromJson(Map<String, dynamic> json) {
-//     id = json['id'];
-//     subject = json['subject'];
-//     description = json['description'];
-//     senderId = json['sender_id'];
-//     archiveNumber = json['archive_number'];
-//     archiveDate = json['archive_date'];
-//     decision = json['decision'];
-//     statusId = json['status_id'];
-//     finalDecision = json['final_decision'];
-//     createdAt = json['created_at'];
-//     updatedAt = json['updated_at'];
-//     sender =
-//         json['sender'] != null ? new Sender.fromJson(json['sender']) : null;
-//     status =
-//         json['status'] != null ? new Status.fromJson(json['status']) : null;
-//     if (json['tags'] != null) {
-//       tags = <Tags>[];
-//       json['tags'].forEach((v) {
-//         tags!.add(new Tags.fromJson(v));
-//       });
-//     }
-//     if (json['attachments'] != null) {
-//       attachments = <Attachment>[];
-//       json['attachments'].forEach((v) {
-//         attachments!.add(new Attachment.fromJson(v));
-//       });
-//     }
-//     if (json['activities'] != null) {
-//       activities = <Activitie>[];
-//       json['activities'].forEach((v) {
-//         activities!.add(new Activitie.fromJson(v));
-//       });
-//     }
-//   }
-
-//   Map<String, dynamic> toJson() {
-//     final Map<String, dynamic> data = new Map<String, dynamic>();
-//     data['id'] = this.id;
-//     data['subject'] = this.subject;
-//     data['description'] = this.description;
-//     data['sender_id'] = this.senderId;
-//     data['archive_number'] = this.archiveNumber;
-//     data['archive_date'] = this.archiveDate;
-//     data['decision'] = this.decision;
-//     data['status_id'] = this.statusId;
-//     data['final_decision'] = this.finalDecision;
-//     data['created_at'] = this.createdAt;
-//     data['updated_at'] = this.updatedAt;
-//     if (this.sender != null) {
-//       data['sender'] = this.sender!.toJson();
-//     }
-//     if (this.status != null) {
-//       data['status'] = this.status!.toJson();
-//     }
-//     if (this.tags != null) {
-//       data['tags'] = this.tags!.map((v) => v.toJson()).toList();
-//     }
-//     if (this.attachments != null) {
-//       data['attachments'] = this.attachments!.map((v) => v.toJson()).toList();
-//     }
-//     if (this.activities != null) {
-//       data['activities'] = this.activities!.map((v) => v.toJson()).toList();
-//     }
-//     return data;
-//   }
-// }
-/////////////////////////////////////////////////////////////////////////////////////////////
-// To parse this JSON data, do
-//
-//     final mail = mailFromJson(jsonString);
-
 import 'dart:convert';
 
 import 'package:gsg_final_project_rgs/models/activity.dart';
@@ -119,7 +5,6 @@ import 'package:gsg_final_project_rgs/models/attachment.dart';
 import 'package:gsg_final_project_rgs/models/pivot.dart';
 import 'package:gsg_final_project_rgs/models/sender.dart';
 import 'package:gsg_final_project_rgs/models/status.dart';
-import 'package:gsg_final_project_rgs/models/tag.dart';
 
 Mail mailFromJson(String str) => Mail.fromJson(json.decode(str));
 
@@ -144,6 +29,10 @@ class Mail {
         "mail": mail?.toJson(),
       };
 }
+
+MailClass mailClassFromJson(String str) => MailClass.fromJson(json.decode(str));
+
+String mailClassToJson(MailClass data) => json.encode(data.toJson());
 
 class MailClass {
   int? id;
@@ -236,7 +125,7 @@ class MailClass {
             ? json.encode(Sender())
             : json.encode(sender?.toJson()),
         "status": status == null
-            ? json.encode(Status())
+            ? json.encode(StatusElement())
             : json.encode(status?.toJson()),
         "attachments": attachments == null
             ? json.encode([])
