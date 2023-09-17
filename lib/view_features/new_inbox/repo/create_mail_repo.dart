@@ -2,8 +2,8 @@ import 'package:gsg_final_project_rgs/cores/helpers/api_response.dart';
 import 'package:gsg_final_project_rgs/cores/helpers/token_helper.dart';
 import 'package:gsg_final_project_rgs/cores/utils/constants.dart';
 import 'package:gsg_final_project_rgs/models/mail.dart';
-// import 'package:http/http.dart' as http;
-// import 'package:http/http.dart';
+import 'package:http/http.dart' as http;
+import 'package:http/http.dart';
 import '../../../cores/helpers/api_base_helper.dart';
 
 class CreateMailRepository {
@@ -14,15 +14,16 @@ class CreateMailRepository {
       MailClass new_mail) async {
     Map<String, dynamic> response;
     _userdata = ApiResponse.loading("fetch created ..");
+    try {
+      response = await _helper.post(mailsUrl, new_mail.toJson(), httpHeader());
+      _userdata = ApiResponse.completed(response);
 
-    response = await _helper.post(mailsUrl, new_mail.toJson(), httpHeader());
-    _userdata = ApiResponse.completed(response);
-
-    // print("from json ........");
-    // print(MailClass.fromJson(response["mail"]).subject);
-    // print("....... ........");
-    _userdata = ApiResponse.completed(response);
-
+      // print("from json ........");
+      // print(MailClass.fromJson(response["mail"]).subject);
+      // print("....... ........");
+    } catch (e) {
+      _userdata = ApiResponse.error("error ..");
+    }
     return _userdata;
   }
 

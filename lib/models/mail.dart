@@ -228,7 +228,7 @@ class MailClass {
         "archive_number": archiveNumber,
         "archive_date": archiveDate,
         "decision": decision ?? "",
-        "status_id": statusId ?? "1",
+        "status_id": statusId.toString() ?? "1",
         "final_decision": finalDecision ?? "",
         "created_at": createdAt ?? "",
         "updated_at": updatedAt ?? "",

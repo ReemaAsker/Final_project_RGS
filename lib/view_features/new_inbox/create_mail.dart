@@ -54,9 +54,9 @@ class _NewInboxPageState extends State<NewInboxPage> {
       );
     } else {
       My_snackBar.showSnackBar(cont, "error", Colors.red);
-      Navigator.pop(
-        context,
-      );
+      // Navigator.pop(
+      //   context,
+      // );
     }
   }
 
@@ -66,14 +66,14 @@ class _NewInboxPageState extends State<NewInboxPage> {
         archiveNumber: mailArchiveNoController.text,
         archiveDate: mailDateController.text,
         createdAt: DateTime.now().toString(),
-        // activities: [],
+        activities: [],
         tags: [2, 4],
         // attachments: [],
         decision: mailDecisionController.text,
         description: mailDescriptionController.text,
         // finalDecision: "",
         senderId: "1",
-        // statusId: 1,
+        statusId: 1,
         updatedAt: DateTime.now().toString());
 
     return mailBody;
