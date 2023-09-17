@@ -1,28 +1,93 @@
 import 'package:flutter/material.dart';
+import 'package:gsg_final_project_rgs/cores/helpers/api_response.dart';
 import 'package:gsg_final_project_rgs/cores/helpers/shared_pref.dart';
+import 'package:gsg_final_project_rgs/custom_widgets/custom_snackbar.dart';
 import 'package:gsg_final_project_rgs/models/activity.dart';
+import 'package:gsg_final_project_rgs/models/attachment.dart';
 import 'package:gsg_final_project_rgs/models/mail.dart';
+import 'package:gsg_final_project_rgs/models/pivot.dart';
+import 'package:gsg_final_project_rgs/models/sender.dart';
 import 'package:gsg_final_project_rgs/models/status.dart';
 import 'package:gsg_final_project_rgs/models/tag.dart';
 import 'package:gsg_final_project_rgs/view_features/auth/model/auth_model.dart';
 import 'package:gsg_final_project_rgs/view_features/auth/model/user.dart';
-import 'package:gsg_final_project_rgs/view_features/create_mail/repo/create_mail_repo.dart';
-import 'package:gsg_final_project_rgs/view_features/create_mail/widgets/custom_app_bar.dart';
+import 'package:gsg_final_project_rgs/view_features/new_inbox/repo/create_mail_repo.dart';
+import 'package:gsg_final_project_rgs/view_features/new_inbox/widgets/custom_app_bar.dart';
+import 'package:gsg_final_project_rgs/view_features/home/categories/models/Category.dart';
 import '../../cores/utils/colors.dart';
 import '../home/widgets/custom_border.dart';
 import '../home/widgets/custom_text.dart';
 
-class NewInboxPage extends StatelessWidget {
+class NewInboxPage extends StatefulWidget {
   NewInboxPage({Key? key}) : super(key: key);
 
+  @override
+  State<NewInboxPage> createState() => _NewInboxPageState();
+}
+
+class _NewInboxPageState extends State<NewInboxPage> {
+  final _formKey = GlobalKey<FormState>();
+
   final senderNameController = TextEditingController();
+
   final senderPhoneController = TextEditingController();
+
   final mailTitleController = TextEditingController();
+
   final mailDescriptionController = TextEditingController();
+
   final mailDateController = TextEditingController();
+
   final mailArchiveNoController = TextEditingController();
+
   final mailDecisionController = TextEditingController();
+
   final mailActivitiesController = TextEditingController();
+
+  void submit(ApiResponse value, BuildContext cont) {
+    print(value.status);
+    if (value.status == DataStatus.COMPLETED) {
+      My_snackBar.showSnackBar(cont, "mail created", Colors.green);
+      // Navigator.pushNamed(context, Hello.id),
+      Navigator.pop(
+        context,
+      );
+    } else {
+      My_snackBar.showSnackBar(cont, "error", Colors.red);
+      // Navigator.pop(
+      //   context,
+      // );
+    }
+  }
+
+  MailClass getBody() {
+    MailClass mailBody = MailClass(
+        subject: mailTitleController.text,
+        archiveNumber: mailArchiveNoController.text,
+        archiveDate: mailDateController.text,
+        createdAt: DateTime.now().toString(),
+        activities: [],
+        tags: [2, 4],
+        // attachments: [],
+        decision: mailDecisionController.text,
+        description: mailDescriptionController.text,
+        // finalDecision: "",
+        senderId: "1",
+        statusId: 1,
+        updatedAt: DateTime.now().toString());
+
+    return mailBody;
+  }
+
+  void create_mail_UI() {
+    // if (_formKey.currentState!.validate())
+    CreateMailRepository()
+        .create_mail(getBody())
+        .then((value) => {submit(value, context)}); //
+    // else {
+    // My_snackBar.showSnackBar(
+    // context, "password not equal confirmpassword", Colors.red);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -35,25 +100,79 @@ class NewInboxPage extends StatelessWidget {
             CustomAppBar(
                 title: 'New Inbox',
                 onTap: () {
-                  CreateMailRepository().create_mail(MailClass(
-                      subject: "new_mail_from us",
-                      description: " ",
-                      senderId: "1",
-                      archiveNumber: "3000",
-                      archiveDate: "2023-9-9",
-                      decision: "",
-                      statusId: "1",
-                      finalDecision: "",
-                      tags: [
-                        1,
-                        3
-                      ],
-                      activities: [
-                        Activity(
-                            body: "the problem is in progress",
-                            createdAt: "2023-2-2",
-                            id: 20)
-                      ]));
+                  create_mail_UI();
+                  // CreateMailRepository mRepo = CreateMailRepository();
+                  // CreateMailRepository()
+                  //     .create_Tag(Tag(
+                  //         createdAt: DateTime.now().toString(),
+                  //         id: "1",
+                  //         name: "population tag",
+                  //         pivot: Pivot(mailId: "1", tagId: "25"),
+                  //         updatedAt: DateTime.now().toString()))
+                  //     .then((value) => print(value.name));
+
+                  // Sender sender = Sender();
+                  // mRepo
+                  //     .create_sender(
+                  //       Sender(
+                  //           address: "",
+                  //           categoryId: "1",
+                  //           createdAt: "",
+                  //           id: "100",
+                  //           mobile: "25866756326",
+                  //           name: "test25",
+                  //           updatedAt: ""),
+                  //     )
+                  //     .then((value) => sender = value);
+
+                  // CreateMailRepository()
+                  //     .create_mail(MailClass(
+                  //   // statusId: 4,
+                  //   decision: "not yet",
+                  //   senderId: '81',
+                  //   finalDecision: "",
+                  //   activities: [
+                  //     Activity(
+                  //         body: "hello",
+                  //         createdAt: DateTime.now().toString(),
+                  //         id: 2,
+                  //         mailId: "5",
+                  //         sendDate: DateTime.now().toString(),
+                  //         sendDestination: DateTime.now().toString(),
+                  //         sendNumber: "25",
+                  //         updatedAt: DateTime.now().toString(),
+                  //         userId: "5")
+                  //   ],
+                  //   subject: "population",
+                  //   description: "water population",
+                  //   archiveNumber: "/4000",
+                  //   archiveDate: DateTime.now().toString(),
+                  //   attachments: [
+                  //     Attachment(
+                  //         createdAt: DateTime.now().toString(),
+                  //         id: 5,
+                  //         image: "",
+                  //         mailId: "5",
+                  //         title: "efd",
+                  //         updatedAt: DateTime.now().toString()),
+                  //     Attachment(
+                  //         createdAt: DateTime.now().toString(),
+                  //         id: 5,
+                  //         image: "",
+                  //         mailId: "5",
+                  //         title: "efd",
+                  //         updatedAt: DateTime.now().toString())
+                  //   ],
+                  //   createdAt: DateTime.now().toString(),
+                  //   updatedAt: DateTime.now().toString(),
+
+                  //   // id: 1,
+                  //   status: Status(statuses: [StatusElement(id: 1)]),
+                  //   tags: [1, 2],
+                  // ))
+                  //     .then((value) {
+                  //   print(value.data!["message"]);
+                  // });
                 }),
             _buildSenderWidget(),
             _buildMailDescriptionWidget(),
@@ -166,46 +285,51 @@ class NewInboxPage extends StatelessWidget {
 
   Widget _buildSenderWidget() {
     return BorderShape(
-      widget: Column(
-        children: [
-          _buildCustomListTile(
-              const Icon(
-                Icons.person,
-                color: kHintGreyColor,
-              ),
-              'Sender',
-              Image.asset('images/info.png'),
-              '',
-              senderNameController),
-          const Divider(),
-          _buildCustomListTile(
-              const Icon(
-                Icons.phone_android,
-                color: kHintGreyColor,
-              ),
-              'Phone',
-              null,
-              '',
-              senderPhoneController),
-          const Divider(),
-          GestureDetector(
-            onTap: () {},
-            child: Row(
-              children: [
-                CustomText(
-                    'Category', 14, 'Poppins', kBlackColor, FontWeight.w400),
-                const Spacer(),
-                CustomText(
-                    'Other', 12, 'Poppins', kLightBlackColor, FontWeight.w400),
-                Image.asset(
-                  'images/arrow_right.png',
-                  width: 14,
-                  height: 12,
+      widget: Form(
+        key: _formKey,
+        child: Column(
+          children: [
+            _buildCustomListTile(
+                const Icon(
+                  Icons.person,
+                  color: kHintGreyColor,
                 ),
-              ],
+                'Sender',
+                Image.asset('images/info.png'),
+                '',
+                senderNameController,
+                AutofillHints.username),
+            const Divider(),
+            _buildCustomListTile(
+                const Icon(
+                  Icons.phone_android,
+                  color: kHintGreyColor,
+                ),
+                'Phone',
+                null,
+                '',
+                senderPhoneController,
+                AutofillHints.telephoneNumber),
+            const Divider(),
+            GestureDetector(
+              onTap: () {},
+              child: Row(
+                children: [
+                  CustomText(
+                      'Category', 14, 'Poppins', kBlackColor, FontWeight.w400),
+                  const Spacer(),
+                  CustomText('Other', 12, 'Poppins', kLightBlackColor,
+                      FontWeight.w400),
+                  Image.asset(
+                    'images/arrow_right.png',
+                    width: 14,
+                    height: 12,
+                  ),
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
       valColor: Colors.white,
       onTap: () {},
@@ -224,7 +348,8 @@ class NewInboxPage extends StatelessWidget {
               'Date',
               Image.asset('images/arrow_right.png'),
               'Tuesday, July 5, 2022',
-              mailDateController),
+              mailDateController,
+              AutofillHints.birthdayDay),
           const Divider(),
           _buildCustomListTile(
               const Icon(
@@ -234,7 +359,8 @@ class NewInboxPage extends StatelessWidget {
               'Archive Number',
               null,
               '2022/6019',
-              mailArchiveNoController),
+              mailArchiveNoController,
+              AutofillHints.nickname),
         ],
       ),
       valColor: Colors.white,
@@ -326,7 +452,7 @@ class NewInboxPage extends StatelessWidget {
   }
 
   Widget _buildCustomListTile(Icon icon, String hint, Image? iconTrailing,
-      String subTitle, TextEditingController controller) {
+      String subTitle, TextEditingController controller, String autoFillJints) {
     return Row(
       children: [
         icon,
@@ -339,8 +465,15 @@ class NewInboxPage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               subTitle.isEmpty
-                  ? TextField(
+                  ? TextFormField(
                       controller: controller,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'please enter the $hint';
+                        }
+                        return null;
+                      },
+                      autofillHints: [autoFillJints],
                       style: const TextStyle(
                           fontWeight: FontWeight.w500,
                           fontFamily: 'Poppins',
@@ -436,31 +569,4 @@ class NewInboxPage extends StatelessWidget {
       onTap: () {},
     );
   }
-  // Future<void> _navigateToTagsPage(
-  //     BuildContext context) async {
-  //   final dynamic? result = await showModalBottomSheet<dynamic>(
-  //     isScrollControlled: true,
-  //     useRootNavigator: true,
-  //     backgroundColor: kLightWhiteColor,
-  //     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-  //     context: context,
-  //     builder: (BuildContext context) {
-  //       return FractionallySizedBox(heightFactor: 0.9, child: TagsPage());
-  //     },
-  //   );
-  // }
-  //
-  // Future<void> _navigateToStatusPage(
-  //     BuildContext context) async {
-  //   final dynamic? result = await showModalBottomSheet<dynamic>(
-  //     isScrollControlled: true,
-  //     useRootNavigator: true,
-  //     backgroundColor: kLightWhiteColor,
-  //     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-  //     context: context,
-  //     builder: (BuildContext context) {
-  //       return FractionallySizedBox(heightFactor: 0.9, child: StatusPage());
-  //     },
-  //   );
-  // }
 }

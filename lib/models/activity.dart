@@ -61,9 +61,9 @@ class Activity {
   String? body;
   String? userId;
   String? mailId;
-  dynamic sendNumber;
-  dynamic sendDate;
-  dynamic sendDestination;
+  String? sendNumber;
+  String? sendDate;
+  String? sendDestination;
   String? createdAt;
   String? updatedAt;
 

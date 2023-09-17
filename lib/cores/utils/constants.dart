@@ -1,4 +1,5 @@
 //==========endpoints==========================
+
 const baseUrl = 'https://palmail.gsgtt.tech/api';
 const loginUrl = '/login';
 const registerUrl = '/register';

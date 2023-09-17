@@ -115,7 +115,9 @@
 import 'dart:convert';
 
 import 'package:gsg_final_project_rgs/models/activity.dart';
+import 'package:gsg_final_project_rgs/models/attachment.dart';
 import 'package:gsg_final_project_rgs/models/pivot.dart';
+import 'package:gsg_final_project_rgs/models/sender.dart';
 import 'package:gsg_final_project_rgs/models/status.dart';
 import 'package:gsg_final_project_rgs/models/tag.dart';
 
@@ -145,29 +147,29 @@ class Mail {
 
 class MailClass {
   int? id;
-  String? subject;
-  dynamic description;
+  String subject;
+  String? description;
   String? senderId;
-  String? archiveNumber;
-  String? archiveDate;
-  dynamic decision;
-  String? statusId;
-  dynamic finalDecision;
+  String archiveNumber;
+  String archiveDate;
+  String? decision;
+  int? statusId;
+  String? finalDecision;
   String? createdAt;
   String? updatedAt;
-  dynamic sender;
+  Sender? sender;
   Status? status;
-  List<dynamic>? attachments;
+  List<Attachment>? attachments;
   List<Activity>? activities;
   List<dynamic>? tags;
 
   MailClass({
     this.id,
-    this.subject,
+    required this.subject,
     this.description,
     this.senderId,
-    this.archiveNumber,
-    this.archiveDate,
+    required this.archiveNumber,
+    required this.archiveDate,
     this.decision,
     this.statusId,
     this.finalDecision,
@@ -180,7 +182,10 @@ class MailClass {
     this.tags,
   });
 
-  factory MailClass.fromJson(Map<String, dynamic> json) => MailClass(
+  factory MailClass.fromJson(Map<String, dynamic> json) {
+    MailClass v = MailClass(subject: "", archiveNumber: "", archiveDate: "");
+    try {
+      v = MailClass(
         id: json["id"],
         subject: json["subject"],
         description: json["description"],
@@ -188,48 +193,57 @@ class MailClass {
         archiveNumber: json["archive_number"],
         archiveDate: json["archive_date"],
         decision: json["decision"],
-        statusId: json["status_id"],
+        statusId: int.parse(json["status_id"]),
         finalDecision: json["final_decision"],
         createdAt: json["created_at"],
         updatedAt: json["updated_at"],
-        sender: json["sender"],
-        status: json["status"] == null ? null : Status.fromJson(json["status"]),
-        attachments: json["attachments"] == null
-            ? []
-            : List<dynamic>.from(json["attachments"]!.map((x) => x)),
-        activities: json["activities"] == null
-            ? []
-            : List<Activity>.from(
-                json["activities"]!.map((x) => Activity.fromJson(x))),
-        tags: json["tags"] == null
-            ? []
-            : List<Status>.from(json["tags"]!.map((x) => Status.fromJson(x))),
+        sender: json["sender"] == null
+            ? Sender()
+            : Sender.fromJson(jsonDecode(json["sender"])),
+        // status: json["status"] == null
+        //     ? Status()
+        //     : Status.fromJson(jsonDecode(json["status"])),
+        // attachments: jsonDecode(json["attachments"])
+        //     .map<Attachment>(
+        //         (attachmentJson) => Attachment.fromJson(attachmentJson))
+        //     .toList(),
+        // activities: jsonDecode(json["activities"])
+        //     .map<Activity>((activityJson) => Activity.fromJson(activityJson))
+        //     .toList(),
+        // tags: jsonDecode(json["tags"]),
       );
+    } catch (e) {
+      print("%%%%%%%%%%%%%%");
+      print(e);
+      print("%%%%%%%%%%%%%%");
+    }
+    return v;
+  }
 
   Map<String, dynamic> toJson() => {
-        "id": id,
+        "id": id.toString() ?? "",
         "subject": subject,
-        "description": description,
-        "sender_id": senderId,
+        "description": description ?? "",
+        "sender_id": senderId ?? "1",
         "archive_number": archiveNumber,
         "archive_date": archiveDate,
-        "decision": decision,
-        "status_id": statusId,
-        "final_decision": finalDecision,
-        "created_at": createdAt,
-        "updated_at": updatedAt,
-        "sender": sender,
-        "status": status?.toJson(),
+        "decision": decision ?? "",
+        "status_id": statusId.toString() ?? "1",
+        "final_decision": finalDecision ?? "",
+        "created_at": createdAt ?? "",
+        "updated_at": updatedAt ?? "",
+        "sender": sender == null
+            ? json.encode(Sender())
+            : json.encode(sender?.toJson()),
+        "status": status == null
+            ? json.encode(Status())
+            : json.encode(status?.toJson()),
         "attachments": attachments == null
-            ? []
-            : List<dynamic>.from(attachments!.map((x) => x)),
+            ? json.encode([])
+            : json.encode(List<Attachment>.from(attachments!.map((x) => x))),
         "activities": activities == null
-            ? []
-            : List<dynamic>.from(activities!.map((x) => x.toJson())),
-        "tags": tags == null
-            ? []
-            : tags![0].runtimeType != int
-                ? List<dynamic>.from(tags!.map((x) => x.toJson()))
-                : List<dynamic>.from(tags!.map((x) => x)),
+            ? json.encode([])
+            : json.encode(List<Activity>.from(activities!.map((x) => x))),
+        "tags": tags == null ? [] : json.encode(tags),
       };
 }
