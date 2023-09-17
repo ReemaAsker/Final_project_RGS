@@ -158,7 +158,7 @@ class MailClass {
   String? createdAt;
   String? updatedAt;
   Sender? sender;
-  Status? status;
+  StatusElement? status; //status
   List<Attachment>? attachments;
   List<Activity>? activities;
   List<dynamic>? tags;
