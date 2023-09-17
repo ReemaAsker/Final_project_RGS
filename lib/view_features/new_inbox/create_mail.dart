@@ -21,6 +21,8 @@ import '../home/widgets/custom_border.dart';
 import '../home/widgets/custom_text.dart';
 import 'package:intl/intl.dart';
 
+import '../tags/tag.dart';
+
 class NewInboxPage extends StatefulWidget {
   NewInboxPage({Key? key}) : super(key: key);
 
@@ -617,8 +619,7 @@ class _NewInboxPageState extends State<NewInboxPage> {
         ),
         valColor: Colors.white,
         onTap: () {
-          print('Hello');
-          // _navigateToTagsPage(context);
+          _navigateToTagsPage(context);
         });
   }
 
@@ -662,6 +663,18 @@ class _NewInboxPageState extends State<NewInboxPage> {
       context: context,
       builder: (BuildContext context) {
         return FractionallySizedBox(heightFactor: 0.9, child: CategoryPage());
+      },
+    );
+  }
+  Future<void> _navigateToTagsPage(BuildContext context) async {
+    await showModalBottomSheet<dynamic>(
+      isScrollControlled: true,
+      useRootNavigator: true,
+      backgroundColor: kLightWhiteColor,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+      context: context,
+      builder: (BuildContext context) {
+        return FractionallySizedBox(heightFactor: 0.9, child: TagsPage());
       },
     );
   }
