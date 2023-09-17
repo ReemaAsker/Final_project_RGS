@@ -16,7 +16,7 @@ class MailListView extends StatelessWidget {
         shrinkWrap: true,
         itemCount: 1,
         physics: const NeverScrollableScrollPhysics(),
-        padding: const EdgeInsets.only(bottom: 16),
+        padding: EdgeInsets.only(bottom: 16, top: 16),
         itemBuilder: (BuildContext context, int index) {
           return Theme(
             data: Theme.of(context).copyWith(dividerColor: Colors.transparent),

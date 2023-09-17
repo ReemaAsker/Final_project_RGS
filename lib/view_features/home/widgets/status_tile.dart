@@ -8,7 +8,7 @@ import '../providers/status_provider.dart';
 import 'custom_text.dart';
 
 class StatusTile extends StatelessWidget {
-  Status status;
+  StatusElement status;
   String color;
   StatusTile(this.status, this.color);
 

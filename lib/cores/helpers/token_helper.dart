@@ -23,3 +23,10 @@ bool removeUser() {
   }
   return removeUser_done;
 }
+
+Map<String, String> httpHeader() {
+  return {
+    'Authorization': 'Bearer ${getToken()!.token}',
+    'Accept': 'application/json'
+  };
+}

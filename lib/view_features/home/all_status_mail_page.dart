@@ -9,7 +9,7 @@ import '../../cores/helpers/api_response.dart';
 import '../../cores/utils/colors.dart';
 
 class StatusMailsPage extends StatefulWidget {
-  final Status status;
+  final StatusElement status;
   const StatusMailsPage({super.key, required this.status});
 
   @override
@@ -97,8 +97,7 @@ class _StatusMailsPageState extends State<StatusMailsPage> {
                                   width: 9,
                                 ),
                                 CustomText(
-                                    widget.status.mails?[index]
-                                            .sender?['name'] ??
+                                    widget.status.mails?[index].sender!.name ??
                                         "no sender ",
                                     18.0,
                                     'Poppins',
@@ -187,7 +186,7 @@ class _StatusMailsPageState extends State<StatusMailsPage> {
                                             ), //         "https://palmail.gsgtt.tech/storage/${myMail.attachments![index]['image']}"))),
                                             child: Image(
                                               image: NetworkImage(
-                                                "https://palmail.gsgtt.tech/storage/${widget.status.mails![index].attachments![i]['image']}",
+                                                "https://palmail.gsgtt.tech/storage/${widget.status.mails![index].attachments![i].image}",
                                               ),
                                               fit: BoxFit.fill,
                                             ),

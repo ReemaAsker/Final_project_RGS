@@ -27,7 +27,7 @@ class CustomAppBar extends StatelessWidget {
           TextButton(
               onPressed: onTap,
               child: CustomText(
-                  'Done', 18, 'Poppins', kLightPrimaryColor, FontWeight.w600)),
+                  'Done', 18, 'Poppins', kLightPrimaryColor, FontWeight.w400)),
         ],
       ),
     );

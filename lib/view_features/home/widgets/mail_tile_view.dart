@@ -20,7 +20,12 @@ class MailTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => {},
+      onTap: () => {
+        // Navigator.push(
+        // context,
+        // MaterialPageRoute(builder: (context) => DetailsPage()),
+        // )
+      },
       child: Container(
         width: MediaQuery.of(context).size.width,
         decoration: const BoxDecoration(
@@ -55,7 +60,7 @@ class MailTile extends StatelessWidget {
               ],
             ),
             Container(
-              margin: const EdgeInsets.only(left: 37),
+              margin: EdgeInsets.only(left: 37),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -89,7 +94,7 @@ class MailTile extends StatelessWidget {
                             ), //         "https://palmail.gsgtt.tech/storage/${myMail.attachments![index]['image']}"))),
                             child: Image(
                               image: NetworkImage(
-                                "https://palmail.gsgtt.tech/storage/${myMail.attachments![index]['image']}",
+                                "https://palmail.gsgtt.tech/storage/${myMail.attachments![index].image}",
                               ),
                               fit: BoxFit.fill,
                             ),
