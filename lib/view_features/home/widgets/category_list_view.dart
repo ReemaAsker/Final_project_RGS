@@ -64,15 +64,14 @@ class CategoryListView extends StatelessWidget {
                                       width: 9,
                                     ),
                                     CustomText(
-                                        mails[index].sender?.name ??
+                                        mails[index].sender?['name'] ??
                                             "no sender ",
                                         18.0,
                                         'Poppins',
                                         kBlackColor,
                                         FontWeight.w600),
                                     const Spacer(),
-                                    CustomText('Today at ..', 12.0, 'Poppins',
-                                        kHintGreyColor, FontWeight.w400),
+
                                     const SizedBox(
                                       width: 8,
                                     ),
@@ -82,19 +81,35 @@ class CategoryListView extends StatelessWidget {
                                   ],
                                 ),
                                 Container(
-                                  margin: const EdgeInsets.only(left: 37),
+                                  margin: EdgeInsets.only(left: 28),
                                   child: Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
+                                      SizedBox(
+                                        height: 5,
+                                      ),
                                       CustomText(
-                                          mails[index].subject ?? "no subject",
+                                          "Created At:  ${mails[index].createdAt!}",
+                                          10,
+                                          'Poppins',
+                                          kHintGreyColor,
+                                          FontWeight.w400),
+                                      SizedBox(
+                                        height: 5,
+                                      ),
+                                      CustomText(
+                                          mails[index].subject ?? "No subject",
                                           14.0,
                                           'Poppins',
                                           kLightBlackColor,
                                           FontWeight.w400),
+                                      const SizedBox(
+                                        height: 8,
+                                      ),
                                       CustomText(
-                                          mails[index].description ?? "no des",
+                                          mails[index].description ??
+                                              "No description",
                                           14.0,
                                           'Poppins',
                                           kHintGreyColor,
@@ -104,7 +119,7 @@ class CategoryListView extends StatelessWidget {
                                       ),
                                     ],
                                   ),
-                                )
+                                ),
                               ]),
                         ),
                       ),

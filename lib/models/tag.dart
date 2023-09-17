@@ -29,6 +29,8 @@
 //     return data;
 //   }
 // }
+
+////////////////////////////////////////////////////////////////
 import 'package:gsg_final_project_rgs/models/pivot.dart';
 
 class TagsResponseModel {
@@ -79,3 +81,4 @@ class Tag {
         "pivot": pivot?.toJson(),
       };
 }
+/////////////////////////////////////////////////////////////////

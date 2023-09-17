@@ -69,7 +69,7 @@ class MailTile extends StatelessWidget {
                   Visibility(
                       ////////////////////////////null check
                       visible: myMail.tags!.isNotEmpty ? true : false,
-                      child: _buildTagHorizontalList(myMail)),
+                      child: buildTagHorizontalList(myMail)),
                   Visibility(
                     visible: myMail.attachments!.isNotEmpty ? true : false,
                     child: SizedBox(
@@ -114,28 +114,28 @@ class MailTile extends StatelessWidget {
       ),
     );
   }
+}
 
-  Widget _buildTagHorizontalList(MailClass mailClass) {
-    return SizedBox(
-      height: 27,
-      child: ListView.separated(
-        shrinkWrap: true,
-        scrollDirection: Axis.horizontal,
-        itemCount: mailClass.tags!.length,
-        itemBuilder: (ctx, index) {
-          print(mailClass.tags![index].name);
-          return Chip(
-            backgroundColor: kLightPrimaryColor,
-            label: CustomText('#${mailClass.tags![index].name}', 14, 'Poppins',
-                Colors.white, FontWeight.w600),
-          );
-        },
-        separatorBuilder: (BuildContext context, int index) {
-          return const SizedBox(
-            width: 8,
-          );
-        },
-      ),
-    );
-  }
+Widget buildTagHorizontalList(MailClass mailClass) {
+  return SizedBox(
+    height: 27,
+    child: ListView.separated(
+      shrinkWrap: true,
+      scrollDirection: Axis.horizontal,
+      itemCount: mailClass.tags!.length,
+      itemBuilder: (ctx, index) {
+        print(mailClass.tags![index].name);
+        return Chip(
+          backgroundColor: kLightPrimaryColor,
+          label: CustomText('#${mailClass.tags![index].name}', 14, 'Poppins',
+              Colors.white, FontWeight.w600),
+        );
+      },
+      separatorBuilder: (BuildContext context, int index) {
+        return const SizedBox(
+          width: 8,
+        );
+      },
+    ),
+  );
 }

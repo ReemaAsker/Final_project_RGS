@@ -115,7 +115,6 @@
 import 'dart:convert';
 
 import 'package:gsg_final_project_rgs/models/activity.dart';
-import 'package:gsg_final_project_rgs/models/sender.dart';
 import 'package:gsg_final_project_rgs/models/status.dart';
 
 Mail mailFromJson(String str) => Mail.fromJson(json.decode(str));
@@ -247,7 +246,7 @@ class MailClass {
   String? createdAt;
   String? updatedAt;
   //dynamic to sender
-  Sender? sender;
+  dynamic sender;
   Status? status;
   List<dynamic>? attachments;
   List<Activity>? activities;
