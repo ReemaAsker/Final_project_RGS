@@ -98,11 +98,11 @@ class CategoryProvider extends ChangeNotifier {
           await _categoryRepo.fetchCategoriesList();
       // call category mails function
       // _categoryList = ApiResponse.completed(categories);
-      for (int i = 0; i < categories!.length; i++) {
+      for (int i = 1; i <= categories!.length; i++) {
         List<MailClass>? categoryMails =
             await _categoryRepo.fetchCategoryMails(i);
-        CategoryContentUI iCategoryContent =
-            CategoryContentUI(category: categories[i], mails: categoryMails!);
+        CategoryContentUI iCategoryContent = CategoryContentUI(
+            category: categories[i - 1], mails: categoryMails!);
 
         categoriesWithMailsAsContent.add(iCategoryContent);
         //  get this category mails as list
@@ -118,6 +118,7 @@ class CategoryProvider extends ChangeNotifier {
       categoryUiStatus =
           CategoryUiStatus(isError: true, errorMessage: e.toString());
       notifyListeners();
+      rethrow;
     }
   }
 

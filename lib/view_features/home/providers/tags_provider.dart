@@ -39,8 +39,10 @@ class TagsProvider extends ChangeNotifier {
       notifyListeners();
     } catch (e) {
       print("in catch tags");
+
       _allTagsList = ApiResponse.error(e.toString());
       notifyListeners();
+      rethrow;
     }
   }
 
@@ -54,6 +56,7 @@ class TagsProvider extends ChangeNotifier {
     } catch (e) {
       _tagsListWithMails = ApiResponse.error(e.toString());
       notifyListeners();
+      rethrow;
     }
   }
 
@@ -67,6 +70,7 @@ class TagsProvider extends ChangeNotifier {
     } catch (e) {
       _tagsOfMail = ApiResponse.error(e.toString());
       notifyListeners();
+      rethrow;
     }
   }
 

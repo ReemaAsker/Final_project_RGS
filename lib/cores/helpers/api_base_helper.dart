@@ -15,8 +15,11 @@ class ApiBaseHelper {
       final response =
           await http.get(Uri.parse(baseUrl + url), headers: header);
 
-
       responseJson = _returnResponse(response);
+      print("\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\");
+      print(responseJson);
+      print("\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\");
+      print(response.body);
     } on SocketException {
       throw FetchDataException('No Internet connection');
     }
@@ -75,6 +78,8 @@ class ApiBaseHelper {
         throw UnauthorisedException(response.body);
       case 500:
       default:
+        print(response.statusCode);
+        print(response.request);
         throw FetchDataException(
             'Error occurred while Communication with Server with StatusCode : ${response.statusCode}');
     }

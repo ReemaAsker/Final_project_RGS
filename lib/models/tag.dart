@@ -31,9 +31,6 @@
 // }
 
 ////////////////////////////////////////////////////////////////
-import 'dart:convert';
-
-import 'package:gsg_final_project_rgs/models/pivot.dart';
 
 class TagsResponseModel {
   List<Tag>? tags;
@@ -59,18 +56,18 @@ class TagsResponseModel {
 }
 
 class Tag {
-  String? id;
+  int? id;
   String? name;
   String? createdAt;
   String? updatedAt;
-  Pivot? pivot;
+  // Pivot? pivot;
 
   Tag({
     this.id,
     this.name,
     this.createdAt,
     this.updatedAt,
-    this.pivot,
+    // this.pivot,
   });
 
   factory Tag.fromJson(Map<String, dynamic> json) => Tag(
@@ -78,16 +75,16 @@ class Tag {
         name: json["name"],
         createdAt: json["created_at"],
         updatedAt: json["updated_at"],
-        pivot: json["pivot"] == null
-            ? null
-            : Pivot.fromJson(jsonDecode(json["pivot"])),
+        // pivot: json["pivot"] == null
+        //     ? null
+        //     : Pivot.fromJson(jsonDecode(json["pivot"])),
       );
   Map<String, dynamic> toJson() => {
         "id": id,
         "name": name,
         "created_at": createdAt,
         "updated_at": updatedAt,
-        "pivot": json.encode(pivot?.toJson()),
+        // "pivot": json.encode(pivot?.toJson()),
       };
   // String toJson() => json.encode({
   //       "id": id,
@@ -98,3 +95,67 @@ class Tag {
   //     });
 }
 /////////////////////////////////////////////////////////////////
+// To parse this JSON data, do
+//
+//     final tagResponseModel = tagResponseModelFromJson(jsonString);
+
+// To parse this JSON data, do
+//
+//     final tagsResponseModel = tagsResponseModelFromJson(jsonString);
+/////////////////////////////////////////////////////////////////////////////
+// import 'dart:convert';
+//
+// TagsResponseModel tagsResponseModelFromJson(String str) =>
+//     TagsResponseModel.fromJson(json.decode(str));
+//
+// String tagsResponseModelToJson(TagsResponseModel data) =>
+//     json.encode(data.toJson());
+//
+// class TagsResponseModel {
+//   List<Tag>? tags;
+//
+//   TagsResponseModel({
+//     this.tags,
+//   });
+//
+//   factory TagsResponseModel.fromJson(Map<String, dynamic> json) =>
+//       TagsResponseModel(
+//         tags: json["tags"] == null
+//             ? []
+//             : List<Tag>.from(json["tags"]!.map((x) => Tag.fromJson(x))),
+//       );
+//
+//   Map<String, dynamic> toJson() => {
+//         "tags": tags == null
+//             ? []
+//             : List<dynamic>.from(tags!.map((x) => x.toJson())),
+//       };
+// }
+//
+// class Tag {
+//   int? id;
+//   String? name;
+//   String? createdAt;
+//   String? updatedAt;
+//
+//   Tag({
+//     this.id,
+//     this.name,
+//     this.createdAt,
+//     this.updatedAt,
+//   });
+//
+//   factory Tag.fromJson(Map<String, dynamic> json) => Tag(
+//         id: json["id"],
+//         name: json["name"],
+//         createdAt: json["created_at"],
+//         updatedAt: json["updated_at"],
+//       );
+//
+//   Map<String, dynamic> toJson() => {
+//         "id": id,
+//         "name": name,
+//         "created_at": createdAt,
+//         "updated_at": updatedAt,
+//       };
+// }

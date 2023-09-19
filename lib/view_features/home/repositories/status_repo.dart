@@ -16,12 +16,13 @@ class StatusRepo {
     // print("url ");
     final response = await _helper.get(url,
         {'Authorization': 'Bearer $userToken', 'Accept': 'application/json'});
-    List<StatusElement>? result = Status.fromJson(response).statuses;
+    // List<StatusElement>? result = Status.fromJson(response).statuses;
 
     return Status.fromJson(response).statuses;
   }
 
-  Future<StatusElement?> fetchOneStatusWithMails({required int statusId}) async {
+  Future<StatusElement?> fetchOneStatusWithMails(
+      {required int statusId}) async {
     String url = satatusUrl + "/$statusId?mail=true";
 
     final response = await _helper.get(url, {

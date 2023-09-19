@@ -1,10 +1,10 @@
 // import 'mail.dart';
-
+//
 // class StatusResponse {
 //   List<Status>? statuses;
-
+//
 //   StatusResponse({this.statuses});
-
+//
 //   StatusResponse.fromJson(Map<String, dynamic> json) {
 //     if (json['statuses'] != null) {
 //       statuses = <Status>[];
@@ -13,7 +13,7 @@
 //       });
 //     }
 //   }
-
+//
 //   Map<String, dynamic> toJson() {
 //     final Map<String, dynamic> data = Map<String, dynamic>();
 //     if (this.statuses != null) {
@@ -22,7 +22,7 @@
 //     return data;
 //   }
 // }
-
+//
 // class Status {
 //   int? id;
 //   String? name;
@@ -30,8 +30,8 @@
 //   String? createdAt;
 //   String? updatedAt;
 //   String? mailsCount;
-//   List<Mail>? mails;
-
+//   List<MailClass>? mails;
+//
 //   Status(
 //       {this.id,
 //       this.name,
@@ -40,7 +40,7 @@
 //       this.updatedAt,
 //       this.mailsCount,
 //       this.mails});
-
+//
 //   Status.fromJson(Map<String, dynamic> json) {
 //     id = json['id'];
 //     name = json['name'];
@@ -49,13 +49,13 @@
 //     updatedAt = json['updated_at'];
 //     mailsCount = json['mails_count'];
 //     if (json['mails'] != null) {
-//       mails = <Mail>[];
+//       mails = <MailClass>[];
 //       json['mails'].forEach((v) {
-//         mails!.add(new Mail.fromJson(v));
+//         mails!.add(new MailClass.fromJson(v));
 //       });
 //     }
 //   }
-
+//
 //   Map<String, dynamic> toJson() {
 //     final Map<String, dynamic> data = new Map<String, dynamic>();
 //     data['id'] = this.id;
@@ -70,10 +70,10 @@
 //     return data;
 //   }
 // }
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // To parse this JSON data, do
-//
-//     final statuses = statusesFromJson(jsonString);
+
+// final statuses = statusesFromJson(jsonString);
 
 import 'dart:convert';
 
@@ -103,6 +103,11 @@ class Status {
             : List<dynamic>.from(statuses!.map((x) => x.toJson())),
       };
 }
+
+StatusElement statusElementFromJson(String str) =>
+    StatusElement.fromJson(json.decode(str));
+
+String statusElementToJson(StatusElement data) => json.encode(data.toJson());
 
 class StatusElement {
   int? id;
@@ -135,11 +140,7 @@ class StatusElement {
             : List<MailClass>.from(
                 json["mails"]!.map((x) => MailClass.fromJson(x))),
       );
-/*
-        mails: json["mails"] == null
-            ? []
-            : List<Mail>.from(json["mails"]!.map((x) => Mail.fromJson(x))),
-*/
+
   Map<String, dynamic> toJson() => {
         "id": id,
         "name": name,
@@ -152,3 +153,52 @@ class StatusElement {
             : List<dynamic>.from(mails!.map((x) => x.toJson())),
       };
 }
+/////////////////////////////////////////////////////////////////////////
+// class StatusElement {
+//   int? id;
+//   String? name;
+//   String? color;
+//   String? createdAt;
+//   String? updatedAt;
+//   String? mailsCount;
+//   List<MailClass>? mails;
+//
+//   StatusElement({
+//     this.id,
+//     this.name,
+//     this.color,
+//     this.createdAt,
+//     this.updatedAt,
+//     this.mailsCount,
+//     this.mails,
+//   });
+//
+//   factory StatusElement.fromJson(Map<String, dynamic> json) => StatusElement(
+//         id: json["id"],
+//         name: json["name"],
+//         color: json["color"],
+//         createdAt: json["created_at"],
+//         updatedAt: json["updated_at"],
+//         mailsCount: json["mails_count"],
+//         mails: json["mails"] == null
+//             ? []
+//             : List<MailClass>.from(
+//                 json["mails"]!.map((x) => MailClass.fromJson(x))),
+//       );
+// /*
+//         mails: json["mails"] == null
+//             ? []
+//             : List<Mail>.from(json["mails"]!.map((x) => Mail.fromJson(x))),
+// */
+//   Map<String, dynamic> toJson() => {
+//         "id": id,
+//         "name": name,
+//         "color": color,
+//         "created_at": createdAt,
+//         "updated_at": updatedAt,
+//         "mails_count": mailsCount,
+//         "mails": mails == null
+//             ? []
+//             : List<dynamic>.from(mails!.map((x) => x.toJson())),
+//       };
+// }

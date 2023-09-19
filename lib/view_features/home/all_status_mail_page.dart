@@ -56,7 +56,7 @@ class _StatusMailsPageState extends State<StatusMailsPage> {
             }
 
             return ListView.separated(
-              shrinkWrap: false,
+              shrinkWrap: true,
               itemBuilder: (context, index) {
                 // print("\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\");
                 // print(statusProvider.status!.data!.mails![index].subject);
@@ -186,7 +186,7 @@ class _StatusMailsPageState extends State<StatusMailsPage> {
                                             ), //         "https://palmail.gsgtt.tech/storage/${myMail.attachments![index]['image']}"))),
                                             child: Image(
                                               image: NetworkImage(
-                                                "https://palmail.gsgtt.tech/storage/${widget.status.mails![index].attachments![i].image}",
+                                                "https://palmail.gsgtt.tech/storage/${widget.status.mails![index].attachments![i]['image']}",
                                               ),
                                               fit: BoxFit.fill,
                                             ),
@@ -217,7 +217,9 @@ class _StatusMailsPageState extends State<StatusMailsPage> {
                   thickness: 1,
                 );
               },
-              itemCount: int.parse(statusProvider.status!.data!.mailsCount!),
+              itemCount: 10,
+              //int.parse(statusProvider.status!.data!.mailsCount!)
+              //!.data!.mailsCount!
             );
           }),
         ),
