@@ -15,6 +15,8 @@ import 'package:gsg_final_project_rgs/view_features/new_inbox/repo/create_mail_r
 import 'package:gsg_final_project_rgs/view_features/new_inbox/widgets/custom_app_bar.dart';
 import 'package:gsg_final_project_rgs/view_features/home/categories/models/Category.dart';
 import 'package:gsg_final_project_rgs/view_features/satuts/status.dart';
+import 'package:gsg_final_project_rgs/view_features/sender/sender_page.dart';
+import 'package:gsg_final_project_rgs/view_features/tags/tag.dart';
 import '../../cores/utils/colors.dart';
 import '../home/widgets/custom_border.dart';
 import '../home/widgets/custom_text.dart';
@@ -29,6 +31,7 @@ class NewInboxPage extends StatefulWidget {
 
 class _NewInboxPageState extends State<NewInboxPage> {
   final _formKey = GlobalKey<FormState>();
+  Tag selectedTag = Tag(name: "no selected tag");
 
   final senderNameController = TextEditingController();
 
@@ -46,19 +49,34 @@ class _NewInboxPageState extends State<NewInboxPage> {
 
   final mailActivitiesController = TextEditingController();
 
-  void submit(ApiResponse value) {
-    print(value.status);
-    if (value.status == DataStatus.COMPLETED) {
-      My_snackBar.showSnackBar(context, value.data, Colors.green);
-      // Navigator.pushNamed(context, Hello.id),
-      Navigator.pop(
-        context,
-      );
-    } else {
-      Navigator.pop(
-        context,
-      );
-      My_snackBar.showSnackBar(context, value.message!, Colors.red);
+  Future<void> _navigateToTagsPage(BuildContext context) async {
+    final tag = await Navigator.push<Tag>(
+      context,
+      MaterialPageRoute(
+        builder: (context) => TagsPage(),
+      ),
+    );
+
+    if (tag != null) {
+      // setState(() {
+      selectedTag = tag;
+      // });
+    }
+
+    void submit(ApiResponse value) {
+      print(value.status);
+      if (value.status == DataStatus.COMPLETED) {
+        My_snackBar.showSnackBar(context, value.data, Colors.green);
+        // Navigator.pushNamed(context, Hello.id),
+        Navigator.pop(
+          context,
+        );
+      } else {
+        Navigator.pop(
+          context,
+        );
+        My_snackBar.showSnackBar(context, value.message!, Colors.red);
+      }
     }
   }
 
@@ -367,7 +385,13 @@ class _NewInboxPageState extends State<NewInboxPage> {
         ),
       ),
       valColor: Colors.white,
-      onTap: () {},
+      onTap: () {
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => SenderPage(),
+            ));
+      },
     );
   }
 
@@ -594,26 +618,73 @@ class _NewInboxPageState extends State<NewInboxPage> {
 
   Widget _buildTagWidget(BuildContext context) {
     return BorderShape(
-        widget: Row(
-          children: [
-            const Icon(
-              Icons.tag,
-              color: kDarkGreyColor,
-            ),
-            const SizedBox(
-              width: 10,
-            ),
-            CustomText('Tags', 16, 'Poppins', kBlackColor, FontWeight.w600),
-            const Spacer(),
-            Image.asset('images/arrow_right.png')
-          ],
-        ),
-        valColor: Colors.white,
-        onTap: () {
-          print('Hello');
-          // _navigateToTagsPage(context);
-        });
+      widget: Column(
+        children: [
+          Row(
+            children: [
+              const Icon(
+                Icons.tag,
+                color: kDarkGreyColor,
+              ),
+              const SizedBox(
+                width: 10,
+              ),
+              CustomText('Tags', 16, 'Poppins', kBlackColor, FontWeight.w600),
+              const Spacer(),
+              GestureDetector(
+                  child: Image.asset('images/arrow_right.png'),
+                  onTap: () {
+                    _navigateToTagsPage(context).then((value) => value);
+                  }),
+            ],
+          ),
+          Container(
+            padding: EdgeInsets.all(12.0),
+            child: Text(selectedTag.name.toString()),
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.all(
+                  Radius.circular(20),
+                ),
+                color: Colors.blueGrey.withOpacity(0.2)),
+          ),
+        ],
+      ),
+      valColor: Colors.white,
+    );
   }
+  // Widget _buildTagWidget(BuildContext context) {
+  //   return BorderShape(
+  //       widget: Column(
+  //         children: [
+  //           Row(
+  //             children: [
+  //               const Icon(
+  //                 Icons.tag,
+  //                 color: kDarkGreyColor,
+  //               ),
+  //               const SizedBox(
+  //                 width: 10,
+  //               ),
+  //               CustomText('Tags', 16, 'Poppins', kBlackColor, FontWeight.w600),
+  //               const Spacer(),
+  //               Image.asset('images/arrow_right.png'),
+  //             ],
+  //           ),
+  //           Row(
+  //             children: [
+  //               Container(
+  //                 child: Text(
+  //                     '${getTags().then((value) => value)}'), //${getTags().then((value) => value.name)}
+  //               )
+  //             ],
+  //           ),
+  //         ],
+  //       ),
+  //       valColor: Colors.white,
+  //       onTap: () {
+  //         // _navigateToTagsPage(context);
+  //       });
+  // }
 
   Widget _buildImageWidget() {
     return BorderShape(

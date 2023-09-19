@@ -32,13 +32,13 @@ class TagsProvider extends ChangeNotifier {
     notifyListeners();
     try {
       List<Tag>? tags = await _tagRepo.fetchAllTagsWithoutEmail();
-      print("tags in provider function ${tags![2].name}");
+      // print("tags in provider function ${tags![2].name}");
       _allTagsList = ApiResponse.completed(tags);
       print("_allTagsList.data");
       print(_allTagsList.data);
       notifyListeners();
     } catch (e) {
-      print("in catch tags");
+      // print("in catch tags");
       _allTagsList = ApiResponse.error(e.toString());
       notifyListeners();
     }
