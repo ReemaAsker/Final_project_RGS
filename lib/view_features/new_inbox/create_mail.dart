@@ -642,7 +642,10 @@ class _NewInboxPageState extends State<NewInboxPage> {
                   }),
             ],
           ),
-          TagGridList(tags: selectedTag),
+          TagGridList(
+            tags: selectedTag,
+            onTagsSelected: (value) {},
+          ),
         ],
       ),
       valColor: Colors.white,

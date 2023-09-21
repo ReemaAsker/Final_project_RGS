@@ -21,48 +21,11 @@ class TagsPage extends StatefulWidget {
 
 class _TagsPageState extends State<TagsPage> {
   TextEditingController addController = TextEditingController();
-  late TagGridList tagList;
+  FocusNode _textFieldFocus = FocusNode();
   List<Tag> selectedTags = [];
 
-  // onEditingComplete() async {
-  //   if (addController.text.isNotEmpty) {
-  //     TagRepo()
-  //         .create_Tag(Tag(
-  //       name: addController.text,
-  //       createdAt: DateTime.now().toString(),
-  //       updatedAt: DateTime.now().toString(),
-  //     ))
-  //         .then((value) {
-  //       My_snackBar.showSnackBar(
-  //         context,
-  //         '${value.data!["message"]} (${addController.text})',
-  //         value.data == null ? Colors.red : Colors.green,
-  //       );
-
-  //       if (value.data != null) {
-  //         Tag newTag = Tag.fromJson(value.data!["tag"]);
-  //         // Navigator.pop(context, newTag);
-  //         // Navigator.pop(context, x);
-
-  //         selectedTags.add(newTag);
-  //         setState(() {});
-  //       }
-  //     });
-  //   }
-  // }
-
-//
   @override
   Widget build(BuildContext context) {
-    List<Tag> tags = [
-      Tag(
-          name: '#new tag',
-          createdAt: DateTime.now().toString(),
-          id: 1,
-          updatedAt: DateTime.now().toString()),
-      Tag(name: '#secoundTag')
-    ];
-
     return Scaffold(
       body: SingleChildScrollView(
         child: Container(
@@ -72,25 +35,20 @@ class _TagsPageState extends State<TagsPage> {
               CustomAppBar(
                   title: 'Tags',
                   onTap: () {
-                    setState(() {});
                     Navigator.pop(context, selectedTags);
                   }),
               Consumer<TagsProvider>(
                 builder: (_, tagProvider, __) {
-                  tagList = TagGridList(
-                      tags: tagProvider.allTagsList.data!); //new tag not work
-                  selectedTags = tagList.getSelectedTag();
                   if (tagProvider.allTagsList.status == DataStatus.LOADING) {
                     return const Center(
                       child: CircularProgressIndicator(),
                     );
-                  }
-                  if (tagProvider.allTagsList.status == DataStatus.ERROR) {
+                  } else if (tagProvider.allTagsList.status ==
+                      DataStatus.ERROR) {
                     return Center(
                       child: Text('${tagProvider.allTagsList..message}'),
                     );
                   }
-
                   return Visibility(
                     visible: tagProvider.allTagsList.data!.isNotEmpty,
                     child: Column(
@@ -101,8 +59,14 @@ class _TagsPageState extends State<TagsPage> {
                           child: CustomText('Tags', 20, 'Poppins', kBlackColor,
                               FontWeight.w600),
                         ),
-                        // TagGridList tagList = TagGridList(tags: tagProvider.allTagsList.data!);
-                        tagList
+                        TagGridList(
+                          tags: tagProvider.allTagsList.data!,
+                          onTagsSelected: (tags) {
+                            setState(() {
+                              selectedTags = tags;
+                            });
+                          },
+                        )
                       ],
                     ),
                   );
@@ -116,6 +80,7 @@ class _TagsPageState extends State<TagsPage> {
                 builder: (_, tagProvider, __) {
                   return BorderShape(
                       widget: TextField(
+                        focusNode: _textFieldFocus,
                         onEditingComplete: () {
                           if (addController.text.isNotEmpty) {
                             tagProvider
@@ -126,6 +91,7 @@ class _TagsPageState extends State<TagsPage> {
                                 '${value.data!["message"]} (${addController.text})',
                                 value.data == null ? Colors.red : Colors.green,
                               );
+                              _textFieldFocus.unfocus();
 
                               // if (value.data != null) {
                               //   Tag newTag = Tag.fromJson(value.data!["tag"]);

@@ -13,15 +13,15 @@ class TagRepo {
   String? userToken = getToken()!.token;
   // String userToken = "265|ksxcuVB3yjlAc44e76tblGvsoae68HxNiyjuIW7O";
 
-  Future<List<Tag>?> fetchAllTagsWithoutEmail() async {
+  Future<List<Tag>> fetchAllTagsWithoutEmail() async {
     String url = tagUrl;
     final response = await _helper.get(url,
         {'Authorization': 'Bearer $userToken', 'Accept': 'application/json'});
     print("In fetchTagsWithoutMail//////////////////////////////////");
-    print(response);
     List<Tag>? result = TagsResponseModel.fromJson(response).tags;
     print("000000000000000000000000");
-    print(result![0].name);
+    print(result!.length);
+    // print(result![0].name);
     return result;
   }
 
@@ -63,33 +63,18 @@ class TagRepo {
     return result;
   }
 
-  Future<Tag?> createTag({required String name}) async {
+  Future<Map<String, dynamic>> createTag({required String name}) async {
     Tag new_tag = Tag(
       name: name,
       createdAt: DateTime.now().toString(),
       updatedAt: DateTime.now().toString(),
     );
-    Map<String, dynamic> response = {};
-    try {
-      response = await _helper.post(tagUrl, httpHeader(), {
-        'name': "hello",
-        'created_at': DateTime.now().toString(),
-        'updated_at': DateTime.now().toString(),
-      });
-    } catch (e) {
-      print("+++++++++++++++++createTag+++++++++++++++++++");
-      print(e.toString());
-    }
-    print("*****************");
-    print(response);
+    Map<String, dynamic> response =
+        await _helper.post(tagUrl, new_tag.toJson(), httpHeader());
 
-    Tag result = Tag.fromJson(response);
-    print(result.name);
-    // print("createTag");
-    // print(result.name);
-    //
-    // print(result.name);
-    return result;
+    // Tag result = Tag.fromJson(response['tag']);
+
+    return response;
   }
   // Future<ApiResponse<Map<String, dynamic>>> create_Tag(Tag new_tag) async {
   //   final response;

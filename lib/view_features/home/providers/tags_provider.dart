@@ -10,11 +10,11 @@ class TagsProvider extends ChangeNotifier {
   late ApiResponse<List<Tag>> _allTagsList;
   late ApiResponse<List<Tag>> _tagsListWithMails;
   late ApiResponse<List<Tag>> _tagsOfMail;
-  late ApiResponse<Tag> _tag;
+  late ApiResponse<Map<String, dynamic>> _tag;
 
   ApiResponse<List<Tag>> get allTagsList => _allTagsList;
 
-  ApiResponse<Tag> get tag => _tag;
+  ApiResponse<Map<String, dynamic>> get tag => _tag;
 
   ApiResponse<List<Tag>> get tagsListWithMails => _tagsListWithMails;
 
@@ -23,27 +23,40 @@ class TagsProvider extends ChangeNotifier {
   TagsProvider() {
     _tagRepo = TagRepo();
     fetchAllTagsList();
-    // fetchCategoryMails();
-    // fetchAllCategoriesWithMails();
   }
-
   fetchAllTagsList() async {
-    _allTagsList = ApiResponse.loading('Fetching Tags');
+    _allTagsList = ApiResponse.loading('Fetching Links');
     notifyListeners();
     try {
-      List<Tag>? tags = await _tagRepo.fetchAllTagsWithoutEmail();
-      // print("tags in provider function ${tags![2].name}");
+      List<Tag> tags = await _tagRepo.fetchAllTagsWithoutEmail();
       _allTagsList = ApiResponse.completed(tags);
-      print("_allTagsList.data");
-      print(_allTagsList.data);
       notifyListeners();
     } catch (e) {
-      // print("in catch tags");
       _allTagsList = ApiResponse.error(e.toString());
       notifyListeners();
-      rethrow;
     }
   }
+
+  // fetchAllTagsList() async {
+  //   print("*********************************************");
+
+  //   _allTagsList = ApiResponse.loading('Fetching Tags');
+  //   notifyListeners();
+  //   try {
+  //     List<Tag>? tags = await _tagRepo.fetchAllTagsWithoutEmail();
+  //     print("*********************************************");
+  //     print(tags);
+  //     print("*********************************************");
+  //     _allTagsList = ApiResponse.completed(tags);
+
+  //     notifyListeners();
+  //   } catch (e) {
+  //     // print("in catch tags");
+  //     _allTagsList = ApiResponse.error(e.toString());
+  //     notifyListeners();
+  //     rethrow;
+  //   }
+  // }
 
   fetchTagsListWithMail({required List<int> tags}) async {
     _tagsListWithMails = ApiResponse.loading('Fetching Tags with mails');
@@ -73,17 +86,20 @@ class TagsProvider extends ChangeNotifier {
     }
   }
 
-  createTag({required String name}) async {
+  Future<ApiResponse<Map<String, dynamic>>> createTag(
+      {required String name}) async {
     _tag = ApiResponse.loading('creating tag ');
     notifyListeners();
     try {
-      Tag? myTag = await _tagRepo.createTag(name: name);
+      Map<String, dynamic> myTag = await _tagRepo.createTag(name: name);
       _tag = ApiResponse.completed(myTag);
+      fetchAllTagsList();
+
       notifyListeners();
     } catch (e) {
       _tag = ApiResponse.error(e.toString());
       notifyListeners();
     }
+    return _tag;
   }
- 
 }

@@ -12,9 +12,12 @@ class ApiBaseHelper {
     try {
       final response =
           await http.get(Uri.parse(baseUrl + url), headers: header);
+      print("tttttttttttttttttttttttttt");
+      print(response.body);
 
       responseJson = _returnResponse(response);
-      // print("\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\");
+
+      // print("\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\");
       // print(responseJson);
       // print("\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\");
       // print(response.body);

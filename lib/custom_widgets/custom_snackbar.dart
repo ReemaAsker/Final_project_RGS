@@ -15,8 +15,8 @@ class My_snackBar extends StatelessWidget {
       type: color == Colors.green
           ? AnimatedSnackBarType.success
           : AnimatedSnackBarType.error,
-      mobileSnackBarPosition: MobileSnackBarPosition.top,
-      desktopSnackBarPosition: DesktopSnackBarPosition.topRight,
+      mobileSnackBarPosition: MobileSnackBarPosition.bottom,
+      desktopSnackBarPosition: DesktopSnackBarPosition.bottomCenter,
     ).show(context);
   }
 }
