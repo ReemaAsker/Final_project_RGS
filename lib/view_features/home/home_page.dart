@@ -8,7 +8,7 @@ import 'package:gsg_final_project_rgs/view_features/home/providers/status_provid
 import 'package:gsg_final_project_rgs/view_features/home/providers/tags_provider.dart';
 import 'package:gsg_final_project_rgs/view_features/home/widgets/category_list_view.dart';
 import 'package:gsg_final_project_rgs/view_features/home/widgets/custom_text.dart';
-import 'package:gsg_final_project_rgs/view_features/home/widgets/status_tile.dart';
+import 'package:gsg_final_project_rgs/view_features/home/widgets/status_grid.dart';
 import 'package:gsg_final_project_rgs/view_features/home/widgets/tag_list.dart';
 import 'package:gsg_final_project_rgs/view_features/new_inbox/create_mail.dart';
 import 'package:provider/provider.dart';

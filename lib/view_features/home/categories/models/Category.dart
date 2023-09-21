@@ -96,7 +96,7 @@ import 'package:gsg_final_project_rgs/models/sender.dart';
 import '../../../../models/mail.dart';
 
 class CategoryModel {
-  int? id;
+  dynamic id;
   String? name;
   String? createdAt;
   String? updatedAt;

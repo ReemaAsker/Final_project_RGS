@@ -1,18 +1,14 @@
-import 'dart:convert';
-
-import 'package:gsg_final_project_rgs/models/status.dart';
-import 'package:gsg_final_project_rgs/view_features/home/categories/models/Category.dart';
-import 'package:gsg_final_project_rgs/view_features/home/categories/models/category_response.dart';
+import '../view_features/home/categories/models/Category.dart';
 
 class Sender {
-  String? id;
+  int? id;
   String? name;
   String? mobile;
   String? address;
-  String? categoryId;
+  dynamic categoryId;
   String? createdAt;
   String? updatedAt;
-  // CategoryModel? category;
+  CategoryModel? category;
 
   Sender({
     this.id,
@@ -22,7 +18,7 @@ class Sender {
     this.categoryId,
     this.createdAt,
     this.updatedAt,
-    // this.category,
+    this.category,
   });
 
   factory Sender.fromJson(Map<String, dynamic> json) => Sender(
@@ -33,9 +29,9 @@ class Sender {
         categoryId: json["category_id"],
         createdAt: json["created_at"],
         updatedAt: json["updated_at"],
-        // category: json["category"] == null
-        // ? null
-        // : CategoryModel.fromJson(json["category"]),
+        category: json["category"] == null
+            ? null
+            : CategoryModel.fromJson(json["category"]),
       );
 
   Map<String, dynamic> toJson() => {
@@ -46,6 +42,6 @@ class Sender {
         "category_id": categoryId ?? "",
         "created_at": createdAt ?? "",
         "updated_at": updatedAt ?? "",
-        // "category": category?.toJson(),
+        "category": category?.toJson(),
       };
 }

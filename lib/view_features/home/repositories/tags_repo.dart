@@ -37,9 +37,8 @@ class TagRepo {
 
     // print(tagUrl);
     // print(url);
-    final response = await _helper.get(url, {
-      'Authorization': 'Bearer $userToken',
-    });
+    final response = await _helper.get(url,
+        {'Authorization': 'Bearer $userToken', 'Accept': 'application/json'});
     // print("In fetchTagsWithEmail//////////////////////////////////");
     // print(response);
     List<Tag>? result = TagsResponseModel.fromJson(response).tags;
@@ -53,9 +52,8 @@ class TagRepo {
     String url = mailsUrl + '/$mailId/tags';
 
     // print(url);
-    final response = await _helper.get(url, {
-      'Authorization': 'Bearer $userToken',
-    });
+    final response = await _helper.get(url,
+        {'Authorization': 'Bearer $userToken', 'Accept': 'application/json'});
     // print("In ffetchMailTags//////////////////////////////////");
     // print(response);
     List<Tag>? result = TagsResponseModel.fromJson(response).tags;

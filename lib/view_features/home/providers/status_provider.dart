@@ -37,6 +37,7 @@ class StatusProvider extends ChangeNotifier {
       } catch (e) {
         _statusListWithMails = ApiResponse.error(e.toString());
         notifyListeners();
+        rethrow;
       }
     } else {
       _statusListWithoutMails = ApiResponse.loading('Fetching Statuses');
@@ -49,6 +50,7 @@ class StatusProvider extends ChangeNotifier {
       } catch (e) {
         _statusListWithoutMails = ApiResponse.error(e.toString());
         notifyListeners();
+        rethrow;
       }
     }
   }
@@ -64,6 +66,7 @@ class StatusProvider extends ChangeNotifier {
     } catch (e) {
       _status = ApiResponse.error(e.toString());
       notifyListeners();
+      rethrow;
     }
   }
 }
