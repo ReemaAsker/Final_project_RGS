@@ -2,7 +2,6 @@ import 'package:gsg_final_project_rgs/cores/helpers/api_response.dart';
 import 'package:gsg_final_project_rgs/custom_widgets/custom_snackbar.dart';
 import 'package:gsg_final_project_rgs/models/tag.dart';
 import 'package:gsg_final_project_rgs/view_features/home/providers/tags_provider.dart';
-import 'package:gsg_final_project_rgs/view_features/home/repositories/tags_repo.dart';
 import 'package:gsg_final_project_rgs/view_features/home/widgets/custom_text.dart';
 import 'package:provider/provider.dart';
 
@@ -13,7 +12,7 @@ import '../home/widgets/custom_border.dart';
 import '../home/widgets/tag_list.dart';
 
 class TagsPage extends StatefulWidget {
-  TagsPage({Key? key}) : super(key: key);
+  const TagsPage({Key? key}) : super(key: key);
 
   @override
   State<TagsPage> createState() => _TagsPageState();
@@ -21,7 +20,7 @@ class TagsPage extends StatefulWidget {
 
 class _TagsPageState extends State<TagsPage> {
   TextEditingController addController = TextEditingController();
-  FocusNode _textFieldFocus = FocusNode();
+  final FocusNode _textFieldFocus = FocusNode();
   List<Tag> selectedTags = [];
 
   @override
@@ -72,7 +71,6 @@ class _TagsPageState extends State<TagsPage> {
                   );
                 },
               ),
-
               const SizedBox(
                 height: 20,
               ),
@@ -92,15 +90,6 @@ class _TagsPageState extends State<TagsPage> {
                                 value.data == null ? Colors.red : Colors.green,
                               );
                               _textFieldFocus.unfocus();
-
-                              // if (value.data != null) {
-                              //   Tag newTag = Tag.fromJson(value.data!["tag"]);
-                              //   // Navigator.pop(context, newTag);
-                              //   // Navigator.pop(context, x);
-
-                              //   selectedTags.add(newTag);
-                              //   setState(() {});
-                              // }
                             });
                           }
                         },
@@ -124,7 +113,6 @@ class _TagsPageState extends State<TagsPage> {
                       onTap: () {});
                 },
               ),
-              // ElevatedButton(onPressed: createNewTag, child: Icon(Icons.tag))
             ],
           ),
         ),
