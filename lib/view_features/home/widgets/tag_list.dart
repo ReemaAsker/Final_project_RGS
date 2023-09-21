@@ -5,13 +5,26 @@ import '../../../models/tag.dart';
 import 'custom_border.dart';
 import 'custom_text.dart';
 
-class TagGridList extends StatelessWidget {
+class TagGridList extends StatefulWidget {
   List<Tag> tags;
+
   TagGridList({required this.tags, super.key});
+
+  @override
+  State<TagGridList> createState() => _TagGridListState();
+
+  List<Tag> selectedTag = [];
+
+  List<Tag> getSelectedTag() {
+    return selectedTag;
+  }
+}
+
+class _TagGridListState extends State<TagGridList> {
   @override
   Widget build(BuildContext context) {
     //|| tags == null || tags.length == 0
-    if (tags.length == 0) {
+    if (widget.tags.length == 0) {
       return CustomText(
           'notFoundData', 14, 'Poppins', kDarkGreyColor, FontWeight.w400);
     } else {
@@ -25,26 +38,35 @@ class TagGridList extends StatelessWidget {
               crossAxisSpacing: 12,
               mainAxisSpacing: 12),
           itemBuilder: (context, i) {
-            print(i);
-            return _buildTagTile("#${tags[i].name}", context);
+            // print(tags[i].id);
+            return _buildTagTile(widget.tags[i], context);
           },
-          itemCount: tags.length,
+          itemCount: widget.tags.length,
         ),
         valColor: Colors.white,
       );
     }
   }
 
-  _buildTagTile(String tagName, BuildContext context) {
+  _buildTagTile(Tag tag, BuildContext context) {
+    var isSelected = widget.getSelectedTag().contains(tag);
+
     return GestureDetector(
-      onTap: () {},
+      onTap: () {
+        isSelected = widget.selectedTag.contains(tag);
+        setState(() {
+          isSelected
+              ? widget.selectedTag.remove(tag)
+              : widget.selectedTag.add(tag);
+        });
+      },
       child: Container(
-        decoration: const BoxDecoration(
-            color: kLightGreyColor,
+        decoration: BoxDecoration(
+            color: isSelected ? Colors.grey : kLightGreyColor,
             borderRadius: BorderRadius.all(Radius.circular(15))),
         child: Center(
           child: CustomText(
-              '${tagName}', 12, 'Poppins', kDarkGreyColor, FontWeight.w600),
+              "#${tag.name}", 12, 'Poppins', kDarkGreyColor, FontWeight.w600),
         ),
       ),
     );

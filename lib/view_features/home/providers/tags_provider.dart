@@ -73,16 +73,17 @@ class TagsProvider extends ChangeNotifier {
     }
   }
 
-  // createTag({required String name}) async {
-  //   _tag = ApiResponse.loading('creating tag ');
-  //   notifyListeners();
-  //   try {
-  //     Tag? myTag = await _tagRepo.createTag(name: name);
-  //     _tag = ApiResponse.completed(myTag);
-  //     notifyListeners();
-  //   } catch (e) {
-  //     _tag = ApiResponse.error(e.toString());
-  //     notifyListeners();
-  //   }
-  // }
+  createTag({required String name}) async {
+    _tag = ApiResponse.loading('creating tag ');
+    notifyListeners();
+    try {
+      Tag? myTag = await _tagRepo.createTag(name: name);
+      _tag = ApiResponse.completed(myTag);
+      notifyListeners();
+    } catch (e) {
+      _tag = ApiResponse.error(e.toString());
+      notifyListeners();
+    }
+  }
+ 
 }

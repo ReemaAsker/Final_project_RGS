@@ -152,13 +152,28 @@ class CategoryMails {
     this.mails,
   });
 
-  factory CategoryMails.fromJson(Map<String, dynamic> json) => CategoryMails(
+  factory CategoryMails.fromJson(Map<String, dynamic> json) {
+    CategoryMails x = CategoryMails();
+    try {
+      List<MailClass> bb = List<MailClass>.from(
+          json["mails"]!.map((x) => MailClass.fromJson(x)));
+      print("&&&&&&&&&&&&&&&&&&&&&###################");
+      print(bb);
+      print("&&&&&&&&&&&&&&&&&&&&&###################");
+
+      x = CategoryMails(
         mails: json["mails"] == null
             ? []
             : List<MailClass>.from(
                 json["mails"]!.map((x) => MailClass.fromJson(x))),
       );
+    } catch (e) {
+      print("(((((((((((((((((())))))))))))))))))");
+      print(e);
+    }
 
+    return x;
+  }
   Map<String, dynamic> toJson() => {
         "mails": mails == null
             ? []

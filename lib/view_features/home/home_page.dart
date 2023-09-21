@@ -133,6 +133,8 @@ class _HomePageState extends State<HomePage> {
                       // color: Colors.red,
                       child: Consumer<StatusProvider>(
                         builder: (_, statusProvider, __) {
+                         
+
                           if (statusProvider.statusListWithMails.status ==
                               DataStatus.LOADING) {
                             return const Center(

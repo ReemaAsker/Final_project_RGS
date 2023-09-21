@@ -8,28 +8,15 @@ import '../categories/models/Category.dart';
 
 class CategoryRepo {
   final ApiBaseHelper _helper = ApiBaseHelper();
-  // String? userToken = getToken() == null
-  //     ? '883|NoOJXjvg0hIYwLbe3dzUZixQflr0iFqyiT0INttm'
-  //     : getToken()!
-  //         .token; // String userToken = "265|ksxcuVB3yjlAc44e76tblGvsoae68HxNiyjuIW7O";
+
   String? userToken = getToken()!.token;
   Future<List<CategoryModel>?> fetchCategoriesList() async {
-    final response = await _helper.get(categoriesUrl,
+    Map<String, dynamic> response = await _helper.get(categoriesUrl,
         {'Authorization': 'Bearer $userToken', 'Accept': 'application/json'});
-
-    // print("fetchCategoriesList/////////////////////////Responses");
-    // print(CatigoryResponse.fromJson(response));
-    // print(response);
-    // print("//////////");
-    // List<CategoryModel>? result =
-    //     CategoryResponseModel.fromJson(response).categories;
     List<CategoryModel>? result =
         CategoryResponseModel.fromJson(response).categories;
-    // print(result.categories);
+
     return result;
-    // print(result);
-    // if (result != null) return result;
-    // return [];
   }
 
   Future<CategoryModel?> fetchCategory(int categoryId) async {
@@ -52,15 +39,21 @@ class CategoryRepo {
 
   Future<List<MailClass>?> fetchCategoryMails(int categoryId) async {
     String url = categoriesUrl + '/$categoryId/mails';
-    final response = await _helper.get(url,
+    Map<String, dynamic> response = await _helper.get(url,
         {'Authorization': 'Bearer $userToken', 'Accept': 'application/json'});
+    List<MailClass>? result = [];
+    try {
+      print("%%%%%%%%%%%%%response%%%%%%%%%%%%%%");
 
-    /// to do:
-    List<MailClass>? result = CategoryMails.fromJson(response).mails;
-    // print(
-    //     "fetchCategoryMails//////////////////////////////////////////////////");
-    // print(response);
-    // print(result!.length);
+      print(response);
+      result = CategoryMails.fromJson(response).mails;
+    } catch (e) {
+      print(
+          "%%%%%%%%%%%%% result = CategoryMails.fromJson(response).mails;%%%%%%%%%%%%%%");
+      print(e.toString());
+      print("%%%%%%%%%%%%%%%%%%%%%%%%%%%");
+    }
+
     return result;
   }
 

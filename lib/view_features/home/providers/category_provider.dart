@@ -96,6 +96,7 @@ class CategoryProvider extends ChangeNotifier {
     try {
       List<CategoryModel>? categories =
           await _categoryRepo.fetchCategoriesList();
+
       // call category mails function
       // _categoryList = ApiResponse.completed(categories);
       for (int i = 1; i <= categories!.length; i++) {
@@ -111,9 +112,9 @@ class CategoryProvider extends ChangeNotifier {
       }
       categoryUiStatus = CategoryUiStatus(
           isSuccess: true, categoriesContent: categoriesWithMailsAsContent);
-
       notifyListeners();
     } catch (e) {
+      print("********************************************" + e.toString());
       // _categoryList = ApiResponse.error(e.toString());
       categoryUiStatus =
           CategoryUiStatus(isError: true, errorMessage: e.toString());

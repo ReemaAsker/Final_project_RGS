@@ -186,7 +186,7 @@ class _StatusMailsPageState extends State<StatusMailsPage> {
                                             ), //         "https://palmail.gsgtt.tech/storage/${myMail.attachments![index]['image']}"))),
                                             child: Image(
                                               image: NetworkImage(
-                                                "https://palmail.gsgtt.tech/storage/${widget.status.mails![index].attachments![i]['image']}",
+                                                "https://palmail.gsgtt.tech/storage/${widget.status.mails![index].attachments![i].image}",
                                               ),
                                               fit: BoxFit.fill,
                                             ),

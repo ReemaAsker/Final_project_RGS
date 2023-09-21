@@ -11,6 +11,7 @@ import 'package:gsg_final_project_rgs/models/status.dart';
 import 'package:gsg_final_project_rgs/models/tag.dart';
 import 'package:gsg_final_project_rgs/view_features/auth/model/auth_model.dart';
 import 'package:gsg_final_project_rgs/view_features/auth/model/user.dart';
+import 'package:gsg_final_project_rgs/view_features/home/widgets/tag_list.dart';
 import 'package:gsg_final_project_rgs/view_features/new_inbox/repo/create_mail_repo.dart';
 import 'package:gsg_final_project_rgs/view_features/new_inbox/widgets/custom_app_bar.dart';
 import 'package:gsg_final_project_rgs/view_features/home/categories/models/Category.dart';
@@ -31,7 +32,7 @@ class NewInboxPage extends StatefulWidget {
 
 class _NewInboxPageState extends State<NewInboxPage> {
   final _formKey = GlobalKey<FormState>();
-  Tag selectedTag = Tag(name: "no selected tag");
+  List<Tag> selectedTag = [];
 
   final senderNameController = TextEditingController();
 
@@ -50,7 +51,7 @@ class _NewInboxPageState extends State<NewInboxPage> {
   final mailActivitiesController = TextEditingController();
 
   Future<void> _navigateToTagsPage(BuildContext context) async {
-    final tag = await Navigator.push<Tag>(
+    List<Tag>? tag = await Navigator.push<List<Tag>>(
       context,
       MaterialPageRoute(
         builder: (context) => TagsPage(),
@@ -58,9 +59,9 @@ class _NewInboxPageState extends State<NewInboxPage> {
     );
 
     if (tag != null) {
-      // setState(() {
-      selectedTag = tag;
-      // });
+      setState(() {
+        selectedTag = tag;
+      });
     }
 
     void submit(ApiResponse value) {
@@ -88,13 +89,15 @@ class _NewInboxPageState extends State<NewInboxPage> {
         // mailDateController.text,
         createdAt: DateTime.now().toString(),
         activities: [],
-        tags: [2, 4],
+        tags: selectedTag
+            .map((tag) => tag.id)
+            .toList(), //[1, 2], //[2, 4],////////////////////
         attachments: [],
         decision: mailDecisionController.text,
         description: mailDescriptionController.text,
         // finalDecision: "",
         senderId: sender_id,
-        statusId: 1,
+        statusId: 1, ///////////////////////
         updatedAt: DateTime.now().toString());
 
     return mailBody;
@@ -119,6 +122,7 @@ class _NewInboxPageState extends State<NewInboxPage> {
             }
           else
             {
+              print(senderhelper.data),
               CreateMailRepository()
                   .create_mail(
                     getBody(senderhelper.data!["sender"][0]["id"].toString()),
@@ -638,15 +642,7 @@ class _NewInboxPageState extends State<NewInboxPage> {
                   }),
             ],
           ),
-          Container(
-            padding: EdgeInsets.all(12.0),
-            child: Text(selectedTag.name.toString()),
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.all(
-                  Radius.circular(20),
-                ),
-                color: Colors.blueGrey.withOpacity(0.2)),
-          ),
+          TagGridList(tags: selectedTag),
         ],
       ),
       valColor: Colors.white,

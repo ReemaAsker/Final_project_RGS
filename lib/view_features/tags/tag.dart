@@ -21,65 +21,47 @@ class TagsPage extends StatefulWidget {
 
 class _TagsPageState extends State<TagsPage> {
   TextEditingController addController = TextEditingController();
+  late TagGridList tagList;
+  List<Tag> selectedTags = [];
 
-  onEditingComplete() async {
-    if (addController.text.isNotEmpty) {
-      TagRepo()
-          .create_Tag(Tag(
-        name: addController.text,
-        createdAt: DateTime.now().toString(),
-        updatedAt: DateTime.now().toString(),
-      ))
-          .then((value) {
-        My_snackBar.showSnackBar(
-          context,
-          '${value.data!["message"]} (${addController.text})',
-          value.data == null ? Colors.red : Colors.green,
-        );
+  // onEditingComplete() async {
+  //   if (addController.text.isNotEmpty) {
+  //     TagRepo()
+  //         .create_Tag(Tag(
+  //       name: addController.text,
+  //       createdAt: DateTime.now().toString(),
+  //       updatedAt: DateTime.now().toString(),
+  //     ))
+  //         .then((value) {
+  //       My_snackBar.showSnackBar(
+  //         context,
+  //         '${value.data!["message"]} (${addController.text})',
+  //         value.data == null ? Colors.red : Colors.green,
+  //       );
 
-        if (value.data != null) {
-          Tag newTag = Tag.fromJson(value.data!["tag"]);
-          Navigator.pop(context, newTag);
-        }
-      });
-    }
-  }
+  //       if (value.data != null) {
+  //         Tag newTag = Tag.fromJson(value.data!["tag"]);
+  //         // Navigator.pop(context, newTag);
+  //         // Navigator.pop(context, x);
 
+  //         selectedTags.add(newTag);
+  //         setState(() {});
+  //       }
+  //     });
+  //   }
+  // }
+
+//
   @override
   Widget build(BuildContext context) {
     List<Tag> tags = [
       Tag(
           name: '#new tag',
           createdAt: DateTime.now().toString(),
-          id: "",
+          id: 1,
           updatedAt: DateTime.now().toString()),
       Tag(name: '#secoundTag')
     ];
-    // String selectedTags = "";
-    // Future<void> onEditingComplete() async {
-    //   var value;
-    //   if (addController.text.isNotEmpty) {
-    //     value = await TagRepo().create_Tag(Tag(
-    //       name: addController.text,
-    //       createdAt: DateTime.now().toString(),
-    //       updatedAt: DateTime.now().toString(),
-    //     ));
-    //     if (mounted) {
-    //       My_snackBar.showSnackBar(
-    //         context,
-    //         value.data == null
-    //             ? value.message
-    //             : '${value.data!["message"]} (${addController.text})',
-    //         value.data == null ? Colors.red : Colors.green,
-    //       );
-    //     }
-
-    //     if (value.data != null) {
-    //       Tag newTag = Tag.fromJson(value.data!["tag"]);
-    //       Navigator.pop(context, newTag);
-    //     }
-    //   }
-    // }
 
     return Scaffold(
       body: SingleChildScrollView(
@@ -87,9 +69,17 @@ class _TagsPageState extends State<TagsPage> {
           padding: const EdgeInsets.only(right: 16, left: 16),
           child: Column(
             children: [
-              CustomAppBar(title: 'Tags', onTap: () {}),
+              CustomAppBar(
+                  title: 'Tags',
+                  onTap: () {
+                    setState(() {});
+                    Navigator.pop(context, selectedTags);
+                  }),
               Consumer<TagsProvider>(
                 builder: (_, tagProvider, __) {
+                  tagList = TagGridList(
+                      tags: tagProvider.allTagsList.data!); //new tag not work
+                  selectedTags = tagList.getSelectedTag();
                   if (tagProvider.allTagsList.status == DataStatus.LOADING) {
                     return const Center(
                       child: CircularProgressIndicator(),
@@ -111,7 +101,8 @@ class _TagsPageState extends State<TagsPage> {
                           child: CustomText('Tags', 20, 'Poppins', kBlackColor,
                               FontWeight.w600),
                         ),
-                        TagGridList(tags: tagProvider.allTagsList.data!),
+                        // TagGridList tagList = TagGridList(tags: tagProvider.allTagsList.data!);
+                        tagList
                       ],
                     ),
                   );
@@ -121,27 +112,52 @@ class _TagsPageState extends State<TagsPage> {
               const SizedBox(
                 height: 20,
               ),
-              BorderShape(
-                  widget: TextField(
-                    onEditingComplete: onEditingComplete,
-                    controller: addController,
-                    style: const TextStyle(
-                        fontWeight: FontWeight.w400,
-                        fontFamily: 'Poppins',
-                        fontSize: 12,
-                        color: kBlackColor),
-                    decoration: const InputDecoration(
-                      border: InputBorder.none,
-                      hintText: 'Add New Tag..',
-                      hintStyle: TextStyle(
-                          fontWeight: FontWeight.w400,
-                          fontFamily: 'Poppins',
-                          fontSize: 16,
-                          color: kHintGreyColor),
-                    ),
-                  ),
-                  valColor: Colors.white,
-                  onTap: () {}),
+              Consumer<TagsProvider>(
+                builder: (_, tagProvider, __) {
+                  return BorderShape(
+                      widget: TextField(
+                        onEditingComplete: () {
+                          if (addController.text.isNotEmpty) {
+                            tagProvider
+                                .createTag(name: addController.text)
+                                .then((value) {
+                              My_snackBar.showSnackBar(
+                                context,
+                                '${value.data!["message"]} (${addController.text})',
+                                value.data == null ? Colors.red : Colors.green,
+                              );
+
+                              // if (value.data != null) {
+                              //   Tag newTag = Tag.fromJson(value.data!["tag"]);
+                              //   // Navigator.pop(context, newTag);
+                              //   // Navigator.pop(context, x);
+
+                              //   selectedTags.add(newTag);
+                              //   setState(() {});
+                              // }
+                            });
+                          }
+                        },
+                        controller: addController,
+                        style: const TextStyle(
+                            fontWeight: FontWeight.w400,
+                            fontFamily: 'Poppins',
+                            fontSize: 12,
+                            color: kBlackColor),
+                        decoration: const InputDecoration(
+                          border: InputBorder.none,
+                          hintText: 'Add New Tag..',
+                          hintStyle: TextStyle(
+                              fontWeight: FontWeight.w400,
+                              fontFamily: 'Poppins',
+                              fontSize: 16,
+                              color: kHintGreyColor),
+                        ),
+                      ),
+                      valColor: Colors.white,
+                      onTap: () {});
+                },
+              ),
               // ElevatedButton(onPressed: createNewTag, child: Icon(Icons.tag))
             ],
           ),

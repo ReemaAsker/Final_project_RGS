@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import '../view_features/home/categories/models/Category.dart';
 
 class Sender {
@@ -42,6 +44,6 @@ class Sender {
         "category_id": categoryId ?? "",
         "created_at": createdAt ?? "",
         "updated_at": updatedAt ?? "",
-        "category": category?.toJson(),
+        "category": json.encode(category?.toJson()),
       };
 }

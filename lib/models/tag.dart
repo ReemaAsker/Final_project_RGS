@@ -30,6 +30,11 @@
 //   }
 // }
 
+import 'dart:convert';
+import 'dart:ffi';
+
+import 'package:gsg_final_project_rgs/models/pivot.dart';
+
 ////////////////////////////////////////////////////////////////
 
 class TagsResponseModel {
@@ -41,15 +46,15 @@ class TagsResponseModel {
     if (json['tags'] != null) {
       tags = <Tag>[];
       json['tags'].forEach((v) {
-        tags!.add(new Tag.fromJson(v));
+        tags!.add(Tag.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.tags != null) {
-      data['tags'] = this.tags!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = Map<String, dynamic>();
+    if (tags != null) {
+      data['tags'] = tags!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -60,28 +65,28 @@ class Tag {
   String? name;
   String? createdAt;
   String? updatedAt;
-  // Pivot? pivot;
+  Pivot? pivot;
 
   Tag({
     this.id,
     this.name,
     this.createdAt,
     this.updatedAt,
-    // this.pivot,
+    this.pivot,
   });
 
   factory Tag.fromJson(Map<String, dynamic> json) => Tag(
-        id: json["id"],//id: json["id"].toString() ?? ""
+        id: int.tryParse(json["id"]), //id: json["id"].toString() ?? ""
         name: json["name"],
         createdAt: json["created_at"],
         updatedAt: json["updated_at"],
-        Pivot: json["pivot"] == null
+        pivot: json["pivot"] == null
             ? null
             : Pivot.fromJson(jsonDecode(json["pivot"])),
       );
-  Map<String, dynamic> toJson() => {
-        "id": id ?? "",
-        "name": name,
+  Map<String, String> toJson() => {
+        "id": json.encode(id) ?? "0",
+        "name": name ?? "",
         "created_at": createdAt ?? DateTime.now().toString(),
         "updated_at": updatedAt ?? "",
         "pivot":

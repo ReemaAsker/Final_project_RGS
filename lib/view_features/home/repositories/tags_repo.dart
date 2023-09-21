@@ -1,5 +1,6 @@
 import 'package:gsg_final_project_rgs/cores/helpers/api_response.dart';
 import 'package:gsg_final_project_rgs/cores/utils/constants.dart';
+import 'package:gsg_final_project_rgs/models/pivot.dart';
 
 import '../../../cores/helpers/api_base_helper.dart';
 import '../../../cores/helpers/token_helper.dart';
@@ -62,33 +63,46 @@ class TagRepo {
     return result;
   }
 
-  // Future<Tag?> createTag({required String name}) async {
-  //   final response = await _helper.post(tagUrl, {
-  //     'Authorization': 'Bearer $userToken',
-  //   }, {
-  //     'name': name
-  //   });
-  //   print("*****************");
-  //   print(response);
-  //   Tag result = Tag.fromJson(response['tag']);
-  //   // print("createTag");
-  //   // print(result.name);
-  //   //
-  //   // print(result.name);
-  //   return result;
-  // }
-  Future<ApiResponse<Map<String, dynamic>>> create_Tag(Tag new_tag) async {
-    final response;
-    _userdata = ApiResponse.loading("fetch created ..");
+  Future<Tag?> createTag({required String name}) async {
+    Tag new_tag = Tag(
+      name: name,
+      createdAt: DateTime.now().toString(),
+      updatedAt: DateTime.now().toString(),
+    );
+    Map<String, dynamic> response = {};
     try {
-      response = await _helper.post(tagUrl, new_tag.toJson(), httpHeader());
-      _userdata = ApiResponse.completed(response);
+      response = await _helper.post(tagUrl, httpHeader(), {
+        'name': "hello",
+        'created_at': DateTime.now().toString(),
+        'updated_at': DateTime.now().toString(),
+      });
     } catch (e) {
-      _userdata = ApiResponse.error("tag created failed..");
+      print("+++++++++++++++++createTag+++++++++++++++++++");
+      print(e.toString());
     }
+    print("*****************");
+    print(response);
 
-    return _userdata;
+    Tag result = Tag.fromJson(response);
+    print(result.name);
+    // print("createTag");
+    // print(result.name);
+    //
+    // print(result.name);
+    return result;
   }
+  // Future<ApiResponse<Map<String, dynamic>>> create_Tag(Tag new_tag) async {
+  //   final response;
+  //   _userdata = ApiResponse.loading("fetch created ..");
+  //   try {
+  //     response = await _helper.post(tagUrl, new_tag.toJson(), httpHeader());
+  //     _userdata = ApiResponse.completed(response);
+  //   } catch (e) {
+  //     _userdata = ApiResponse.error("tag created failed..");
+  //   }
+
+  //   return _userdata;
+  // }
 }
 /*
  .create_Tag(Tag(

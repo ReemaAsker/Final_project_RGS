@@ -6,8 +6,6 @@ import 'package:http/http.dart' as http;
 
 import 'app_exception.dart';
 
-class tasty {}
-
 class ApiBaseHelper {
   Future<dynamic> get(String url, Map<String, String> header) async {
     var responseJson;
@@ -16,10 +14,10 @@ class ApiBaseHelper {
           await http.get(Uri.parse(baseUrl + url), headers: header);
 
       responseJson = _returnResponse(response);
-      print("\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\");
-      print(responseJson);
-      print("\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\");
-      print(response.body);
+      // print("\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\");
+      // print(responseJson);
+      // print("\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\");
+      // print(response.body);
     } on SocketException {
       throw FetchDataException('No Internet connection');
     }
@@ -30,8 +28,14 @@ class ApiBaseHelper {
       String url, Map<String, dynamic> body, Map<String, String> header) async {
     var responseJson;
     try {
+      print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!8888888888888888888");
+
       final response = await http.post(Uri.parse(baseUrl + url),
           body: body, headers: header);
+      print("##########################");
+      print(response.body);
+      print("##########################");
+
       responseJson = _returnResponse(response);
     } on SocketException {
       throw FetchDataException('No Internet connection');
@@ -65,6 +69,7 @@ class ApiBaseHelper {
   }
 
   dynamic _returnResponse(http.Response response) {
+    print(response.body);
     switch (response.statusCode) {
       case 200:
       case 201:
