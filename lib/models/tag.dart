@@ -71,20 +71,21 @@ class Tag {
   });
 
   factory Tag.fromJson(Map<String, dynamic> json) => Tag(
-        id: json["id"],
+        id: json["id"],//id: json["id"].toString() ?? ""
         name: json["name"],
         createdAt: json["created_at"],
         updatedAt: json["updated_at"],
-        // pivot: json["pivot"] == null
-        //     ? null
-        //     : Pivot.fromJson(jsonDecode(json["pivot"])),
+        Pivot: json["pivot"] == null
+            ? null
+            : Pivot.fromJson(jsonDecode(json["pivot"])),
       );
   Map<String, dynamic> toJson() => {
-        "id": id,
+        "id": id ?? "",
         "name": name,
-        "created_at": createdAt,
-        "updated_at": updatedAt,
-        // "pivot": json.encode(pivot?.toJson()),
+        "created_at": createdAt ?? DateTime.now().toString(),
+        "updated_at": updatedAt ?? "",
+        "pivot":
+            pivot == null ? json.encode(Pivot()) : json.encode(pivot!.toJson()),
       };
   // String toJson() => json.encode({
   //       "id": id,

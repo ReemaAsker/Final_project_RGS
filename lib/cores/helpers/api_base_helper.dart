@@ -32,7 +32,6 @@ class ApiBaseHelper {
     try {
       final response = await http.post(Uri.parse(baseUrl + url),
           body: body, headers: header);
-      print(response.statusCode);
       responseJson = _returnResponse(response);
     } on SocketException {
       throw FetchDataException('No Internet connection');
