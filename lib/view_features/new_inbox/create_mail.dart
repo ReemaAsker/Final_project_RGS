@@ -376,10 +376,17 @@ class _NewInboxPageState extends State<NewInboxPage> {
                   const Spacer(),
                   CustomText('Other', 12, 'Poppins', kLightBlackColor,
                       FontWeight.w400),
-                  Image.asset(
-                    'images/arrow_right.png',
-                    width: 14,
-                    height: 12,
+                  GestureDetector(
+                    onTap: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => SenderPage(),
+                        )),
+                    child: Image.asset(
+                      'images/arrow_right.png',
+                      width: 14,
+                      height: 12,
+                    ),
                   ),
                 ],
               ),
