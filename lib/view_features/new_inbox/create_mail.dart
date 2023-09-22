@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:gsg_final_project_rgs/cores/helpers/api_response.dart';
-import 'package:gsg_final_project_rgs/cores/helpers/shared_pref.dart';
 import 'package:gsg_final_project_rgs/custom_widgets/custom_snackbar.dart';
 import 'package:gsg_final_project_rgs/models/activity.dart';
 import 'package:gsg_final_project_rgs/models/attachment.dart';
@@ -636,7 +635,10 @@ class _NewInboxPageState extends State<NewInboxPage> {
               CustomText('Tags', 16, 'Poppins', kBlackColor, FontWeight.w600),
               const Spacer(),
               GestureDetector(
-                  child: Image.asset('images/arrow_right.png'),
+                  child: Container(
+                      height: 20,
+                      width: 20,
+                      child: Image.asset('images/arrow_right.png')),
                   onTap: () {
                     _navigateToTagsPage(context).then((value) => value);
                   }),
@@ -651,39 +653,6 @@ class _NewInboxPageState extends State<NewInboxPage> {
       valColor: Colors.white,
     );
   }
-  // Widget _buildTagWidget(BuildContext context) {
-  //   return BorderShape(
-  //       widget: Column(
-  //         children: [
-  //           Row(
-  //             children: [
-  //               const Icon(
-  //                 Icons.tag,
-  //                 color: kDarkGreyColor,
-  //               ),
-  //               const SizedBox(
-  //                 width: 10,
-  //               ),
-  //               CustomText('Tags', 16, 'Poppins', kBlackColor, FontWeight.w600),
-  //               const Spacer(),
-  //               Image.asset('images/arrow_right.png'),
-  //             ],
-  //           ),
-  //           Row(
-  //             children: [
-  //               Container(
-  //                 child: Text(
-  //                     '${getTags().then((value) => value)}'), //${getTags().then((value) => value.name)}
-  //               )
-  //             ],
-  //           ),
-  //         ],
-  //       ),
-  //       valColor: Colors.white,
-  //       onTap: () {
-  //         // _navigateToTagsPage(context);
-  //       });
-  // }
 
   Widget _buildImageWidget() {
     return BorderShape(

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gsg_final_project_rgs/view_features/home/providers/category_provider.dart';
 import 'package:gsg_final_project_rgs/view_features/home/providers/status_provider.dart';
-import 'package:gsg_final_project_rgs/view_features/home/providers/tags_provider.dart';
+import 'package:gsg_final_project_rgs/providers/tags_provider.dart';
 import 'package:gsg_final_project_rgs/view_features/splash/widgets/splash_screan.dart';
 import 'package:provider/provider.dart';
 

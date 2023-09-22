@@ -5,8 +5,8 @@ import 'package:gsg_final_project_rgs/view_features/home/widgets/custom_text.dar
 import 'package:gsg_final_project_rgs/view_features/home/widgets/mail_tile_view.dart';
 import 'package:provider/provider.dart';
 
-import '../../cores/helpers/api_response.dart';
-import '../../cores/utils/colors.dart';
+import '../../../cores/helpers/api_response.dart';
+import '../../../cores/utils/colors.dart';
 
 class StatusMailsPage extends StatefulWidget {
   final StatusElement status;

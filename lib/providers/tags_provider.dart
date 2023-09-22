@@ -1,8 +1,9 @@
+//use in home oage ,tag page(new inbox)
 import 'package:flutter/widgets.dart';
 import 'package:gsg_final_project_rgs/cores/helpers/api_response.dart';
 
-import '../../../models/tag.dart';
-import '../repositories/tags_repo.dart';
+import '../models/tag.dart';
+import '../view_features/tags/tagRepo/tags_repo.dart';
 
 class TagsProvider extends ChangeNotifier {
   late TagRepo _tagRepo;
@@ -36,27 +37,6 @@ class TagsProvider extends ChangeNotifier {
       notifyListeners();
     }
   }
-
-  // fetchAllTagsList() async {
-  //   print("*********************************************");
-
-  //   _allTagsList = ApiResponse.loading('Fetching Tags');
-  //   notifyListeners();
-  //   try {
-  //     List<Tag>? tags = await _tagRepo.fetchAllTagsWithoutEmail();
-  //     print("*********************************************");
-  //     print(tags);
-  //     print("*********************************************");
-  //     _allTagsList = ApiResponse.completed(tags);
-
-  //     notifyListeners();
-  //   } catch (e) {
-  //     // print("in catch tags");
-  //     _allTagsList = ApiResponse.error(e.toString());
-  //     notifyListeners();
-  //     rethrow;
-  //   }
-  // }
 
   fetchTagsListWithMail({required List<int> tags}) async {
     _tagsListWithMails = ApiResponse.loading('Fetching Tags with mails');

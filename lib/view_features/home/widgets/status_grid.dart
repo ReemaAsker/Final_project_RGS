@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gsg_final_project_rgs/models/status.dart';
-import 'package:gsg_final_project_rgs/view_features/home/all_status_mail_page.dart';
+import 'package:gsg_final_project_rgs/view_features/home/widgets/all_status_mail_page.dart';
 import 'package:provider/provider.dart';
 
 import '../../../cores/utils/colors.dart';

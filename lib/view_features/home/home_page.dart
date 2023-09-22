@@ -5,7 +5,7 @@ import 'package:gsg_final_project_rgs/custom_widgets/custom_snackbar.dart';
 import 'package:gsg_final_project_rgs/view_features/auth/widgets/auth_screen.dart';
 import 'package:gsg_final_project_rgs/view_features/home/providers/category_provider.dart';
 import 'package:gsg_final_project_rgs/view_features/home/providers/status_provider.dart';
-import 'package:gsg_final_project_rgs/view_features/home/providers/tags_provider.dart';
+import 'package:gsg_final_project_rgs/providers/tags_provider.dart';
 import 'package:gsg_final_project_rgs/view_features/home/widgets/category_list_view.dart';
 import 'package:gsg_final_project_rgs/view_features/home/widgets/custom_text.dart';
 import 'package:gsg_final_project_rgs/view_features/home/widgets/status_grid.dart';
@@ -214,7 +214,7 @@ class _HomePageState extends State<HomePage> {
                       }),
                     ),
                     Consumer<TagsProvider>(
-                      builder: (_, tagProvider, __) {
+                      builder: (context, tagProvider, child) {
                         if (tagProvider.allTagsList.status ==
                             DataStatus.LOADING) {
                           return const Center(
