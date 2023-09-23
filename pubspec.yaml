@@ -19,7 +19,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
-  sdk: '3.1.0'
+  sdk: '3.1.1'
 # Dependencies specify other packages that your package needs in order to work.
 # To automatically upgrade your package dependencies to the latest versions
 # consider running `flutter pub upgrade --major-versions`. Alternatively,
@@ -43,7 +43,9 @@ dependencies:
   expandable: ^5.0.1
   intl: ^0.18.1
   animated_snack_bar: ^0.3.1
-
+  mime: ^1.0.4
+  image_picker: ^1.0.4
+  video_player: ^2.7.1
 
 dev_dependencies:
   flutter_test:

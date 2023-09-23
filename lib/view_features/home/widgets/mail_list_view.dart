@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:gsg_final_project_rgs/models/mail.dart';
+
 import '../../../cores/utils/colors.dart';
 import 'custom_text.dart';
 import 'mail_tile_view.dart';
 
 class MailListView extends StatelessWidget {
   String title;
-  List<Map<String, dynamic>> listLength;
-
-  MailListView(this.title, this.listLength, {Key? key}) : super(key: key);
+  List<MailClass> mailsList;
+  MailListView(this.title, this.mailsList, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -28,9 +29,9 @@ class MailListView extends StatelessWidget {
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
                   padding: EdgeInsets.zero,
-                  itemCount: listLength.length,
+                  itemCount: mailsList.length,
                   itemBuilder: (context, index) {
-                    return MailTile('mailList[index][index]');
+                    return MailTile(mailsList[index]);
                   },
                   separatorBuilder: (BuildContext context, int index) {
                     return const Divider(
