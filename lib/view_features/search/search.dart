@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gsg_final_project_rgs/models/mail.dart';
 import 'package:gsg_final_project_rgs/view_features/search/widgets/custom_search.dart';
 import '../../cores/utils/colors.dart';
+import '../filter/filter.dart';
 import '../home/widgets/custom_text.dart';
 import '../home/widgets/mail_tile_view.dart';
 
@@ -232,24 +233,24 @@ class SearchPage extends StatelessWidget {
   }
 }
 
-// class MyFilterWidget extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//     return GestureDetector(
-//         onTap: () async {
-//           await showModalBottomSheet<void>(
-//             context: context,
-//             isScrollControlled: true,
-//             shape:
-//             RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-//             builder: (BuildContext context) {
-//               return FractionallySizedBox(
-//                 heightFactor: 0.9,
-//                 child: FilterPage(),
-//               );
-//             },
-//           );
-//         },
-//         child: const Image(image: AssetImage('images/filter.png')));
-//   }
-// }
+class MyFilterWidget extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+        onTap: () async {
+          await showModalBottomSheet<void>(
+            context: context,
+            isScrollControlled: true,
+            shape:
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+            builder: (BuildContext context) {
+              return FractionallySizedBox(
+                heightFactor: 0.9,
+                child: FilterPage(),
+              );
+            },
+          );
+        },
+        child: const Image(image: AssetImage('images/filter.png')));
+  }
+}
