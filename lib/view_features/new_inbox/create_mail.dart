@@ -367,7 +367,7 @@ class _NewInboxPageState extends State<NewInboxPage> {
             const Divider(),
             GestureDetector(
               onTap: () {
-                onTap: () => _navigateToCategoryPage(context);
+                _navigateToCategoryPage(context);
               },
               child: Row(
                 children: [
@@ -380,7 +380,7 @@ class _NewInboxPageState extends State<NewInboxPage> {
                     onTap: () => Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => SenderPage(),
+                          builder: (context) => CategoryPage(),
                         )),
                     child: Image.asset(
                       'images/arrow_right.png',
@@ -395,13 +395,13 @@ class _NewInboxPageState extends State<NewInboxPage> {
         ),
       ),
       valColor: Colors.white,
-      onTap: () {
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => SenderPage(),
-            ));
-      },
+      // onTap: () {
+      //   Navigator.push(
+      //       context,
+      //       MaterialPageRoute(
+      //         builder: (context) => SenderPage(),
+      //       ));
+      // },
     );
   }
 
@@ -724,16 +724,16 @@ class _NewInboxPageState extends State<NewInboxPage> {
       },
     );
   }
-  Future<void> _navigateToTagsPage(BuildContext context) async {
-    await showModalBottomSheet<dynamic>(
-      isScrollControlled: true,
-      useRootNavigator: true,
-      backgroundColor: kLightWhiteColor,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-      context: context,
-      builder: (BuildContext context) {
-        return FractionallySizedBox(heightFactor: 0.9, child: TagsPage());
-      },
-    );
-  }
+  // Future<void> _navigateToTagsPage(BuildContext context) async {
+  //   await showModalBottomSheet<dynamic>(
+  //     isScrollControlled: true,
+  //     useRootNavigator: true,
+  //     backgroundColor: kLightWhiteColor,
+  //     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+  //     context: context,
+  //     builder: (BuildContext context) {
+  //       return FractionallySizedBox(heightFactor: 0.9, child: TagsPage());
+  //     },
+  //   );
+  // }
 }
