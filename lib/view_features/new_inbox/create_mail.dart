@@ -394,13 +394,13 @@ class _NewInboxPageState extends State<NewInboxPage> {
         ),
       ),
       valColor: Colors.white,
-      // onTap: () {
-      //   Navigator.push(
-      //       context,
-      //       MaterialPageRoute(
-      //         builder: (context) => SenderPage(),
-      //       ));
-      // },
+      onTap: () {
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => SenderPage(),
+            ));
+      },
     );
   }
 
@@ -625,9 +625,9 @@ class _NewInboxPageState extends State<NewInboxPage> {
     );
   }
 
-  Widget _buildTagWidget(BuildContext context) {///
+  Widget _buildTagWidget(BuildContext context) {
+    ///
     return BorderShape(
-
         widget: Row(
           children: [
             const Icon(
@@ -677,7 +677,6 @@ class _NewInboxPageState extends State<NewInboxPage> {
 //       ),
 //       valColor: Colors.white,
 //     );
-
   }
 
   Widget _buildImageWidget() {
@@ -699,6 +698,7 @@ class _NewInboxPageState extends State<NewInboxPage> {
       onTap: () {},
     );
   }
+
   Future<void> _navigateToStatusPage(BuildContext context) async {
     await showModalBottomSheet<dynamic>(
       isScrollControlled: true,
@@ -711,6 +711,7 @@ class _NewInboxPageState extends State<NewInboxPage> {
       },
     );
   }
+
   Future<void> _navigateToCategoryPage(BuildContext context) async {
     await showModalBottomSheet<dynamic>(
       isScrollControlled: true,
