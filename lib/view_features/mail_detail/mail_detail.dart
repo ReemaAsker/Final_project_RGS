@@ -5,6 +5,8 @@ import 'package:gsg_final_project_rgs/view_features/mail_detail/widgets/image_ti
 import '../../cores/utils/colors.dart';
 import '../home/widgets/custom_border.dart';
 import '../home/widgets/custom_text.dart';
+import '../satuts/status.dart';
+import 'more_page.dart';
 
 class DetailsPage extends StatefulWidget {
   const DetailsPage({Key? key}) : super(key: key);
@@ -44,7 +46,17 @@ class _DetailsScreenState extends State<DetailsPage> {
                   ),
                   const Spacer(),
                   TextButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        showModalBottomSheet<void>(
+                            isScrollControlled: false,
+                            backgroundColor: kLightWhiteColor,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(15)),
+                            context: context,
+                            builder: (BuildContext context) {
+                              return const MorePage();
+                            });
+                      },
                       child: const Image(
                         image: AssetImage('images/more.png'),
                       ))
@@ -204,7 +216,9 @@ class DetailsWidgetState extends State<DetailsWidget> {
                 height: 12,
               ),
               GestureDetector(
-                onTap: () => {},
+                onTap: () => {
+                  _theReturnValue(context),
+                },
                 child: BorderShape(
                   widget: Row(
                     children: [
@@ -359,5 +373,15 @@ class DetailsWidgetState extends State<DetailsWidget> {
         //  ),
       ),
     );
+  }
+  _theReturnValue(BuildContext context) async {
+    await Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => StatusPage(),
+        ));
+    // after the SecondScreen result comes back update the Text widget with it
+    setState(() {
+    });
   }
 }
