@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:gsg_final_project_rgs/cores/helpers/api_response.dart';
-import 'package:gsg_final_project_rgs/cores/helpers/shared_pref.dart';
 import 'package:gsg_final_project_rgs/custom_widgets/custom_snackbar.dart';
 import 'package:gsg_final_project_rgs/models/activity.dart';
 import 'package:gsg_final_project_rgs/models/attachment.dart';
@@ -11,11 +10,15 @@ import 'package:gsg_final_project_rgs/models/status.dart';
 import 'package:gsg_final_project_rgs/models/tag.dart';
 import 'package:gsg_final_project_rgs/view_features/auth/model/auth_model.dart';
 import 'package:gsg_final_project_rgs/view_features/auth/model/user.dart';
+import 'package:gsg_final_project_rgs/view_features/home/widgets/tag_list.dart';
 import 'package:gsg_final_project_rgs/view_features/new_inbox/repo/create_mail_repo.dart';
 import 'package:gsg_final_project_rgs/view_features/new_inbox/widgets/custom_app_bar.dart';
 import 'package:gsg_final_project_rgs/view_features/home/categories/models/Category.dart';
 import 'package:gsg_final_project_rgs/view_features/satuts/status.dart';
+import 'package:gsg_final_project_rgs/view_features/sender/sender_page.dart';
+import 'package:gsg_final_project_rgs/view_features/tags/tag.dart';
 import '../../cores/utils/colors.dart';
+import '../category/category.dart';
 import '../home/widgets/custom_border.dart';
 import '../home/widgets/custom_text.dart';
 import 'package:intl/intl.dart';
@@ -29,6 +32,7 @@ class NewInboxPage extends StatefulWidget {
 
 class _NewInboxPageState extends State<NewInboxPage> {
   final _formKey = GlobalKey<FormState>();
+  List<Tag> selectedTag = [];
 
   final senderNameController = TextEditingController();
 
@@ -46,19 +50,34 @@ class _NewInboxPageState extends State<NewInboxPage> {
 
   final mailActivitiesController = TextEditingController();
 
-  void submit(ApiResponse value) {
-    print(value.status);
-    if (value.status == DataStatus.COMPLETED) {
-      My_snackBar.showSnackBar(context, value.data, Colors.green);
-      // Navigator.pushNamed(context, Hello.id),
-      Navigator.pop(
-        context,
-      );
-    } else {
-      Navigator.pop(
-        context,
-      );
-      My_snackBar.showSnackBar(context, value.message!, Colors.red);
+  Future<void> _navigateToTagsPage(BuildContext context) async {
+    List<Tag>? tag = await Navigator.push<List<Tag>>(
+      context,
+      MaterialPageRoute(
+        builder: (context) => TagsPage(),
+      ),
+    );
+
+    if (tag != null) {
+      setState(() {
+        selectedTag = tag;
+      });
+    }
+
+    void submit(ApiResponse value) {
+      print(value.status);
+      if (value.status == DataStatus.COMPLETED) {
+        My_snackBar.showSnackBar(context, value.data, Colors.green);
+        // Navigator.pushNamed(context, Hello.id),
+        Navigator.pop(
+          context,
+        );
+      } else {
+        Navigator.pop(
+          context,
+        );
+        My_snackBar.showSnackBar(context, value.message!, Colors.red);
+      }
     }
   }
 
@@ -70,13 +89,15 @@ class _NewInboxPageState extends State<NewInboxPage> {
         // mailDateController.text,
         createdAt: DateTime.now().toString(),
         activities: [],
-        tags: [2, 4],
+        tags: selectedTag
+            .map((tag) => tag.id)
+            .toList(), //[1, 2], //[2, 4],////////////////////
         attachments: [],
         decision: mailDecisionController.text,
         description: mailDescriptionController.text,
         // finalDecision: "",
         senderId: sender_id,
-        statusId: 1,
+        statusId: 1, ///////////////////////
         updatedAt: DateTime.now().toString());
 
     return mailBody;
@@ -95,18 +116,18 @@ class _NewInboxPageState extends State<NewInboxPage> {
           if (senderhelper.data == null)
             {
               My_snackBar.showSnackBar(
-                  context, "Can't created sender", Colors.red),
+                  context, "Wrong in created sender process", Colors.red),
               My_snackBar.showSnackBar(
-                  context, "Can't created mail", Colors.red),
+                  context, "Wrong in created mail process", Colors.red),
             }
           else
             {
+              print(senderhelper.data),
               CreateMailRepository()
                   .create_mail(
                     getBody(senderhelper.data!["sender"][0]["id"].toString()),
                   )
                   .then((value) => {
-                        print(value),
                         Navigator.pop(context),
                         My_snackBar.showSnackBar(
                             context, "sender created", Colors.green),
@@ -118,15 +139,7 @@ class _NewInboxPageState extends State<NewInboxPage> {
                             value.data == null ? Colors.red : Colors.green)
                       })
             }
-        }); //}
-
-    // print("---------------------");
-    // // if (_formKey.currentState!.validate())
-    //
-
-    // else {
-    // My_snackBar.showSnackBar(
-    // context, "password not equal confirmpassword", Colors.red);
+        });
   }
 
   @override
@@ -351,7 +364,9 @@ class _NewInboxPageState extends State<NewInboxPage> {
                 AutofillHints.telephoneNumber),
             const Divider(),
             GestureDetector(
-              onTap: () {},
+              onTap: () {
+                onTap: () => _navigateToCategoryPage(context);
+              },
               child: Row(
                 children: [
                   CustomText(
@@ -359,10 +374,17 @@ class _NewInboxPageState extends State<NewInboxPage> {
                   const Spacer(),
                   CustomText('Other', 12, 'Poppins', kLightBlackColor,
                       FontWeight.w400),
-                  Image.asset(
-                    'images/arrow_right.png',
-                    width: 14,
-                    height: 12,
+                  GestureDetector(
+                    onTap: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => SenderPage(),
+                        )),
+                    child: Image.asset(
+                      'images/arrow_right.png',
+                      width: 14,
+                      height: 12,
+                    ),
                   ),
                 ],
               ),
@@ -371,7 +393,13 @@ class _NewInboxPageState extends State<NewInboxPage> {
         ),
       ),
       valColor: Colors.white,
-      onTap: () {},
+      onTap: () {
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => SenderPage(),
+            ));
+      },
     );
   }
 
@@ -598,25 +626,37 @@ class _NewInboxPageState extends State<NewInboxPage> {
 
   Widget _buildTagWidget(BuildContext context) {
     return BorderShape(
-        widget: Row(
-          children: [
-            const Icon(
-              Icons.tag,
-              color: kDarkGreyColor,
-            ),
-            const SizedBox(
-              width: 10,
-            ),
-            CustomText('Tags', 16, 'Poppins', kBlackColor, FontWeight.w600),
-            const Spacer(),
-            Image.asset('images/arrow_right.png')
-          ],
-        ),
-        valColor: Colors.white,
-        onTap: () {
-          print('Hello');
-          // _navigateToTagsPage(context);
-        });
+      widget: Column(
+        children: [
+          Row(
+            children: [
+              const Icon(
+                Icons.tag,
+                color: kDarkGreyColor,
+              ),
+              const SizedBox(
+                width: 10,
+              ),
+              CustomText('Tags', 16, 'Poppins', kBlackColor, FontWeight.w600),
+              const Spacer(),
+              GestureDetector(
+                  child: Container(
+                      height: 20,
+                      width: 20,
+                      child: Image.asset('images/arrow_right.png')),
+                  onTap: () {
+                    _navigateToTagsPage(context).then((value) => value);
+                  }),
+            ],
+          ),
+          TagGridList(
+            tags: selectedTag,
+            onTagsSelected: (value) {},
+          ),
+        ],
+      ),
+      valColor: Colors.white,
+    );
   }
 
   Widget _buildImageWidget() {
@@ -647,6 +687,18 @@ class _NewInboxPageState extends State<NewInboxPage> {
       context: context,
       builder: (BuildContext context) {
         return FractionallySizedBox(heightFactor: 0.9, child: StatusPage());
+      },
+    );
+  }
+  Future<void> _navigateToCategoryPage(BuildContext context) async {
+    await showModalBottomSheet<dynamic>(
+      isScrollControlled: true,
+      useRootNavigator: true,
+      backgroundColor: kLightWhiteColor,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+      context: context,
+      builder: (BuildContext context) {
+        return FractionallySizedBox(heightFactor: 0.9, child: CategoryPage());
       },
     );
   }
