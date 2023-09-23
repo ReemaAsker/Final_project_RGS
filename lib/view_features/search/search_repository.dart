@@ -1,4 +1,5 @@
 import 'package:gsg_final_project_rgs/cores/helpers/api_base_helper.dart';
+import 'package:gsg_final_project_rgs/models/mail.dart';
 
 import '../../cores/helpers/token_helper.dart';
 import '../../cores/utils/constants.dart';
@@ -8,31 +9,21 @@ class SearchRepo {
   ApiBaseHelper _helper = ApiBaseHelper();
   String? userToken = getToken()!.token;
 
-  Future<SearchResponseModel> search(
+  Future<List<MailClass>?> search(
       {required String searchQuery,
-      required String fromDate,
-      required String toDate}) async {
-    String url =
-        searchkUrl + "?text=$searchQuery&start=$fromDate&end=$toDate&status_id";
+      String? fromDate,
+      String? toDate,
+      dynamic id}) async {
+    print("search");
+    String url = searchkUrl +
+        "?text=$searchQuery&start=${fromDate ?? ""}&end=${toDate ?? ""}&status_id=${id ?? ""}";
+    print(url);
     final response = await _helper.get(url,
         {'Authorization': 'Bearer $userToken', 'Accept': 'application/json'});
+    print(response);
 
     SearchResponseModel result = SearchResponseModel.fromJson(response);
-    return result;
-
-    //Future<List<MailClass>?> fetchCategoryMails(int categoryId) async {
-    //     String url = categoriesUrl + '/$categoryId/mails';
-    //     final response = await _helper.get(url,
-    //         {'Authorization': 'Bearer $userToken', 'Accept': 'application/json'});
-    //
-    //     /// to do:
-    //     List<MailClass>? result = CategoryMails.fromJson(response).mails;
-    //     // print(
-    //     //     "fetchCategoryMails//////////////////////////////////////////////////");
-    //     // print(response);
-    //     // print(result!.length);
-    //     return result;
-    //   }
+    return result.mails;
   }
   //Future<Search> searchByName(context, Map<String, dynamic> body) async {
   //   final SharedPreferences prefs = await SharedPreferences.getInstance();

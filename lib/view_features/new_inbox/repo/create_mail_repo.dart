@@ -42,7 +42,6 @@ class CreateMailRepository {
     try {
       response =
           await _helper.post(senderUrl, new_sender.toJson(), httpHeader());
-      print(response);
       _userdata = ApiResponse.completed(response);
     } catch (e) {
       _userdata = ApiResponse.error("Can't created sender, try again");

@@ -16,10 +16,10 @@ class ApiBaseHelper {
           await http.get(Uri.parse(baseUrl + url), headers: header);
 
       responseJson = _returnResponse(response);
-      print("\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\");
-      print(responseJson);
-      print("\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\");
-      print(response.body);
+      // print("\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\");
+      // print(responseJson);
+      // print("\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\");
+      // print(response.body);
     } on SocketException {
       throw FetchDataException('No Internet connection');
     }
@@ -32,7 +32,9 @@ class ApiBaseHelper {
     try {
       final response = await http.post(Uri.parse(baseUrl + url),
           body: body, headers: header);
+      print(response.request);
       print(response.statusCode);
+      print(response);
       responseJson = _returnResponse(response);
     } on SocketException {
       throw FetchDataException('No Internet connection');

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+
 import '../../../cores/utils/colors.dart';
+import '../search_repository.dart';
 
 class CustomSearch extends StatelessWidget {
   CustomSearch({
@@ -12,7 +14,10 @@ class CustomSearch extends StatelessWidget {
     return TextField(
       controller: _textEditingController,
       keyboardType: TextInputType.text,
-      onSubmitted: (value) {},
+      onSubmitted: (value) {
+        SearchRepo searchRepo = SearchRepo();
+        searchRepo.search(searchQuery: "bbb");
+      },
       decoration: InputDecoration(
         fillColor: kLightGreyColor,
         filled: true,

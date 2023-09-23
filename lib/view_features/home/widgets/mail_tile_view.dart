@@ -46,7 +46,7 @@ class MailTile extends StatelessWidget {
                 const SizedBox(
                   width: 9,
                 ),
-                CustomText(myMail.senderId!, 18.0, 'Poppins', kBlackColor,
+                CustomText(myMail.sender!.name!, 18.0, 'Poppins', kBlackColor,
                     FontWeight.w600),
                 const Spacer(),
                 CustomText(myMail.createdAt!, 12.0, 'Poppins', kHintGreyColor,
@@ -94,7 +94,7 @@ class MailTile extends StatelessWidget {
                             ), //         "https://palmail.gsgtt.tech/storage/${myMail.attachments![index]['image']}"))),
                             child: Image(
                               image: NetworkImage(
-                                "https://palmail.gsgtt.tech/storage/${myMail.attachments![index].image}",
+                                "https://palmail.gsgtt.tech/storage/${myMail.attachments![index]['image']}",
                               ),
                               fit: BoxFit.fill,
                             ),

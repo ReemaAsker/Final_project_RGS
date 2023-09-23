@@ -10,11 +10,12 @@ import 'package:gsg_final_project_rgs/view_features/home/widgets/category_list_v
 import 'package:gsg_final_project_rgs/view_features/home/widgets/custom_text.dart';
 import 'package:gsg_final_project_rgs/view_features/home/widgets/status_grid.dart';
 import 'package:gsg_final_project_rgs/view_features/home/widgets/tag_list.dart';
-import 'package:gsg_final_project_rgs/view_features/new_inbox/create_mail.dart';
+import 'package:gsg_final_project_rgs/view_features/search/search_page.dart';
 import 'package:provider/provider.dart';
 
 import '../../cores/helpers/api_response.dart';
 import '../../cores/utils/colors.dart';
+import '../new_inbox/widgets/new_inbox.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({
@@ -75,6 +76,16 @@ class _HomePageState extends State<HomePage> {
       ),
       drawer: _buildNavDrawer(),
       child: Scaffold(
+        appBar: AppBar(
+          leading: IconButton(
+            onPressed: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context) {
+                return SearchPage();
+              }));
+            },
+            icon: Icon(Icons.search),
+          ),
+        ),
         backgroundColor: kLightWhiteColor,
         body: Container(
           margin: const EdgeInsets.all(16),
