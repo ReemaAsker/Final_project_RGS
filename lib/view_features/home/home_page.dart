@@ -3,14 +3,19 @@ import 'package:flutter_advanced_drawer/flutter_advanced_drawer.dart';
 import 'package:gsg_final_project_rgs/cores/helpers/token_helper.dart';
 import 'package:gsg_final_project_rgs/custom_widgets/custom_snackbar.dart';
 import 'package:gsg_final_project_rgs/view_features/auth/widgets/auth_screen.dart';
-import 'package:gsg_final_project_rgs/view_features/new_inbox/create_mail.dart';
+import 'package:gsg_final_project_rgs/view_features/home/providers/category_provider.dart';
+import 'package:gsg_final_project_rgs/view_features/home/providers/status_provider.dart';
+import 'package:gsg_final_project_rgs/providers/tags_provider.dart';
+import 'package:gsg_final_project_rgs/view_features/home/widgets/category_list_view.dart';
 import 'package:gsg_final_project_rgs/view_features/home/widgets/custom_text.dart';
-import 'package:gsg_final_project_rgs/view_features/home/widgets/mail_list_view.dart';
-import 'package:gsg_final_project_rgs/view_features/home/widgets/ngos_widget.dart';
-import 'package:gsg_final_project_rgs/view_features/home/widgets/others_list_view.dart';
 import 'package:gsg_final_project_rgs/view_features/home/widgets/status_grid.dart';
 import 'package:gsg_final_project_rgs/view_features/home/widgets/tag_list.dart';
+import 'package:gsg_final_project_rgs/view_features/new_inbox/create_mail.dart';
+import 'package:provider/provider.dart';
+
+import '../../cores/helpers/api_response.dart';
 import '../../cores/utils/colors.dart';
+import '../search/search.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({
@@ -23,8 +28,14 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final _advancedDrawerController = AdvancedDrawerController();
+  // Map<int, Color> colors = {
+  //   1: Colors.red,
+  //   2: Colors.yellow,
+  //   3: Colors.blue,
+  //   4: Colors.green,
+  // };
 
-  List statusList = ['Organization Name', 'k'];
+  // List statusList = ['Organization Name', 'k'];
   void logout() {
     if (removeUser()) {
       Navigator.pushReplacement(
@@ -37,6 +48,15 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
+  @override
+  void initState() {
+    // CategoryProvider categoryProvider = CategoryProvider();
+    // categoryProvider.categoryMails.status = DataStatus.LOADING;
+
+    super.initState();
+  }
+
+  var myindex = 0;
   @override
   Widget build(BuildContext context) {
     return AdvancedDrawer(
@@ -92,15 +112,25 @@ class _HomePageState extends State<HomePage> {
                             bottom: 8, left: 16, right: 16, top: 8),
                         child: Row(
                           children: [
-                            const Icon(
-                              Icons.search,
-                              color: kHintGreyColor,
+                            IconButton(
+                              onPressed: () => {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => SearchPage(),
+                                  ),
+                                )
+                              },
+                              icon: const Icon(
+                                Icons.search,
+                                color: kHintGreyColor,
+                              ),
                             ),
                             const SizedBox(
                               width: 8,
                             ),
-                            CustomText('Search', 18, 'Poppins',
-                                kHintGreyColor, FontWeight.w400),
+                            CustomText('Search', 18, 'Poppins', kHintGreyColor,
+                                FontWeight.w400),
                           ],
                         ),
                       ),
@@ -108,35 +138,127 @@ class _HomePageState extends State<HomePage> {
                     const SizedBox(
                       height: 20,
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        StatusTile('Inbox', Colors.red),
-                        StatusTile('Pending', Colors.yellow),
-                      ],
+
+                    Container(
+                      height: 250,
+                      // color: Colors.red,
+                      child: Consumer<StatusProvider>(
+                        builder: (_, statusProvider, __) {
+                          if (statusProvider.statusListWithMails.status ==
+                              DataStatus.LOADING) {
+                            return const Center(
+                              child: CircularProgressIndicator(),
+                            );
+                          }
+
+                          if (statusProvider.statusListWithMails.status ==
+                              DataStatus.ERROR) {
+                            return Center(
+                              child: Text(
+                                  '${statusProvider.statusListWithMails.message}\n '),
+                            );
+                          }
+                          print(
+                              'count statuses: ${statusProvider.statusListWithMails.data?.length}');
+
+                          return GridView.builder(
+                              physics: const NeverScrollableScrollPhysics(),
+                              itemCount: statusProvider
+                                  .statusListWithMails.data?.length,
+                              gridDelegate:
+                                  const SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 2,
+                                childAspectRatio: 2 / 1.1,
+                              ),
+                              itemBuilder: (context, index) {
+                                //colors[statusProvider
+                                //                                     .statusListWithoutMails.data![index].id]!
+                                return StatusTile(
+                                    statusProvider
+                                        .statusListWithMails.data![index],
+                                    statusProvider.statusListWithMails
+                                        .data![index].color!);
+                              });
+                        },
+                      ),
                     ),
-                    SizedBox(height: 16,),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        StatusTile('In progress', Colors.blue),
-                        StatusTile('Completed', Colors.green),
-                      ],
+
+                    /// todo: Last try inshaallah
+                    Container(
+                      height: 400,
+                      // color: Colors.blue,
+                      child: Consumer<CategoryProvider>(
+                          builder: (_, categoryProvider, __) {
+                        return ListView.builder(
+                            shrinkWrap: true,
+                            //categoryProvider.categoryList.data!.length
+                            itemCount: categoryProvider
+                                .categoriesWithMailsAsContent.length,
+                            itemBuilder: (context, index) {
+                              // categoryProvider.fetchCategoryMails(index + 1);
+                              // Provider.of<CategoryProvider>(context,
+                              //         listen: false)
+                              //     .fetchCategoryMails(index + 1);
+
+                              if (categoryProvider.categoryUiStatus.isLoading) {
+                                return const Center(
+                                  child: CircularProgressIndicator(),
+                                );
+                              }
+                              if (categoryProvider.categoryUiStatus.isError) {
+                                return Center(
+                                  child: Text(
+                                      '${categoryProvider.categoryUiStatus.errorMessage}'),
+                                );
+                              }
+
+                              return CategoryListView(
+                                  categoryModel:
+                                      Provider.of<CategoryProvider>(context)
+                                          .categoriesWithMailsAsContent[index]
+                                          .category,
+                                  mails: Provider.of<CategoryProvider>(context)
+                                          .categoriesWithMailsAsContent[index]
+                                          .mails ??
+                                      []);
+                            });
+                      }),
                     ),
-                    MailListView('Official Organization', [
-                      {'oo': 10}
-                    ]),
-                    NGOsWidget(),
-                    OthersListView([
-                      {'oo': 10},
-                      {'oo': 10}
-                    ], Colors.green),
-                    Padding(
-                      padding: const EdgeInsets.all(16),
-                      child: CustomText(
-                          'Tags', 20, 'Poppins', kBlackColor, FontWeight.w600),
+                    Consumer<TagsProvider>(
+                      builder: (context, tagProvider, child) {
+                        if (tagProvider.allTagsList.status ==
+                            DataStatus.LOADING) {
+                          return const Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        }
+                        if (tagProvider.allTagsList.status ==
+                            DataStatus.ERROR) {
+                          return Center(
+                            child: Text('${tagProvider.allTagsList..message}'),
+                          );
+                        }
+
+                        return Visibility(
+                            // tagProvider.allTagsList.data!.isNotEmpty
+                            //
+                            visible: tagProvider.allTagsList.data!.isNotEmpty,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.all(16),
+                                  child: CustomText('Tags', 20, 'Poppins',
+                                      kBlackColor, FontWeight.w600),
+                                ),
+                                TagGridList(
+                                  tags: tagProvider.allTagsList.data!,
+                                  onTagsSelected: (value) {},
+                                ),
+                              ],
+                            ));
+                      },
                     ),
-                    TagGridList(),
                   ],
                 ),
               ),
@@ -161,12 +283,8 @@ class _HomePageState extends State<HomePage> {
                 child: Container(
                   key: ValueKey<bool>(value.visible),
                   child: value.visible
-                      ? Image.asset(
-                          'images/clear.png',
-                          width: 20,
-                          height: 20,
-                        )
-                      : Image.asset('images/menu.png'),
+                      ? IconButton(onPressed: () {}, icon: Icon(Icons.add))
+                      : IconButton(onPressed: () {}, icon: Icon(Icons.add)),
                 ),
               );
             },
@@ -280,13 +398,14 @@ class _HomePageState extends State<HomePage> {
           padding: const EdgeInsets.only(left: 16),
           child: Row(
             children: [
-              const CircleAvatar(
-                backgroundColor: kLightPrimaryColor,
-                radius: 13,
-                child: Image(
-                  image: AssetImage('images/add.png'),
-                ),
-              ),
+              CircleAvatar(
+                  backgroundColor: kLightPrimaryColor,
+                  radius: 13,
+                  child: IconButton(onPressed: () {}, icon: Icon(Icons.add))
+                  //   Image(
+                  //     image: AssetImage('assets/add.png'),
+                  //   ),
+                  ),
               const SizedBox(
                 width: 5,
               ),
@@ -369,7 +488,7 @@ class _HomePageState extends State<HomePage> {
         shape: BoxShape.circle,
       ),
       child: Image.asset(
-        'images/logo.png',
+        'assets/logoone.png',
       ),
     );
   }

@@ -1,21 +1,35 @@
+//use in home oage ,tag page(new inbox)
 import 'package:flutter/widgets.dart';
 import 'package:gsg_final_project_rgs/cores/helpers/api_response.dart';
 
-import '../../../models/tag.dart';
-import '../repositories/tags_repo.dart';
+import '../models/tag.dart';
+import '../view_features/tags/tagRepo/tags_repo.dart';
 
-class tagsProvider extends ChangeNotifier {
+class TagsProvider extends ChangeNotifier {
   late TagRepo _tagRepo;
+
   late ApiResponse<List<Tag>> _allTagsList;
   late ApiResponse<List<Tag>> _tagsListWithMails;
   late ApiResponse<List<Tag>> _tagsOfMail;
-  late ApiResponse<Tag> _tag;
+  late ApiResponse<Map<String, dynamic>> _tag;
 
+  ApiResponse<List<Tag>> get allTagsList => _allTagsList;
+
+  ApiResponse<Map<String, dynamic>> get tag => _tag;
+
+  ApiResponse<List<Tag>> get tagsListWithMails => _tagsListWithMails;
+
+  ApiResponse<List<Tag>> get tagsOfMail => _tagsOfMail;
+
+  TagsProvider() {
+    _tagRepo = TagRepo();
+    fetchAllTagsList();
+  }
   fetchAllTagsList() async {
-    _allTagsList = ApiResponse.loading('Fetching Tags');
+    _allTagsList = ApiResponse.loading('Fetching Links');
     notifyListeners();
     try {
-      List<Tag>? tags = await _tagRepo.fetchAllTagsWithoutEmail();
+      List<Tag> tags = await _tagRepo.fetchAllTagsWithoutEmail();
       _allTagsList = ApiResponse.completed(tags);
       notifyListeners();
     } catch (e) {
@@ -34,6 +48,7 @@ class tagsProvider extends ChangeNotifier {
     } catch (e) {
       _tagsListWithMails = ApiResponse.error(e.toString());
       notifyListeners();
+      rethrow;
     }
   }
 
@@ -47,19 +62,24 @@ class tagsProvider extends ChangeNotifier {
     } catch (e) {
       _tagsOfMail = ApiResponse.error(e.toString());
       notifyListeners();
+      rethrow;
     }
   }
 
-  // createTag({required String name}) async {
-  //   _tag = ApiResponse.loading('creating tag ');
-  //   notifyListeners();
-  //   try {
-  //     Tag? myTag = await _tagRepo.createTag(name: name);
-  //     _tag = ApiResponse.completed(myTag);
-  //     notifyListeners();
-  //   } catch (e) {
-  //     _tag = ApiResponse.error(e.toString());
-  //     notifyListeners();
-  //   }
-  // }
+  Future<ApiResponse<Map<String, dynamic>>> createTag(
+      {required String name}) async {
+    _tag = ApiResponse.loading('creating tag ');
+    notifyListeners();
+    try {
+      Map<String, dynamic> myTag = await _tagRepo.createTag(name: name);
+      _tag = ApiResponse.completed(myTag);
+      fetchAllTagsList();
+
+      notifyListeners();
+    } catch (e) {
+      _tag = ApiResponse.error(e.toString());
+      notifyListeners();
+    }
+    return _tag;
+  }
 }

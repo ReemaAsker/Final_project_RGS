@@ -2,8 +2,9 @@ import 'package:gsg_final_project_rgs/cores/helpers/api_response.dart';
 import 'package:gsg_final_project_rgs/cores/helpers/token_helper.dart';
 import 'package:gsg_final_project_rgs/cores/utils/constants.dart';
 import 'package:gsg_final_project_rgs/models/mail.dart';
-// import 'package:http/http.dart' as http;
-// import 'package:http/http.dart';
+import 'package:gsg_final_project_rgs/models/sender.dart';
+import 'package:http/http.dart' as http;
+import 'package:http/http.dart';
 import '../../../cores/helpers/api_base_helper.dart';
 
 class CreateMailRepository {
@@ -12,38 +13,44 @@ class CreateMailRepository {
 
   Future<ApiResponse<Map<String, dynamic>>> create_mail(
       MailClass new_mail) async {
-    Map<String, dynamic> response;
+    Map<String, dynamic> response = {};
+    // Response responsee;
     _userdata = ApiResponse.loading("fetch created ..");
-
-    response = await _helper.post(mailsUrl, new_mail.toJson(), httpHeader());
-    _userdata = ApiResponse.completed(response);
-
-    // print("from json ........");
-    // print(MailClass.fromJson(response["mail"]).subject);
-    // print("....... ........");
-    _userdata = ApiResponse.completed(response);
-
+    try {
+      response = await _helper.post(mailsUrl, new_mail.toJson(), httpHeader());
+      print("!!!!!!!!!!!!!!!!!!!!!!");
+      print(response);
+      print("!!!!!!!!!!!!!!!!!!!!!!");
+      _userdata = ApiResponse.completed(response);
+      // responsee = await http.post(Uri.parse(baseUrl + mailsUrl),
+      //     body: new_mail.toJson(), headers: httpHeader());
+      // print(responsee.body);
+      // print("from json ........");
+      // print(MailClass.fromJson(response["mail"]).subject);
+      // print("....... ........");
+    } catch (e) {
+      _userdata = ApiResponse.error("mail isn't created ,try again");
+    }
+    print("################");
+    print(response);
     return _userdata;
   }
 
-  // Future<Sender> create_sender(Sender new_sender) async {
-  //   Response response;
-  //   _userdata = ApiResponse.loading("fetch created ..");
-  //   try {
-  //     response = await http.post(Uri.parse(baseUrl + senderUrl),
-  //         body: new_sender.toJson(),
-  //         httpHeader());
-  //     print(response.body);
-  //     // _userdata = ApiResponse.completed(response);
+  Future<ApiResponse<Map<String, dynamic>>> create_sender(
+      Sender new_sender) async {
+    Map<String, dynamic> response = {};
+    _userdata = ApiResponse.loading("fetch created ..");
+    try {
+      response =
+          await _helper.post(senderUrl, new_sender.toJson(), httpHeader());
+      print(response);
 
-  //     // print("from json ........");
-  //     // print(MailClass.fromJson(response["mail"]).subject);
-  //     // print("....... ........");
-  //   } catch (e) {
-  //     print("sender error created ::::::::: $e");
-  //   }
-  //   return Sender.fromJson(new_sender.toJson());
-  // }
+      _userdata = ApiResponse.completed(response);
+    } catch (e) {
+      _userdata = ApiResponse.error("Can't created sender, try again");
+    }
+    return _userdata;
+  }
 
   // Future<Tag> create_Tag(Tag new_tag) async {
   //   Response response;
