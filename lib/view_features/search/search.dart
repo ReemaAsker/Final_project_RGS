@@ -32,8 +32,13 @@ class SearchPage extends StatelessWidget {
                       const SizedBox(
                         width: 8,
                       ),
-                      CustomText('Home', 18, 'Poppins', kLightPrimaryColor,
-                          FontWeight.w400),
+                      TextButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        child: CustomText('Home', 18, 'Poppins', kLightPrimaryColor,
+                            FontWeight.w400),
+                      ),
                     ],
                     //),
                   ),
