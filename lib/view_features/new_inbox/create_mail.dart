@@ -23,6 +23,8 @@ import '../home/widgets/custom_border.dart';
 import '../home/widgets/custom_text.dart';
 import 'package:intl/intl.dart';
 
+import '../mail_detail/widgets/activity_tile.dart';
+import '../mail_detail/widgets/image_tile.dart';
 import '../tags/tag.dart';
 
 class NewInboxPage extends StatefulWidget {
@@ -279,10 +281,11 @@ class _NewInboxPageState extends State<NewInboxPage> {
 
   Widget _buildActivityExpansion(BuildContext context) {
     return Theme(
-      data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
+      data: Theme.of(context)
+          .copyWith(dividerColor: Colors.transparent),
       child: ExpansionTile(
-        title:
-            CustomText('Activity', 20, 'Poppins', kBlackColor, FontWeight.w600),
+        title: CustomText(
+            'Activity', 20, 'Poppins', kBlackColor, FontWeight.w600),
         backgroundColor: Colors.transparent,
         children: [
           ListView.separated(
@@ -290,8 +293,11 @@ class _NewInboxPageState extends State<NewInboxPage> {
             shrinkWrap: true,
             itemCount: 2,
             itemBuilder: (context, index) {
-              return Text('activity');
-              // return ActivityTile('hello');
+              return ActivityTile(const [
+                'Hussam',
+                'The issue is transferred to AAAA',
+                'Ali'
+              ]);
             },
             separatorBuilder: (BuildContext context, int index) {
               return const SizedBox(
@@ -681,22 +687,30 @@ class _NewInboxPageState extends State<NewInboxPage> {
 
   Widget _buildImageWidget() {
     return BorderShape(
-      widget: const Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            'Add Image',
-            style: TextStyle(
-                fontWeight: FontWeight.w400,
-                fontFamily: 'Poppins',
-                fontSize: 16,
-                color: kLightPrimaryColor),
-          ),
-        ],
-      ),
-      valColor: Colors.white,
-      onTap: () {},
-    );
+        widget: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            CustomText('Add Image', 16, 'Poppins',
+                kLightPrimaryColor, FontWeight.w400),
+            const SizedBox(
+              height: 20,
+            ),
+            ListView.separated(
+              shrinkWrap: true,
+              itemCount: 2,
+              physics: const NeverScrollableScrollPhysics(),
+              itemBuilder: (BuildContext context, int idx) {
+                return const ImageTile();
+              },
+              separatorBuilder: (BuildContext context, int index) {
+                return const SizedBox(
+                  height: 24,
+                );
+              },
+            ),
+          ],
+        ),
+        valColor: Colors.white);
   }
 
   Future<void> _navigateToStatusPage(BuildContext context) async {
