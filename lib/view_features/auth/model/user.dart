@@ -1,4 +1,8 @@
+import 'dart:convert';
+
 import 'package:gsg_final_project_rgs/models/role.dart';
+
+String userToJson(User data) => json.encode(data.toJson());
 
 class User {
   int? id;

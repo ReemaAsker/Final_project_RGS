@@ -18,8 +18,9 @@ class CreateMailRepository {
     _userdata = ApiResponse.loading("fetch created ..");
     try {
       response = await _helper.post(mailsUrl, new_mail.toJson(), httpHeader());
-      print("*******************");
+      print("!!!!!!!!!!!!!!!!!!!!!!");
       print(response);
+      print("!!!!!!!!!!!!!!!!!!!!!!");
       _userdata = ApiResponse.completed(response);
       // responsee = await http.post(Uri.parse(baseUrl + mailsUrl),
       //     body: new_mail.toJson(), headers: httpHeader());
@@ -43,6 +44,7 @@ class CreateMailRepository {
       response =
           await _helper.post(senderUrl, new_sender.toJson(), httpHeader());
       print(response);
+
       _userdata = ApiResponse.completed(response);
     } catch (e) {
       _userdata = ApiResponse.error("Can't created sender, try again");
