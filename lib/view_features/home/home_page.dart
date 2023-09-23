@@ -15,6 +15,7 @@ import 'package:provider/provider.dart';
 
 import '../../cores/helpers/api_response.dart';
 import '../../cores/utils/colors.dart';
+import '../search/search.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({
@@ -111,9 +112,19 @@ class _HomePageState extends State<HomePage> {
                             bottom: 8, left: 16, right: 16, top: 8),
                         child: Row(
                           children: [
-                            const Icon(
-                              Icons.search,
-                              color: kHintGreyColor,
+                            IconButton(
+                              onPressed: () => {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => SearchPage(),
+                                  ),
+                                )
+                              },
+                              icon: const Icon(
+                                Icons.search,
+                                color: kHintGreyColor,
+                              ),
                             ),
                             const SizedBox(
                               width: 8,

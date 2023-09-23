@@ -18,9 +18,12 @@ import 'package:gsg_final_project_rgs/view_features/satuts/status.dart';
 import 'package:gsg_final_project_rgs/view_features/sender/sender_page.dart';
 import 'package:gsg_final_project_rgs/view_features/tags/tag.dart';
 import '../../cores/utils/colors.dart';
+import '../category/category.dart';
 import '../home/widgets/custom_border.dart';
 import '../home/widgets/custom_text.dart';
 import 'package:intl/intl.dart';
+
+import '../tags/tag.dart';
 
 class NewInboxPage extends StatefulWidget {
   NewInboxPage({Key? key}) : super(key: key);
@@ -329,12 +332,7 @@ class _NewInboxPageState extends State<NewInboxPage> {
         ),
         valColor: Colors.white,
         onTap: () {
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => StatusPage(),
-              ));
-          // _navigateToStatusPage(context);
+          _navigateToStatusPage(context);
         });
   }
 
@@ -367,7 +365,9 @@ class _NewInboxPageState extends State<NewInboxPage> {
                 AutofillHints.telephoneNumber),
             const Divider(),
             GestureDetector(
-              onTap: () {},
+              onTap: () {
+                _navigateToCategoryPage(context);
+              },
               child: Row(
                 children: [
                   CustomText(
@@ -379,7 +379,7 @@ class _NewInboxPageState extends State<NewInboxPage> {
                     onTap: () => Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => SenderPage(),
+                          builder: (context) => CategoryPage(),
                         )),
                     child: Image.asset(
                       'images/arrow_right.png',
@@ -394,13 +394,13 @@ class _NewInboxPageState extends State<NewInboxPage> {
         ),
       ),
       valColor: Colors.white,
-      onTap: () {
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => SenderPage(),
-            ));
-      },
+      // onTap: () {
+      //   Navigator.push(
+      //       context,
+      //       MaterialPageRoute(
+      //         builder: (context) => SenderPage(),
+      //       ));
+      // },
     );
   }
 
@@ -625,39 +625,59 @@ class _NewInboxPageState extends State<NewInboxPage> {
     );
   }
 
-  Widget _buildTagWidget(BuildContext context) {
+  Widget _buildTagWidget(BuildContext context) {///
     return BorderShape(
-      widget: Column(
-        children: [
-          Row(
-            children: [
-              const Icon(
-                Icons.tag,
-                color: kDarkGreyColor,
-              ),
-              const SizedBox(
-                width: 10,
-              ),
-              CustomText('Tags', 16, 'Poppins', kBlackColor, FontWeight.w600),
-              const Spacer(),
-              GestureDetector(
-                  child: Container(
-                      height: 20,
-                      width: 20,
-                      child: Image.asset('images/arrow_right.png')),
-                  onTap: () {
-                    _navigateToTagsPage(context).then((value) => value);
-                  }),
-            ],
-          ),
-          TagGridList(
-            tags: selectedTag,
-            onTagsSelected: (value) {},
-          ),
-        ],
-      ),
-      valColor: Colors.white,
-    );
+
+        widget: Row(
+          children: [
+            const Icon(
+              Icons.tag,
+              color: kDarkGreyColor,
+            ),
+            const SizedBox(
+              width: 10,
+            ),
+            CustomText('Tags', 16, 'Poppins', kBlackColor, FontWeight.w600),
+            const Spacer(),
+            Image.asset('images/arrow_right.png')
+          ],
+        ),
+        valColor: Colors.white,
+        onTap: () {
+          _navigateToTagsPage(context);
+        });
+//       widget: Column(
+//         children: [
+//           Row(
+//             children: [
+//               const Icon(
+//                 Icons.tag,
+//                 color: kDarkGreyColor,
+//               ),
+//               const SizedBox(
+//                 width: 10,
+//               ),
+//               CustomText('Tags', 16, 'Poppins', kBlackColor, FontWeight.w600),
+//               const Spacer(),
+//               GestureDetector(
+//                   child: Container(
+//                       height: 20,
+//                       width: 20,
+//                       child: Image.asset('images/arrow_right.png')),
+//                   onTap: () {
+//                     _navigateToTagsPage(context).then((value) => value);
+//                   }),
+//             ],
+//           ),
+//           TagGridList(
+//             tags: selectedTag,
+//             onTagsSelected: (value) {},
+//           ),
+//         ],
+//       ),
+//       valColor: Colors.white,
+//     );
+
   }
 
   Widget _buildImageWidget() {
@@ -679,4 +699,40 @@ class _NewInboxPageState extends State<NewInboxPage> {
       onTap: () {},
     );
   }
+  Future<void> _navigateToStatusPage(BuildContext context) async {
+    await showModalBottomSheet<dynamic>(
+      isScrollControlled: true,
+      useRootNavigator: true,
+      backgroundColor: kLightWhiteColor,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+      context: context,
+      builder: (BuildContext context) {
+        return FractionallySizedBox(heightFactor: 0.9, child: StatusPage());
+      },
+    );
+  }
+  Future<void> _navigateToCategoryPage(BuildContext context) async {
+    await showModalBottomSheet<dynamic>(
+      isScrollControlled: true,
+      useRootNavigator: true,
+      backgroundColor: kLightWhiteColor,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+      context: context,
+      builder: (BuildContext context) {
+        return FractionallySizedBox(heightFactor: 0.9, child: CategoryPage());
+      },
+    );
+  }
+  // Future<void> _navigateToTagsPage(BuildContext context) async {
+  //   await showModalBottomSheet<dynamic>(
+  //     isScrollControlled: true,
+  //     useRootNavigator: true,
+  //     backgroundColor: kLightWhiteColor,
+  //     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+  //     context: context,
+  //     builder: (BuildContext context) {
+  //       return FractionallySizedBox(heightFactor: 0.9, child: TagsPage());
+  //     },
+  //   );
+  // }
 }
