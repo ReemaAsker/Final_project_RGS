@@ -129,8 +129,18 @@ class _HomePageState extends State<HomePage> {
                             const SizedBox(
                               width: 8,
                             ),
-                            CustomText('Search', 18, 'Poppins', kHintGreyColor,
-                                FontWeight.w400),
+                            TextButton(
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => SearchPage(),
+                                  ),
+                                );
+                              },
+                              child: CustomText('Search', 18, 'Poppins', kHintGreyColor,
+                                  FontWeight.w400),
+                            ),
                           ],
                         ),
                       ),
@@ -429,7 +439,8 @@ class _HomePageState extends State<HomePage> {
             children: [
               _buildDrawerHeader(),
               ListTile(
-                onTap: () {},
+                onTap: () {
+                },
                 leading: const Icon(Icons.home),
                 title: const Text(
                   'Home',
