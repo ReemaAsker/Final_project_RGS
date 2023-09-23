@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gsg_final_project_rgs/view_features/auth/widgets/testUi.dart';
+import 'package:gsg_final_project_rgs/view_features/home/home_page.dart';
 
 import '../../auth/widgets/auth_screen.dart';
 import '../controller/splash_controller.dart';
@@ -28,7 +28,8 @@ class _SplashScreenState extends State<SplashScreen> {
           context,
           MaterialPageRoute(
             builder: (context) {
-              return Hello();
+              return HomePage();
+              // Hello();
             },
           ),
         );

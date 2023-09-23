@@ -35,25 +35,19 @@ class _SignUpWidgetState extends State<SignUpWidget> {
   }
 
   Map<String, String> getBody() {
-    late final body;
-    if (_formKey.currentState!.validate()) {
-      if (passwordController.text == confirmpasswordController.text) {
-        body = {
-          'email': emailController.text,
-          'password': passwordController.text,
-          'password_confirmation': confirmpasswordController.text,
-          'name': usernameController.text
-        };
-      } else {
-        My_snackBar.showSnackBar(
-            context, "password not equal confirmpassword", Colors.red);
-      }
-    }
+    Map<String, String> body = {};
+    body = {
+      'email': emailController.text,
+      'password': passwordController.text,
+      'password_confirmation': confirmpasswordController.text,
+      'name': usernameController.text
+    };
+
     return body;
   }
 
   void submit(ApiResponse value) async {
-    if (value.status == Status.COMPLETED) {
+    if (value.status == DataStatus.COMPLETED) {
       if (mounted) {
         My_snackBar.showSnackBar(
             context, "Sign up process ,Sucuuess , login now ..", Colors.green);
@@ -75,7 +69,14 @@ class _SignUpWidgetState extends State<SignUpWidget> {
   }
 
   void signup() {
-    AuthController().signup(getBody()).then((value) => {submit(value)});
+    if (_formKey.currentState!.validate()) {
+      if (passwordController.text == confirmpasswordController.text) {
+        AuthController().signup(getBody()).then((value) => {submit(value)});
+      } else {
+        My_snackBar.showSnackBar(
+            context, "password not equal confirmpassword", Colors.red);
+      }
+    }
   }
 
   @override

@@ -1,11 +1,11 @@
 class ApiResponse<T> {
-  Status status;
+  DataStatus status;
   T? data;
   String? message;
 
-  ApiResponse.loading(this.message) : status = Status.LOADING;
-  ApiResponse.completed(this.data) : status = Status.COMPLETED;
-  ApiResponse.error(this.message) : status = Status.ERROR;
+  ApiResponse.loading(this.message) : status = DataStatus.LOADING;
+  ApiResponse.completed(this.data) : status = DataStatus.COMPLETED;
+  ApiResponse.error(this.message) : status = DataStatus.ERROR;
 
   @override
   String toString() {
@@ -13,4 +13,4 @@ class ApiResponse<T> {
   }
 }
 
-enum Status { LOADING, COMPLETED, ERROR }
+enum DataStatus { LOADING, COMPLETED, ERROR }

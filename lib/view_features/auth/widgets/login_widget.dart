@@ -4,6 +4,7 @@ import 'package:gsg_final_project_rgs/cores/helpers/api_response.dart';
 import 'package:gsg_final_project_rgs/custom_widgets/custom_snackbar.dart';
 import 'package:gsg_final_project_rgs/view_features/auth/controller/authController.dart';
 import 'package:gsg_final_project_rgs/view_features/auth/widgets/testUi.dart';
+import 'package:gsg_final_project_rgs/view_features/home/home_page.dart';
 
 class LogInWidget extends StatefulWidget {
   const LogInWidget({super.key});
@@ -25,7 +26,7 @@ class _LogInWidgetState extends State<LogInWidget> {
   }
 
   void submit(ApiResponse value) {
-    if (value.status == Status.ERROR) {
+    if (value.status == DataStatus.ERROR) {
       My_snackBar.showSnackBar(context,
           value.message!.split(" ")[0].replaceAll(":", "...."), Colors.red);
     } else {
@@ -35,7 +36,7 @@ class _LogInWidgetState extends State<LogInWidget> {
         Navigator.pushReplacement(
             context,
             MaterialPageRoute(
-              builder: (context) => Hello(),
+              builder: (context) => HomePage(),
             ));
       }
     }
