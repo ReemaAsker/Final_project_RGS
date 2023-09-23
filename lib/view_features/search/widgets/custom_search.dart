@@ -13,23 +13,25 @@ class CustomSearch extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextField(
       onEditingComplete: () {
-        CategoryRepo().fetchCategoriesList().then(
-          (value) {
-            print('33333333333333333333');
-            print(value);
-            List<Sender>? senders = value![0].senders;
-            senders?.forEach((sender) {
-              print('Sender Name: ${sender.name}');
-              print('Sender Mobile: ${sender.mobile}');
-              if (sender.address != null) {
-                print('Sender Address: ${sender.address}');
-              }
-              //   print('');
-            });
-            // print(
-            //     '${value![0].senders}\n${value![1].name}\n${value![2].name}\n${value![3].name}');
-          },
-        );
+        print(_textEditingController.text);
+
+        // CategoryRepo().fetchCategoriesList().then(
+        //   (value) {
+        //     // print('33333333333333333333');
+        //     // print(value);
+        //     // List<Sender>? senders = value![0].senders;
+        //     // senders?.forEach((sender) {
+        //     //   print('Sender Name: ${sender.name}');
+        //     //   print('Sender Mobile: ${sender.mobile}');
+        //     //   if (sender.address != null) {
+        //     //     print('Sender Address: ${sender.address}');
+        //     //   }
+        //     //   //   print('');
+        //     // });
+        //     // print(
+        //     //     '${value![0].senders}\n${value![1].name}\n${value![2].name}\n${value![3].name}');
+        //   },
+        // );
       },
       controller: _textEditingController,
       keyboardType: TextInputType.text,

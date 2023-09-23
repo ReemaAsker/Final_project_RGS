@@ -56,7 +56,6 @@ class _NewInboxPageState extends State<NewInboxPage> {
         builder: (context) => TagsPage(),
       ),
     );
-
     if (tag != null) {
       setState(() {
         selectedTag = tag;

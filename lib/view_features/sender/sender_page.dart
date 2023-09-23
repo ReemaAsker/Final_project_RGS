@@ -10,7 +10,6 @@ import '../search/widgets/custom_search.dart';
 
 class SenderPage extends StatelessWidget {
   SenderPage({Key? key}) : super(key: key);
-  List senders = ['Sender 1', 'Sender 1'];
 
   @override
   Widget build(BuildContext context) {
