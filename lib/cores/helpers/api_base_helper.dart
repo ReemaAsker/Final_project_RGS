@@ -12,21 +12,33 @@ class ApiBaseHelper {
     try {
       final response =
           await http.get(Uri.parse(baseUrl + url), headers: header);
+      print("tttttttttttttttttttttttttt");
+      print(response.body);
+
       responseJson = _returnResponse(response);
+
+      // print("\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\");
+      // print(responseJson);
+      // print("\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\");
+      // print(response.body);
     } on SocketException {
       throw FetchDataException('No Internet connection');
     }
-    responseJson;
+    return responseJson;
   }
 
-  Future<dynamic> post(String url, bool isAuth, Map<String, String>? header,
-      Map<String, dynamic> body) async {
+  Future<dynamic> post(
+      String url, Map<String, dynamic> body, Map<String, String> header) async {
     var responseJson;
     try {
-      final response = isAuth
-          ? await http.post(Uri.parse(baseUrl + url), body: body)
-          : await http.post(Uri.parse(baseUrl + url),
-              headers: header, body: body);
+      print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!8888888888888888888");
+
+      final response = await http.post(Uri.parse(baseUrl + url),
+          body: body, headers: header);
+      print("##########################");
+      print(response.body);
+      print("##########################");
+
       responseJson = _returnResponse(response);
     } on SocketException {
       throw FetchDataException('No Internet connection');
@@ -44,7 +56,7 @@ class ApiBaseHelper {
     } on SocketException {
       throw FetchDataException('No Internet connection');
     }
-    responseJson;
+    return responseJson;
   }
 
   Future<dynamic> delete(String url, Map<String, String> header) async {
@@ -56,10 +68,11 @@ class ApiBaseHelper {
     } on SocketException {
       throw FetchDataException('No Internet connection');
     }
-    responseJson;
+    return responseJson;
   }
 
   dynamic _returnResponse(http.Response response) {
+    print(response.body);
     switch (response.statusCode) {
       case 200:
       case 201:
@@ -72,6 +85,8 @@ class ApiBaseHelper {
         throw UnauthorisedException(response.body);
       case 500:
       default:
+        print(response.statusCode);
+        print(response.request);
         throw FetchDataException(
             'Error occurred while Communication with Server with StatusCode : ${response.statusCode}');
     }

@@ -1,11 +1,15 @@
+import 'dart:convert';
+
 import 'package:gsg_final_project_rgs/models/role.dart';
+
+String userToJson(User data) => json.encode(data.toJson());
 
 class User {
   int? id;
   String? name;
   String? email;
-  String? image;
-  String? emailVerifiedAt;
+  dynamic image;
+  dynamic emailVerifiedAt;
   String? roleId;
   String? createdAt;
   String? updatedAt;
@@ -23,31 +27,27 @@ class User {
     this.role,
   });
 
-  User.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    name = json['name'];
-    email = json['email'];
-    image = json['image'];
-    emailVerifiedAt = json['email_verified_at'];
-    roleId = json['role_id'].toString();
-    createdAt = json['created_at'];
-    updatedAt = json['updated_at'];
-    role = json['role'] != null ? Role.fromJson(json['role']) : null;
-  }
+  factory User.fromJson(Map<String, dynamic> json) => User(
+        id: json["id"],
+        name: json["name"],
+        email: json["email"],
+        image: json["image"],
+        emailVerifiedAt: json["email_verified_at"],
+        roleId: json["role_id"],
+        createdAt: json["created_at"],
+        updatedAt: json["updated_at"],
+        role: json["role"] == null ? null : Role.fromJson(json["role"]),
+      );
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = {};
-    data['id'] = id;
-    data['name'] = name;
-    data['email'] = email;
-    data['image'] = image;
-    data['email_verified_at'] = emailVerifiedAt;
-    data['role_id'] = roleId;
-    data['created_at'] = createdAt;
-    data['updated_at'] = updatedAt;
-    if (role != null) {
-      data['role'] = role!.toJson();
-    }
-    return data;
-  }
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "name": name,
+        "email": email,
+        "image": image,
+        "email_verified_at": emailVerifiedAt,
+        "role_id": roleId,
+        "created_at": createdAt,
+        "updated_at": updatedAt,
+        "role": role?.toJson(),
+      };
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:animated_snack_bar/animated_snack_bar.dart';
 
 class My_snackBar extends StatelessWidget {
   const My_snackBar({super.key});
@@ -9,26 +10,13 @@ class My_snackBar extends StatelessWidget {
   }
 
   static void showSnackBar(BuildContext context, String message, Color color) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        behavior: SnackBarBehavior.floating,
-        content: Row(
-          children: [
-            Icon(
-              color == Colors.green ? Icons.check_circle : Icons.close,
-              color: Colors.white,
-            ),
-            SizedBox(
-              width: 20,
-            ),
-            Text(
-              message,
-              style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
-            ),
-          ],
-        ),
-        backgroundColor: color,
-      ),
-    );
+    AnimatedSnackBar.material(
+      message,
+      type: color == Colors.green
+          ? AnimatedSnackBarType.success
+          : AnimatedSnackBarType.error,
+      mobileSnackBarPosition: MobileSnackBarPosition.bottom,
+      desktopSnackBarPosition: DesktopSnackBarPosition.bottomCenter,
+    ).show(context);
   }
 }
