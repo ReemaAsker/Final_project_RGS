@@ -14,7 +14,6 @@ import 'package:provider/provider.dart';
 
 import '../../cores/helpers/api_response.dart';
 import '../../cores/utils/colors.dart';
-import '../search/search.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({
@@ -296,16 +295,16 @@ class _HomePageState extends State<HomePage> {
       ),
       drawer: _buildNavDrawer(),
       child: Scaffold(
-        appBar: AppBar(
-          leading: IconButton(
-            onPressed: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) {
-                return SearchPage();
-              }));
-            },
-            icon: Icon(Icons.search),
-          ),
-        ),
+        // appBar: AppBar(
+        //   leading: IconButton(
+        //     onPressed: () {
+        //       Navigator.push(context, MaterialPageRoute(builder: (context) {
+        //         return SearchPage();
+        //       }));
+        //     },
+        //     icon: Icon(Icons.search),
+        //   ),
+        // ),
         backgroundColor: kLightWhiteColor,
         body: Container(
           margin: const EdgeInsets.all(16),
