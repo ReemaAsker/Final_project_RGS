@@ -2,15 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_advanced_drawer/flutter_advanced_drawer.dart';
 import 'package:gsg_final_project_rgs/cores/helpers/token_helper.dart';
 import 'package:gsg_final_project_rgs/custom_widgets/custom_snackbar.dart';
+import 'package:gsg_final_project_rgs/providers/tags_provider.dart';
 import 'package:gsg_final_project_rgs/view_features/auth/widgets/auth_screen.dart';
 import 'package:gsg_final_project_rgs/view_features/home/providers/category_provider.dart';
 import 'package:gsg_final_project_rgs/view_features/home/providers/status_provider.dart';
-import 'package:gsg_final_project_rgs/providers/tags_provider.dart';
 import 'package:gsg_final_project_rgs/view_features/home/widgets/category_list_view.dart';
 import 'package:gsg_final_project_rgs/view_features/home/widgets/custom_text.dart';
 import 'package:gsg_final_project_rgs/view_features/home/widgets/status_grid.dart';
 import 'package:gsg_final_project_rgs/view_features/home/widgets/tag_list.dart';
-import 'package:gsg_final_project_rgs/view_features/new_inbox/create_mail.dart';
 import 'package:provider/provider.dart';
 
 import '../../cores/helpers/api_response.dart';
@@ -58,6 +57,227 @@ class _HomePageState extends State<HomePage> {
 
   var myindex = 0;
   @override
+  // Widget build(BuildContext context) {
+  //   return AdvancedDrawer(
+  //     backdrop: Container(
+  //       width: double.infinity,
+  //       height: double.infinity,
+  //       color: kPrimaryColor,
+  //     ),
+  //     controller: _advancedDrawerController,
+  //     animationCurve: Curves.easeInOut,
+  //     animationDuration: const Duration(milliseconds: 300),
+  //     animateChildDecoration: true,
+  //     rtlOpening: false,
+  //     disabledGestures: false,
+  //     childDecoration: const BoxDecoration(
+  //       borderRadius: BorderRadius.all(Radius.circular(30)),
+  //     ),
+  //     drawer: _buildNavDrawer(),
+  //     child: Scaffold(
+  //       backgroundColor: kLightWhiteColor,
+  //       body: Container(
+  //         margin: const EdgeInsets.all(16),
+  //         child: CustomScrollView(
+  //           slivers: [
+  //             SliverAppBar(
+  //                 elevation: 0,
+  //                 // Set padding and margin to zero
+  //                 automaticallyImplyLeading: false,
+  //                 titleSpacing: 0,
+  //                 stretch: true,
+  //                 pinned: true,
+  //                 backgroundColor: kLightWhiteColor,
+  //                 title: _buildAppBar(
+  //                   context,
+  //                 )),
+  //             SliverToBoxAdapter(child: Container()),
+  //             SliverToBoxAdapter(
+  //               child: Container(),
+  //             ),
+  //             SliverToBoxAdapter(
+  //               child: Column(
+  //                 mainAxisAlignment: MainAxisAlignment.start,
+  //                 crossAxisAlignment: CrossAxisAlignment.start,
+  //                 children: [
+  //                   Card(
+  //                     shape: RoundedRectangleBorder(
+  //                       borderRadius: BorderRadius.circular(22.0),
+  //                     ),
+  //                     elevation: 1,
+  //                     color: Colors.white,
+  //                     child: Padding(
+  //                       padding: const EdgeInsets.only(
+  //                           bottom: 8, left: 16, right: 16, top: 8),
+  //                       child: Row(
+  //                         children: [
+  //                           IconButton(
+  //                             onPressed: () => {
+  //                               Navigator.push(
+  //                                 context,
+  //                                 MaterialPageRoute(
+  //                                   builder: (context) => SearchPage(),
+  //                                 ),
+  //                               )
+  //                             },
+  //                             icon: const Icon(
+  //                               Icons.search,
+  //                               color: kHintGreyColor,
+  //                             ),
+  //                           ),
+  //                           const SizedBox(
+  //                             width: 8,
+  //                           ),
+  //                           TextButton(
+  //                             onPressed: () {
+  //                               Navigator.push(
+  //                                 context,
+  //                                 MaterialPageRoute(
+  //                                   builder: (context) => SearchPage(),
+  //                                 ),
+  //                               );
+  //                             },
+  //                             child: CustomText('Search', 18, 'Poppins', kHintGreyColor,
+  //                                 FontWeight.w400),
+  //                           ),
+  //                         ],
+  //                       ),
+  //                     ),
+  //                   ),
+  //                   const SizedBox(
+  //                     height: 20,
+  //                   ),
+  //
+  //                   Container(
+  //                     height: 250,
+  //                     // color: Colors.red,
+  //                     child: Consumer<StatusProvider>(
+  //                       builder: (_, statusProvider, __) {
+  //                         if (statusProvider.statusListWithMails.status ==
+  //                             DataStatus.LOADING) {
+  //                           return const Center(
+  //                             child: CircularProgressIndicator(),
+  //                           );
+  //                         }
+  //
+  //                         if (statusProvider.statusListWithMails.status ==
+  //                             DataStatus.ERROR) {
+  //                           return Center(
+  //                             child: Text(
+  //                                 '${statusProvider.statusListWithMails.message}\n '),
+  //                           );
+  //                         }
+  //                         print(
+  //                             'count statuses: ${statusProvider.statusListWithMails.data?.length}');
+  //
+  //                         return GridView.builder(
+  //                             physics: const NeverScrollableScrollPhysics(),
+  //                             itemCount: statusProvider
+  //                                 .statusListWithMails.data?.length,
+  //                             gridDelegate:
+  //                                 const SliverGridDelegateWithFixedCrossAxisCount(
+  //                               crossAxisCount: 2,
+  //                               childAspectRatio: 2 / 1.1,
+  //                             ),
+  //                             itemBuilder: (context, index) {
+  //                               //colors[statusProvider
+  //                               //                                     .statusListWithoutMails.data![index].id]!
+  //                               return StatusTile(
+  //                                   statusProvider
+  //                                       .statusListWithMails.data![index],
+  //                                   statusProvider.statusListWithMails
+  //                                       .data![index].color!);
+  //                             });
+  //                       },
+  //                     ),
+  //                   ),
+  //
+  //                   /// todo: Last try inshaallah
+  //                   Container(
+  //                     height: 400,
+  //                     // color: Colors.blue,
+  //                     child: Consumer<CategoryProvider>(
+  //                         builder: (_, categoryProvider, __) {
+  //                       return ListView.builder(
+  //                           shrinkWrap: true,
+  //                           //categoryProvider.categoryList.data!.length
+  //                           itemCount: categoryProvider
+  //                               .categoriesWithMailsAsContent.length,
+  //                           itemBuilder: (context, index) {
+  //                             // categoryProvider.fetchCategoryMails(index + 1);
+  //                             // Provider.of<CategoryProvider>(context,
+  //                             //         listen: false)
+  //                             //     .fetchCategoryMails(index + 1);
+  //
+  //                             if (categoryProvider.categoryUiStatus.isLoading) {
+  //                               return const Center(
+  //                                 child: CircularProgressIndicator(),
+  //                               );
+  //                             }
+  //                             if (categoryProvider.categoryUiStatus.isError) {
+  //                               return Center(
+  //                                 child: Text(
+  //                                     '${categoryProvider.categoryUiStatus.errorMessage}'),
+  //                               );
+  //                             }
+  //
+  //                             return CategoryListView(
+  //                                 categoryModel:
+  //                                     Provider.of<CategoryProvider>(context)
+  //                                         .categoriesWithMailsAsContent[index]
+  //                                         .category,
+  //                                 mails: Provider.of<CategoryProvider>(context)
+  //                                         .categoriesWithMailsAsContent[index]
+  //                                         .mails ??
+  //                                     []);
+  //                           });
+  //                     }),
+  //                   ),
+  //                   Consumer<TagsProvider>(
+  //                     builder: (context, tagProvider, child) {
+  //                       if (tagProvider.allTagsList.status ==
+  //                           DataStatus.LOADING) {
+  //                         return const Center(
+  //                           child: CircularProgressIndicator(),
+  //                         );
+  //                       }
+  //                       if (tagProvider.allTagsList.status ==
+  //                           DataStatus.ERROR) {
+  //                         return Center(
+  //                           child: Text('${tagProvider.allTagsList..message}'),
+  //                         );
+  //                       }
+  //
+  //                       return Visibility(
+  //                           // tagProvider.allTagsList.data!.isNotEmpty
+  //                           //
+  //                           visible: tagProvider.allTagsList.data!.isNotEmpty,
+  //                           child: Column(
+  //                             crossAxisAlignment: CrossAxisAlignment.start,
+  //                             children: [
+  //                               Padding(
+  //                                 padding: const EdgeInsets.all(16),
+  //                                 child: CustomText('Tags', 20, 'Poppins',
+  //                                     kBlackColor, FontWeight.w600),
+  //                               ),
+  //                               TagGridList(
+  //                                 tags: tagProvider.allTagsList.data!,
+  //                                 onTagsSelected: (value) {},
+  //                               ),
+  //                             ],
+  //                           ));
+  //                     },
+  //                   ),
+  //                 ],
+  //               ),
+  //             ),
+  //           ],
+  //         ),
+  //       ),
+  //       bottomNavigationBar: _buildBottomNavBar(context),
+  //     ),
+  //   );
+  // }
   Widget build(BuildContext context) {
     return AdvancedDrawer(
       backdrop: Container(
@@ -76,6 +296,16 @@ class _HomePageState extends State<HomePage> {
       ),
       drawer: _buildNavDrawer(),
       child: Scaffold(
+        appBar: AppBar(
+          leading: IconButton(
+            onPressed: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context) {
+                return SearchPage();
+              }));
+            },
+            icon: Icon(Icons.search),
+          ),
+        ),
         backgroundColor: kLightWhiteColor,
         body: Container(
           margin: const EdgeInsets.all(16),
@@ -112,35 +342,15 @@ class _HomePageState extends State<HomePage> {
                             bottom: 8, left: 16, right: 16, top: 8),
                         child: Row(
                           children: [
-                            IconButton(
-                              onPressed: () => {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => SearchPage(),
-                                  ),
-                                )
-                              },
-                              icon: const Icon(
-                                Icons.search,
-                                color: kHintGreyColor,
-                              ),
+                            const Icon(
+                              Icons.search,
+                              color: kHintGreyColor,
                             ),
                             const SizedBox(
                               width: 8,
                             ),
-                            TextButton(
-                              onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => SearchPage(),
-                                  ),
-                                );
-                              },
-                              child: CustomText('Search', 18, 'Poppins', kHintGreyColor,
-                                  FontWeight.w400),
-                            ),
+                            CustomText('Search', 18, 'Poppins', kHintGreyColor,
+                                FontWeight.w400),
                           ],
                         ),
                       ),
@@ -235,7 +445,7 @@ class _HomePageState extends State<HomePage> {
                       }),
                     ),
                     Consumer<TagsProvider>(
-                      builder: (context, tagProvider, child) {
+                      builder: (_, tagProvider, __) {
                         if (tagProvider.allTagsList.status ==
                             DataStatus.LOADING) {
                           return const Center(
@@ -392,7 +602,8 @@ class _HomePageState extends State<HomePage> {
             context: context,
             builder: (BuildContext context) {
               // return NewInboxPage();
-              return NewInboxPage();
+              // return NewInboxPage();
+              return SizedBox();
             });
       },
       child: Container(
@@ -439,8 +650,7 @@ class _HomePageState extends State<HomePage> {
             children: [
               _buildDrawerHeader(),
               ListTile(
-                onTap: () {
-                },
+                onTap: () {},
                 leading: const Icon(Icons.home),
                 title: const Text(
                   'Home',

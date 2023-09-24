@@ -17,21 +17,7 @@
 //     pivot = json['pivot'] != null ? new Pivot.fromJson(json['pivot']) : null;
 //   }
 
-//   Map<String, dynamic> toJson() {
-//     final Map<String, dynamic> data = new Map<String, dynamic>();
-//     data['id'] = this.id;
-//     data['name'] = this.name;
-//     data['created_at'] = this.createdAt;
-//     data['updated_at'] = this.updatedAt;
-//     if (this.pivot != null) {
-//       data['pivot'] = this.pivot!.toJson();
-//     }
-//     return data;
-//   }
-// }
-
 import 'dart:convert';
-import 'dart:ffi';
 
 import 'package:gsg_final_project_rgs/models/pivot.dart';
 
@@ -76,13 +62,14 @@ class Tag {
   });
 
   factory Tag.fromJson(Map<String, dynamic> json) => Tag(
-        id: json["id"], //id: json["id"].toString() ?? ""
-        name: json["name"],
-        createdAt: json["created_at"],
-        updatedAt: json["updated_at"],
-        pivot: json["pivot"] == null
-            ? null
-            : Pivot.fromJson(jsonDecode(json["pivot"])),
+      id: json["id"], //id: json["id"].toString() ?? ""
+      name: json["name"],
+      createdAt: json["created_at"],
+      updatedAt: json["updated_at"],
+      pivot: Pivot.fromJson(json['pivot'])
+      // pivot: json["pivot"] == null
+      //     ? null
+      //     : Pivot.fromJson(jsonDecode(json["pivot"])),
       );
   Map<String, String> toJson() => {
         "id": id.toString() ?? "0",

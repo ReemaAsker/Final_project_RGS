@@ -1,31 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:gsg_final_project_rgs/cores/helpers/api_response.dart';
 import 'package:gsg_final_project_rgs/custom_widgets/custom_snackbar.dart';
-import 'package:gsg_final_project_rgs/models/activity.dart';
-import 'package:gsg_final_project_rgs/models/attachment.dart';
 import 'package:gsg_final_project_rgs/models/mail.dart';
-import 'package:gsg_final_project_rgs/models/pivot.dart';
 import 'package:gsg_final_project_rgs/models/sender.dart';
-import 'package:gsg_final_project_rgs/models/status.dart';
 import 'package:gsg_final_project_rgs/models/tag.dart';
-import 'package:gsg_final_project_rgs/view_features/auth/model/auth_model.dart';
-import 'package:gsg_final_project_rgs/view_features/auth/model/user.dart';
-import 'package:gsg_final_project_rgs/view_features/home/widgets/tag_list.dart';
 import 'package:gsg_final_project_rgs/view_features/new_inbox/repo/create_mail_repo.dart';
 import 'package:gsg_final_project_rgs/view_features/new_inbox/widgets/custom_app_bar.dart';
-import 'package:gsg_final_project_rgs/view_features/home/categories/models/Category.dart';
 import 'package:gsg_final_project_rgs/view_features/satuts/status.dart';
 import 'package:gsg_final_project_rgs/view_features/sender/sender_page.dart';
 import 'package:gsg_final_project_rgs/view_features/tags/tag.dart';
+import 'package:intl/intl.dart';
+
 import '../../cores/utils/colors.dart';
 import '../category/category.dart';
 import '../home/widgets/custom_border.dart';
 import '../home/widgets/custom_text.dart';
-import 'package:intl/intl.dart';
-
 import '../mail_detail/widgets/activity_tile.dart';
 import '../mail_detail/widgets/image_tile.dart';
-import '../tags/tag.dart';
 
 class NewInboxPage extends StatefulWidget {
   NewInboxPage({Key? key}) : super(key: key);
@@ -100,7 +91,7 @@ class _NewInboxPageState extends State<NewInboxPage> {
         description: mailDescriptionController.text,
         // finalDecision: "",
         senderId: sender_id,
-        statusId: 1, ///////////////////////
+        statusId: "1", ///////////////////////
         updatedAt: DateTime.now().toString());
 
     return mailBody;
@@ -281,11 +272,10 @@ class _NewInboxPageState extends State<NewInboxPage> {
 
   Widget _buildActivityExpansion(BuildContext context) {
     return Theme(
-      data: Theme.of(context)
-          .copyWith(dividerColor: Colors.transparent),
+      data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
       child: ExpansionTile(
-        title: CustomText(
-            'Activity', 20, 'Poppins', kBlackColor, FontWeight.w600),
+        title:
+            CustomText('Activity', 20, 'Poppins', kBlackColor, FontWeight.w600),
         backgroundColor: Colors.transparent,
         children: [
           ListView.separated(
@@ -293,11 +283,8 @@ class _NewInboxPageState extends State<NewInboxPage> {
             shrinkWrap: true,
             itemCount: 2,
             itemBuilder: (context, index) {
-              return ActivityTile(const [
-                'Hussam',
-                'The issue is transferred to AAAA',
-                'Ali'
-              ]);
+              return ActivityTile(
+                  const ['Hussam', 'The issue is transferred to AAAA', 'Ali']);
             },
             separatorBuilder: (BuildContext context, int index) {
               return const SizedBox(
@@ -690,8 +677,8 @@ class _NewInboxPageState extends State<NewInboxPage> {
         widget: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            CustomText('Add Image', 16, 'Poppins',
-                kLightPrimaryColor, FontWeight.w400),
+            CustomText('Add Image', 16, 'Poppins', kLightPrimaryColor,
+                FontWeight.w400),
             const SizedBox(
               height: 20,
             ),
@@ -738,16 +725,16 @@ class _NewInboxPageState extends State<NewInboxPage> {
       },
     );
   }
-  // Future<void> _navigateToTagsPage(BuildContext context) async {
-  //   await showModalBottomSheet<dynamic>(
-  //     isScrollControlled: true,
-  //     useRootNavigator: true,
-  //     backgroundColor: kLightWhiteColor,
-  //     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-  //     context: context,
-  //     builder: (BuildContext context) {
-  //       return FractionallySizedBox(heightFactor: 0.9, child: TagsPage());
-  //     },
-  //   );
-  // }
+// Future<void> _navigateToTagsPage(BuildContext context) async {
+//   await showModalBottomSheet<dynamic>(
+//     isScrollControlled: true,
+//     useRootNavigator: true,
+//     backgroundColor: kLightWhiteColor,
+//     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+//     context: context,
+//     builder: (BuildContext context) {
+//       return FractionallySizedBox(heightFactor: 0.9, child: TagsPage());
+//     },
+//   );
+// }
 }

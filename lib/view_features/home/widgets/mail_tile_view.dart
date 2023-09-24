@@ -94,7 +94,7 @@ class MailTile extends StatelessWidget {
                             ), //         "https://palmail.gsgtt.tech/storage/${myMail.attachments![index]['image']}"))),
                             child: Image(
                               image: NetworkImage(
-                                "https://palmail.gsgtt.tech/storage/${myMail.attachments![index].image}",
+                                "https://palmail.gsgtt.tech/storage/${myMail.attachments![index]['image']}",
                               ),
                               fit: BoxFit.fill,
                             ),
